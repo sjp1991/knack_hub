@@ -14,10 +14,10 @@ import React, {
   DrawerLayoutAndroid,
 } from 'react-native'
 
-import PageTwo from './app/pages/PageTwo'
+import Login from './app/pages/Login'
 import PageThree from './app/pages/PageThree'
 import PageFour from './app/pages/PageFour'
-const Page = {PageTwo, PageThree, PageFour}
+const Page = {Login, PageThree, PageFour}
 const Drawer = require('react-native-drawer') // Third party drawer layout that works in iOS, very funky so use with care
 
 export default class Route extends Component {
@@ -53,8 +53,8 @@ export default class Route extends Component {
 		if(route.className) {
 			return React.createElement(Page[route.className], {route, navigator})
 		} else {
-			route.title = 'PageTwo'
-			return React.createElement(Page['PageTwo'], {route, navigator})
+			route.title = 'Login'
+			return React.createElement(Page['Login'], {route, navigator})
 		}
 	}
 	drawerMenuItemPressed(alertPopupMessage) {
@@ -146,7 +146,7 @@ export default class Route extends Component {
 			},
 		}
 		return (
-			<Navigator initialRoute={{name: 'Landing Page', index: 0}}
+			<Navigator initialRoute={{name: 'Login Page', index: 0}}
 				ref='navigator'
 				renderScene={this.renderPage}
 				navigationBar={
