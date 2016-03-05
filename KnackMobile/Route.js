@@ -14,10 +14,13 @@ import React, {
   DrawerLayoutAndroid,
 } from 'react-native'
 
+import DDPClient from 'ddp-client';
+
+import Index from './app/index'
 import PageTwo from './app/pages/PageTwo'
 import PageThree from './app/pages/PageThree'
 import PageFour from './app/pages/PageFour'
-const Page = {PageTwo, PageThree, PageFour}
+const Page = {Index, PageTwo, PageThree, PageFour}
 const Drawer = require('react-native-drawer') // Third party drawer layout that works in iOS, very funky so use with care
 
 export default class Route extends Component {
@@ -26,6 +29,12 @@ export default class Route extends Component {
 		this.state = {
 			isDrawerOpen: false,
 		}
+		this.ddpClient = new DDPClient({
+		  host: '172.18.147.31',
+		  // host: '192.168.1.3', // If using android use your device IP address
+		  port: '3000',
+		  // url: <your websocket url>
+		});
 	}
 	_openDrawer() {
 		if(Platform.OS === 'ios') {
@@ -60,6 +69,7 @@ export default class Route extends Component {
 	drawerMenuItemPressed(alertPopupMessage) {
 		this._closeDrawer()
 		alert(alertPopupMessage)
+		this.ddpClient.call('addPost')
 	}
 	renderMenuItems() {
 		return (
