@@ -61,7 +61,7 @@ export default class Route extends Component {
 			return React.createElement(Page[route.className], {route, navigator, ddpClient, setNavBarVisibility: this._setNavBarVisibility.bind(this)})
 		} else {
 			route.title = 'Profile'
-			return React.createElement(Page['CreateTask'], {route, navigator, ddpClient, setNavBarVisibility: this._setNavBarVisibility.bind(this)})
+			return React.createElement(Page['CreateBadge'], {route, navigator, ddpClient, setNavBarVisibility: this._setNavBarVisibility.bind(this)})
 		}
 	}
 	_setNavBarVisibility(visible) {

@@ -87,18 +87,18 @@ export default class EarnerProfile extends Component {
 		}
 	}
 	componentDidMount() {
-		_this = this
 		this.props.ddpClient.connect((err, wasReconnect) => {
       let connected = true;
       if (err) {
         connected = false
       } else {
-        this.observeBadges.bind(_this)()
-        this.observeEarners.bind(_this)()
-        this.observeUser.bind(_this)()
+        this.observeBadges.bind(this)()
+        this.observeEarners.bind(this)()
+        this.observeUser.bind(this)()
       }
       this.setState({ connected: connected })
     })
+    this.props.setNavBarVisibility(true)
 	}
 	observeBadges() {
     let observer = this.props.ddpClient.observe("badges");
@@ -190,18 +190,12 @@ export default class EarnerProfile extends Component {
 				</Image>
 				<View>
 					<View style={{height: 20, backgroundColor: 'transparent'}}></View>
-					<View style={styles.badgecontainer1}>
-						<Image style={{width: 100, height: 120, resizeMode: 'cover', margin: 5,}} source={require('./../img/badges/kitchen_math.png')}/>
-						<Image style={{width: 100, height: 120, resizeMode: 'cover', margin: 5,}} source={require('./../img/badges/professionalism.png')}/>
-						<Image style={{width: 100, height: 120, resizeMode: 'cover', margin: 5,}} source={require('./../img/badges/knife_skills.png')}/>
-					</View>
-					<View style={{height: 20, backgroundColor: 'transparent'}}></View>
-					<View style={styles.badgecontainer2}>
-						{this.renderBadge()}
-						<TouchableOpacity onPress={this._onPressAddNewBadge.bind(this)}>
-							<Image style={{width: 100, height: 120, resizeMode: 'cover', margin: 5,}} source={require('./../img/badges/add_new_badge.png')}/>
-						</TouchableOpacity>
-					</View>
+						<View style={styles.badgecontainer2}>
+							{this.renderBadge()}
+							<TouchableOpacity onPress={this._onPressAddNewBadge.bind(this)}>
+								<Image style={{width: 100, height: 120, resizeMode: 'cover', margin: 5,}} source={require('./../img/badges/add_new_badge.png')}/>
+							</TouchableOpacity>
+						</View>
 			    </View>
 
 
@@ -220,7 +214,7 @@ export default class EarnerProfile extends Component {
 		        	<View style={styles.buttonContainer}>
 			        	<TouchableOpacity onPress={this.showTasks.bind(this)}>
 		    	    		<Text style={styles.heading}>
-		        				Jobs Applied
+		        				Tasks Applied
 		        			</Text>
 		        		</TouchableOpacity>
 		        		<View style={styles.lengthcontainer}>
@@ -278,7 +272,7 @@ export default class EarnerProfile extends Component {
 		if(this.state.badges) {
 			return this.state.badges.map((badge)=>{
 				return (
-					<Image key={badge._id} style={{width: 100, height: 120, resizeMode: 'cover', margin: 5,}} source={{uri: badge.pic}}/>
+					<Image key={badge._id} style={{width: 90, height: 120, resizeMode: 'cover', margin: 5,}} source={{uri: badge.pic}}/>
 				)
 			})
 		}
@@ -379,8 +373,8 @@ var styles = StyleSheet.create({
   },
 
   badgecontainer2: {
-  	height: 170,
   	flexDirection: 'row',
+    flexWrap: 'wrap',
   	alignItems: 'flex-start',
   	width: width * 0.9
   },

@@ -38,6 +38,8 @@ export default class CreateBadge extends Component {
 						<View style={{height:64, width:width*.7, borderWidth:2, borderColor:'gray', marginTop:30, alignSelf:'center'}}>
 							<Text style={{color:'gray', marginTop:-8, width:100, alignSelf:'center', textAlign:'center'}}>Badge Name</Text>
 							<TextInput style={styles.classinput}
+								placeholder="Badge Name"
+		  						placeholderTextColor="white"
 								onChangeText={(name) => this.setState({name})}
 		    				value={this.state.name}>
 							</TextInput>
@@ -47,6 +49,8 @@ export default class CreateBadge extends Component {
 							<TextInput style={[styles.classinput, {height: 125}]}
 								onChangeText={(description) => this.setState({description})}
 								multiline={true}
+								placeholder="	    Badge Description"
+		  						placeholderTextColor="white"
 		    				value={this.state.description}>
 							</TextInput>
 						</View>

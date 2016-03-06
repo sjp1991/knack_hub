@@ -9,12 +9,13 @@ import React, {
 	Image,
 } from 'react-native'
 
+let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
+
 export default class ClassList extends Component {
 	constructor(props) {
 		super(props)
-		let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
 		this.state = {
-			dataSource: ds.cloneWithRows(['Basic food service', 'Cooking Method', 'Dish-machine Operation', 'Knife skills', 'Personal Finance', 'Teamwork']),
+			classes: ds.cloneWithRows([]),
 		}
 	}
 	_onClassRowPress(rowData, rowID) {
@@ -25,7 +26,7 @@ export default class ClassList extends Component {
 			<TouchableOpacity onPress={this._onClassRowPress.bind(this, rowData, rowID)}>
 				<Image style={styles.rowImage} source={require('./../img/class/class1.jpg')}>
 					<View style={styles.rowView}>
-						<Text style={styles.renderText}>{rowData}</Text>
+						<Text style={styles.renderText}>{rowData.name}</Text>
 						<Image style={styles.badgeStyle} source={require('./../img/badges/knife_skills.png')} />
 					</View>
 				</Image>
@@ -33,7 +34,25 @@ export default class ClassList extends Component {
 		)
 	}
 	componentDidMount() {
-		this.props.setNavBarVisibility(true)
+		this.props.ddpClient.connect((err, wasReconnect) => {
+      if (err) {
+      } else {
+        this.observeClasses.bind(this)()
+      }
+    })
+    this.props.setNavBarVisibility(true)
+	}
+	observeClasses() {
+		let observer = this.props.ddpClient.observe("classes");
+    observer.added = (id) => {
+      this.setState({classes: ds.cloneWithRows(Object.values(this.props.ddpClient.collections.classes))})
+    }
+    observer.changed = (id, oldFields, clearedFields, newFields) => {
+      this.setState({classes: ds.cloneWithRows(Object.values(this.props.ddpClient.collections.classes))})
+    }
+    observer.removed = (id, oldValue) => {
+      this.setState({classes: ds.cloneWithRows(Object.values(this.props.ddpClient.collections.classes))})
+    }
 	}
 	render() {
 		return (
@@ -42,7 +61,7 @@ export default class ClassList extends Component {
 					<Text style={styles.filterText}>filter options</Text>
 				</TouchableOpacity>
 				<ListView 
-					dataSource={this.state.dataSource}
+					dataSource={this.state.classes}
 					renderSeparator={(sectionID, rowID)=><View key={rowID} style={styles.separator}></View>}
 					renderRow={this._renderRow.bind(this)} />
 			</ScrollView>
