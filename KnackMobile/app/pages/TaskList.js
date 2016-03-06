@@ -16,9 +16,13 @@ export default class TaskList extends Component {
 		this.state = {
 			dataSource: ds.cloneWithRows(['Waiter', 'Driver', 'Chef', 'Dog-walker', 'Cahsier', 'Make-up', 'Task', 'Task', 'Task', 'Task', 'Task', 'Task', 'Task', 'Task']),
 		}
+	}
+	componentDidMount(){
 		this.props.setNavBarVisibility(true)
 	}
-
+	_onTaskRowPress(rowData, rowID) {
+		this.props.navigator.push({className: 'TaskDetail', title: ''})
+	}
 	render() {
 		return (
 			<ScrollView style={styles.container}>
@@ -29,14 +33,14 @@ export default class TaskList extends Component {
 					dataSource={this.state.dataSource}
 					renderSeparator={(sectionID, rowID)=><View key={rowID} style={styles.separator}></View>}
 					renderRow={(rowData, sectionID, rowID) =>
-						<TouchableOpacity>
-						<Image style={styles.rowImage} source={require('./../img/class/class1.jpg')}>
-						<View style={styles.rowView}>
-							<Text style={styles.renderText}>{rowData}</Text>
-							<Text style={styles.renderText}>Noodle House</Text>
-							<Text style={styles.renderText}>500m</Text>
-						</View>
-						</Image>
+						<TouchableOpacity onPress={this._onTaskRowPress.bind(this)}>
+							<Image style={styles.rowImage} source={require('./../img/class/class1.jpg')}>
+								<View style={styles.rowView}>
+									<Text style={[styles.renderText, {width: 90}]}>{rowData}</Text>
+									<Text style={styles.renderText}>Noodle House</Text>
+									<Text style={styles.renderText}>500m</Text>
+								</View>
+							</Image>
 						</TouchableOpacity>
 					} />
 			</ScrollView>
@@ -47,7 +51,8 @@ export default class TaskList extends Component {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		marginTop: 60,
+		backgroundColor:'#41645c',
+		marginTop: 56,
 	},
 	separator: {
 		height: 2,

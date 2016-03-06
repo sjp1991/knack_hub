@@ -70,7 +70,7 @@ export default class Register extends Component {
 					</View>
 					<View style={styles.bottomButtonsRowContainer}>
 						<TouchableOpacity
-							onPress={this._pushPage.bind(this, 'Login', 'Login')}>
+							onPress={()=>this.props.navigator.pop()}>
 							<Text style={styles.bottomText}>Cancel</Text>
 						</TouchableOpacity>
 						<TouchableOpacity>

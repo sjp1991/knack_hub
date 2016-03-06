@@ -34,7 +34,7 @@ import CreateClass from './app/pages/CreateClass'
 const Page = {Login, PageTwo, PageThree, PageFour, AddEarnerProfile, EarnerProfile, Register, Dashboard, ClassList, ClassDetail, TaskList, TaskDetail, EarnMoreBadge, CreateBadge, CreateClass}
 
 let ddpClient = new DDPClient({
-  host: '172.18.146.36',
+  host: '172.18.147.31',
   // host: '192.168.1.3', // If using android use your device IP address
   port: '3000',
   // url: <your websocket url>
@@ -65,9 +65,7 @@ export default class Route extends Component {
 		}
 	}
 	_setNavBarVisibility(visible) {
-		InteractionManager.runAfterInteractions(()=> {
-			this.setState({hideNavBar: !visible})
-		})
+		this.setState({hideNavBar: !visible})
 	}
 	componentDidMount() {
 		// Override Android back button. Return false if you want to default back to original behaviour, which usually exits the app.
@@ -85,13 +83,23 @@ export default class Route extends Component {
 			}
 		})
 	}
+	_popToTop() {
+		this.setState({hideNavBar: true})
+		this.refs.navigator.popToTop()
+	}
+	_pop() {
+		if(this.refs.navigator.getCurrentRoutes().length === 2) {
+			this.setState({hideNavBar: true})
+		}
+		this.refs.navigator.pop()
+	}
 	_renderNavigationView() {
 		let _this = this // We need to hold onto reference to 'this' as "this" gets overwritten inside the method
 		const NavigationBarRouteMapper = {
 			LeftButton(route, navigator, index, navState) {
 				return (
 					<View style={styles.navLeftIconView}>
-						<TouchableOpacity style={styles.navButton}>
+						<TouchableOpacity onPress={_this._popToTop.bind(_this)} style={styles.navButton}>
 							<Image style={styles.navLeftIcon} source={require('./app/img/navigation/home_icon.png')} />
 						</TouchableOpacity>
           </View>
@@ -101,7 +109,9 @@ export default class Route extends Component {
 				// Button on the right side of navigationView
 				return (
 					<View style={styles.navRightIconView}>
-						<TouchableOpacity style={styles.navButton}>
+						<TouchableOpacity 
+							onPress={_this._pop.bind(_this)}
+							style={styles.navButton}>
 							<Image style={styles.navRightIcon} source={require('./app/img/navigation/close_white.png')} />
 						</TouchableOpacity>
           </View>

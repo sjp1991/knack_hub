@@ -8,69 +8,75 @@ import React, {
 	TouchableOpacity,
 	PickerIOS,
 	Image,
-	ScrollView
+	ScrollView,
 } from 'react-native'
+let {height, width} = Dimensions.get('window')
 
 // export default allows class to be referenced using import <className> from '<path>'
 export default class CreateBadge extends Component {
 	constructor(props) {
 		super(props)
-		this.state={name: '', description: '', location:'', size:'', signedUpNum:'0', badgeId:[], when:''}
+		this.state={name: '', description: '', location:'', size:'', signedUpNum:'0', badgeId:'', when:''}
 	}
 
 	_create() {
 		this.props.ddpClient.call('createClass', [{name:this.state.name, description:this.state.description, location:this.state.location,
 			size:this.state.size, signedUpNum:this.state.signedUpNum, badgeId:this.state.badgeId, when:this.state.when}])
 	}
+	componentDidMount() {
+		this.props.setNavBarVisibility(true)
+	}
 
 	render() {
 		return(
 			<View style={styles.container}>
-
-				<TextInput style={styles.classinput} 
-					ref= "title"
-					placeholder="Enter Class Title"
-  					placeholderTextColor="gray"
-					onChangeText={(name) => this.setState({name})}
-    				value={this.state.title}/>
-
-				<TextInput style={styles.classinput} 
-					ref= "description"
-					placeholder="Enter Class Description"
-  					placeholderTextColor="gray"
-					onChangeText={(description) => this.setState({description})}
-    				value={this.state.description}/>
-
-				<Image style={{width: 200, height: 100, resizeMode: 'contain'}} source={{uri: 'https://lh3.googleusercontent.com/TJXbuHM8KFn6JuG43LOc38gU0oJdlRoO1I64ncbUPj-y987ebZG89uFhB5Jf8R_tAbcp=w300'}} />
-				
-				<TextInput style={styles.classinput} 
-					ref= "when"
-					placeholder="when"
-  					placeholderTextColor="gray"
-					onChangeText={(when) => this.setState({when})}
-    				value={this.state.when}/> 
-
-				<TextInput style={styles.classinput} 
-					ref= "location"
-					placeholder="Enter location"
-  					placeholderTextColor="gray"
-					onChangeText={(location) => this.setState({location})}
-    				value={this.state.location}/>  
-
-				<TextInput style={styles.classinput} 
-					ref= "size"
-					placeholder="Enter size"
-  					placeholderTextColor="gray"
-					onChangeText={(size) => this.setState({size})}
-    				value={this.state.size}/>  
-
-				<View style={styles.buttonContainer}>
-					<TouchableOpacity style = {styles.button}>
-						<Text>Cancel</Text>
-					</TouchableOpacity>
-					
+				<View style={styles.imageContainer}>
+					<Text style={styles.uploadText}>Tap to upload</Text>
+					<Text style={styles.uploadText}>Class title image</Text>
+				</View>
+				<ScrollView style={styles.scroll}>
+					<View>
+						<View style={{height:64, width:width*.7, borderWidth:2, borderColor:'gray', marginTop:30, alignSelf:'center'}}>
+							<Text style={{color:'gray', marginTop:-8, width:100, alignSelf:'center', textAlign:'center'}}>Class Name</Text>
+							<TextInput style={styles.classinput}
+								onChangeText={(name) => this.setState({name})}
+		    				value={this.state.name}>
+							</TextInput>
+						</View>
+						<View style={{height:140, width:width*.7, borderWidth:2, borderColor:'gray', marginTop:30, alignSelf:'center'}}>
+							<Text style={{color:'gray', marginTop:-8, width:130, alignSelf:'center', textAlign:'center'}}>Class Description</Text>
+							<TextInput style={[styles.classinput, {height: 125}]}
+								onChangeText={(description) => this.setState({description})}
+								multiline={true}
+		    				value={this.state.description}>
+							</TextInput>
+						</View>
+						<View style={{height:64, width:width*.7, borderWidth:2, borderColor:'gray', marginTop:30,alignSelf:'center'}}>
+							<Text style={{color:'gray', marginTop:-8, width:100, alignSelf:'center', textAlign:'center'}}>Location</Text>
+							<TextInput style={styles.classinput}
+								onChangeText={(location) => this.setState({location})}
+		    				value={this.state.location}>
+							</TextInput>
+						</View>
+						<View style={{height:64, width:width*.7, borderWidth:2, borderColor:'gray', marginTop:30, alignSelf:'center'}}>
+							<Text style={{color:'gray', marginTop:-8, width:70, alignSelf:'center', textAlign:'center'}}>Time</Text>
+							<TextInput style={styles.classinput}
+								onChangeText={(when) => this.setState({when})}
+		    				value={this.state.when}>
+							</TextInput>
+						</View>
+						<View style={{height:64, width:width*.7, borderWidth:2, borderColor:'gray', marginTop:30, alignSelf:'center'}}>
+							<Text style={{color:'gray', marginTop:-8, width:100, alignSelf:'center', textAlign:'center'}}>Add Badge</Text>
+							<TextInput style={styles.classinput}
+								onChangeText={(badgeId) => this.setState({badgeId})}
+		    				value={this.state.badgeId}>
+							</TextInput>
+						</View>
+					</View>
+				</ScrollView>
+				<View style={{marginTop:30, justifyContent:'center', alignItems:'center', backgroundColor:'#41645c', height:50}}>
 					<TouchableOpacity onPress={this._create.bind(this)}>
-						<Text>Create Class</Text>
+						<Text style={{color:'white', fontSize: 25}}>Create Class</Text>
 					</TouchableOpacity>
 				</View>
 			</View>
@@ -78,20 +84,18 @@ export default class CreateBadge extends Component {
 	}
 }
 
-var width = Dimensions.get('window').width;
-
 var styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop:60,
+    backgroundColor:'black'
   },
   classinput: {
     fontSize: 20,
     textAlign: 'center',
-    backgroundColor: 'white',
-    margin: 10,
-    width: width * 0.8,
-    height: 40
+    width: width * 0.7,
+    height: 50,
+    color:'white'
   },
 
   buttonContainer: {
@@ -100,6 +104,29 @@ var styles = StyleSheet.create({
 
   button: {
   	paddingRight: 40
+  },
+
+  uploadText:{
+  	fontSize:16,
+  	textAlign:'center',
+  	color: '#333'
+  },
+
+  imageContainer:{
+  	height:150,
+  	backgroundColor:'white',
+  	justifyContent:'center',
+  	borderBottomWidth: 24,
+  	borderColor:'#41645c'
+  },
+
+  scroll:{
+  	height:height-225,
+  },
+
+  name:{
+  	color:'gray',
+  	fontSize:20,
   }
 });
 
