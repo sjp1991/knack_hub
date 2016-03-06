@@ -7,7 +7,10 @@ import React, {
 	TouchableOpacity,
 	Dimensions,
 	Image,
+	Animated,
 } from 'react-native'
+
+let {height, width} = Dimensions.get('window')
 
 // export default allows class to be referenced using import <className> from '<path>'
 export default class Login extends Component {
@@ -15,7 +18,8 @@ export default class Login extends Component {
 		super(props)
 		this.state = {
 			email: 'eric@example.com',
-			password: '123'
+			password: '123',
+			dashboardY: new Animated.Value(-height / 2),
 		}
 	}
 	_popPage(){
@@ -38,9 +42,16 @@ export default class Login extends Component {
 			} else {
 				console.log(result)
 				_this.setState({user: _this.props.ddpClient.collections.users[result.id]})
-				_this.props.navigator.replace({className: 'AddEarnerProfile', title: 'AddEarnerProfile'})
+				// _this.props.navigator.replace({className: 'AddEarnerProfile', title: 'AddEarnerProfile'})
+				_this.openDashboard.bind(_this)()
 			}
 		})
+	}
+	openDashboard() {
+		Animated.timing(  // Uses easing functions
+			this.state.dashboardY,  // The value to drive
+			{toValue: 0},  // Configuration
+		).start()
 	}
 	render() {
 		return(
@@ -85,12 +96,30 @@ export default class Login extends Component {
 						</TouchableOpacity>
 					</View>
 				</View>
+				<Animated.View style={{position: 'absolute', bottom: this.state.dashboardY, width, height: height / 2, backgroundColor: '#373536', borderTopWidth: 16, borderColor: '#41645c', justifyContent: 'center', alignItems: 'center'}}>
+					<TouchableOpacity style={[styles.loginInputContainer, {backgroundColor: '#41645c'}]}
+						onPress={this._login.bind(this)}>
+						<View style={styles.loginButtonInnerView}>
+							<Text style={styles.loginButtonText}>Profile</Text>
+						</View>
+					</TouchableOpacity>
+					<TouchableOpacity style={[styles.loginInputContainer, {backgroundColor: '#41645c'}]}
+						onPress={this._login.bind(this)}>
+						<View style={styles.loginButtonInnerView}>
+							<Text style={styles.loginButtonText}>Task Board</Text>
+						</View>
+					</TouchableOpacity>
+					<TouchableOpacity style={[styles.loginInputContainer, {backgroundColor: '#41645c'}]}
+						onPress={this._login.bind(this)}>
+						<View style={styles.loginButtonInnerView}>
+							<Text style={styles.loginButtonText}>Find Classes</Text>
+						</View>
+					</TouchableOpacity>
+				</Animated.View>
 			</Image>
 		)
 	}
 }
-
-var width = Dimensions.get('window').width; 
 
 var styles = StyleSheet.create({
 	backgroundImg: {
@@ -145,7 +174,7 @@ var styles = StyleSheet.create({
   loginButtonText: {
   	fontSize: 20,
     textAlign: 'center',
-    color: 'white',
+    color: 'rgba(255,255,255,0.8)',
   },
   buttonContainer: {
   	flexDirection:'row'
