@@ -12,6 +12,7 @@ import React, {
   PixelRatio,
   Image,
   DrawerLayoutAndroid,
+  InteractionManager,
 } from 'react-native'
 
 import DDPClient from 'ddp-client';
@@ -81,11 +82,16 @@ export default class Route extends Component {
 	// This gets called when you add new page into navigator stack (ie. navigator.push or navigator.replace)
 	renderPage(route, navigator) {
 		if(route.className) {
-			return React.createElement(Page[route.className], {route, navigator, ddpClient})
+			return React.createElement(Page[route.className], {route, navigator, ddpClient, setNavBarVisibility: this._setNavBarVisibility.bind(this)})
 		} else {
-			route.title = ''
-			return React.createElement(Page['TaskDetail'], {route, navigator, ddpClient})
+			route.title = 'Class List'
+			return React.createElement(Page['ClassList'], {route, navigator, ddpClient, setNavBarVisibility: this._setNavBarVisibility.bind(this)})
 		}
+	}
+	_setNavBarVisibility(visible) {
+		InteractionManager.runAfterInteractions(()=> {
+			this.setState({hideNavBar: !visible})
+		})
 	}
 	drawerMenuItemPressed(alertPopupMessage) {
 		this._closeDrawer()
@@ -186,7 +192,7 @@ export default class Route extends Component {
 		return (
 			<Navigator initialRoute={{name: 'Login Page', index: 0}}
 				ref='navigator'
-				renderScene={this.renderPage}
+				renderScene={this.renderPage.bind(this)}
 				navigationBar={
 					<Navigator.NavigationBar
 						style={this.state.hideNavBar ? {height: 0} : styles.navigationBar}
@@ -242,7 +248,7 @@ export default class Route extends Component {
 
 let styles = StyleSheet.create({
 	navigationBar: {
-		backgroundColor: '#46B7C7',
+		backgroundColor: '#373536',
 	},
 	navLeftIconView: {
 		flex:1,
@@ -265,7 +271,7 @@ let styles = StyleSheet.create({
 		color: 'white',
 		fontSize: 18,
 		fontWeight: '500',
-		fontStyle: 'italic',
+		// fontStyle: 'italic',
 		alignSelf: 'flex-end',
 	},
 	drawerLayoutView: {
