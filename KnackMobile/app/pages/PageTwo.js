@@ -5,14 +5,6 @@ import React, {
 	TouchableOpacity,
 } from 'react-native'
 
-import DDPClient from 'ddp-client';
-let ddpClient = new DDPClient({
-  host: '172.18.147.31',
-  // host: '192.168.1.3', // If using android use your device IP address
-  port: '3000',
-  // url: <your websocket url>
-});
-
 // export default allows class to be referenced using import <className> from '<path>'
 export default class PageTwo extends Component {
 	constructor(props) {
@@ -23,7 +15,7 @@ export default class PageTwo extends Component {
       users: {},
       userId: undefined,
     }
-		ddpClient.connect((err, wasReconnect) => {
+		this.props.ddpClient.connect((err, wasReconnect) => {
       let connected = true;
       if (err) {
       	console.log(err)
@@ -44,41 +36,41 @@ export default class PageTwo extends Component {
 	}
 	_login(email, password) {
 		_this = this
-		ddpClient.call("login", [
+		this.props.ddpClient.call("login", [
 		  { user : { email }, password }
 		], (err, result)=> {
 			if(err) {
 				console.log(err)
 			} else {
 				console.log(result)
-				_this.setState({user: ddpClient.collections.users[result.id]})
+				_this.setState({user: this.props.ddpClient.collections.users[result.id]})
 				// _this.setState({userId: result.id})
 			}
 		});
 	}
 	_register(email, password) {
-    ddpClient.call('register', [email, password]);
+    this.props.ddpClient.call('register', [email, password]);
 	}
 	_handleIncrement() {
-    ddpClient.call('addPost');
+    this.props.ddpClient.call('addPost');
     console.log(this.state.user)
     // console.log(this.state.users[this.state.userId].emails[0].address)
   }
 	makeSubscription() {
-    ddpClient.subscribe("posts", [], () => {
-      this.setState({posts: ddpClient.collections.posts});
+    this.props.ddpClient.subscribe("posts", [], () => {
+      this.setState({posts: this.props.ddpClient.collections.posts});
     });
   }
   observePosts() {
-    let observer = ddpClient.observe("posts");
+    let observer = this.props.ddpClient.observe("posts");
     observer.added = (id) => {
-      this.setState({posts: ddpClient.collections.posts})
+      this.setState({posts: this.props.ddpClient.collections.posts})
     }
     observer.changed = (id, oldFields, clearedFields, newFields) => {
-      this.setState({posts: ddpClient.collections.posts})
+      this.setState({posts: this.props.ddpClient.collections.posts})
     }
     observer.removed = (id, oldValue) => {
-      this.setState({posts: ddpClient.collections.posts})
+      this.setState({posts: this.props.ddpClient.collections.posts})
     }
   }
 	render() {

@@ -65,7 +65,7 @@ export default class Login extends Component {
 
 				<View style={styles.buttonContainer}>
 					<TouchableOpacity style={styles.button}
-						onPress={this._pushPage.bind(this, 'PageFour', 'PageFour Title')}>
+						onPress={this._pushPage.bind(this, 'Register', 'Register Title')}>
 						<Text>Register</Text>
 					</TouchableOpacity>
 					<TouchableOpacity

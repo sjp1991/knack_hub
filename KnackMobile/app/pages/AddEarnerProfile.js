@@ -5,16 +5,9 @@ import React, {
 	StyleSheet,
 	TextInput,
 	TouchableOpacity,
+	Platform,
 	Image,
 } from 'react-native'
-
-import DDPClient from 'ddp-client';
-let ddpClient = new DDPClient({
-  host: '172.18.147.31',
-  // host: '192.168.1.3', // If using android use your device IP address
-  port: '3000',
-  // url: <your websocket url>
-});
 
 // export default allows class to be referenced using import <className> from '<path>'
 export default class AddEarnerProfile extends Component {
@@ -35,6 +28,11 @@ export default class AddEarnerProfile extends Component {
 	_pushPage(className, title) {
 		this.props.navigator.push({className, title})
 	}
+
+	createUser(){
+		this.props.ddpClient.call('createEarner', [{firstName: this.state.firstName, lastName: this.state.lastName, pic: '', desc: this.state.description, phone: this.state.cell}])
+	}
+
 	render() {
 		return(
 			<View style={styles.container}>
@@ -82,7 +80,7 @@ export default class AddEarnerProfile extends Component {
 	  			<TouchableOpacity style={{width: 80}}>
 						<Text>Cancel</Text>
 					</TouchableOpacity>
-					<TouchableOpacity style={{width: 80, alignItems: 'flex-end'}}>
+					<TouchableOpacity onPress={this.createUser.bind(this)} style={{width: 80, alignItems: 'flex-end'}}>
 						<Text>Save</Text>
 					</TouchableOpacity>
   			</View>
@@ -93,10 +91,12 @@ export default class AddEarnerProfile extends Component {
 
 var styles = StyleSheet.create({
   container: {
+  	marginTop: Platform.OS === 'ios' ? 60 : 0,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'gray',
+    alignSelf: 'center',
   },
   logininput: {
     fontSize: 20,
