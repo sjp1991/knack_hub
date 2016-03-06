@@ -5,23 +5,42 @@ import React, {
 	StyleSheet,
 	TouchableOpacity,
 	ScrollView,
+	ListView,
 } from 'react-native'
+
+let tempData = [{text: 'Class', isSelected: false}, {text: 'Class', isSelected: false}, {text: 'Class', isSelected: false}, {text: 'Class', isSelected: false}, {text: 'Class', isSelected: false}, {text: 'Class', isSelected: false}, {text: 'Class', isSelected: false}, {text: 'Class', isSelected: false}, {text: 'Class', isSelected: false}, {text: 'Class', isSelected: false}, {text: 'Class', isSelected: false}]
+let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
 
 export default class EarnMoreBadge extends Component {
 	constructor(props) {
 		super(props)
-		
+		this.state = {
+			selectedRowID: 1,
+			dataSource: ds.cloneWithRows(tempData),
+		}
 	}
-
+	_onRowPress(rowID) {
+		let data = tempData
+		// console.log(data)
+		data[rowID].isSelected = !data[rowID].isSelected
+		this.setState({dataSource: ds.cloneWithRows(data)})
+	}
+	_renderRow(rowData, sectionID, rowID) {
+		const rowStyle = rowData.isSelected ? styles.selectedRow : styles.unselectedRow
+		// console.log(this.state.selectedRowID)
+		return (
+			<TouchableOpacity onPress={this._onRowPress.bind(this, rowID)} style={rowStyle}>
+				<Text style={styles.renderText}>{rowData.text + ' ' + rowID}</Text>
+			</TouchableOpacity>
+		)
+	}
 	render() {
 		return (
 			<ScrollView style={styles.container}>
-				<Text style={{fontSize: 30, alignSelf: 'center'}}>Class Title</Text>
-				<Text style={styles.h3}>Badges to be granted upon completion</Text>
-				<Text style={styles.h3}>Class Details</Text>
-				<Text style={styles.h3}>Location</Text>
-				<Text style={styles.h3}>When</Text>
-				<TouchableOpacity style={styles.button}><Text style={styles.buttonText}>Enroll Class</Text></TouchableOpacity>
+				<ListView 
+					dataSource={this.state.dataSource}
+					renderSeparator={(sectionID, rowID)=><View key={rowID} style={styles.separator}></View>}
+					renderRow={this._renderRow.bind(this)} />
 			</ScrollView>
 		)
 	}
@@ -31,28 +50,20 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		marginTop: 60,
-		marginLeft: 10,
-		marginRight: 10,
-		marginBottom: 30,
 	},
 	separator: {
 		height: 2,
 		backgroundColor: 'black'
 	},
-	h3: {
-		fontSize: 20,
+	renderText: {
+		fontSize: 30,
+		marginLeft: 8,
 	},
-	button: {
-		backgroundColor: 'teal',
-		width: 150,
-		height: 60,
-		justifyContent: 'center',
-		alignItems: 'center',
-		alignSelf: 'center',
+	unselectedRow: {
+		// backgroundColor: 'grey',
 	},
-	buttonText: {
-		color: 'white',
-		fontSize: 18,
+	selectedRow: {
+		height: 100
 	}
 })
 
