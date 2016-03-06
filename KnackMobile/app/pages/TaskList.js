@@ -16,9 +16,10 @@ export default class TaskList extends Component {
 		this.state = {
 			dataSource: ds.cloneWithRows(['Waiter', 'Driver', 'Chef', 'Dog-walker', 'Cahsier', 'Make-up', 'Task', 'Task', 'Task', 'Task', 'Task', 'Task', 'Task', 'Task']),
 		}
+	}
+	componentDidMount(){
 		this.props.setNavBarVisibility(true)
 	}
-
 	render() {
 		return (
 			<ScrollView style={styles.container}>
@@ -47,7 +48,8 @@ export default class TaskList extends Component {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		marginTop: 60,
+		backgroundColor:'#41645c',
+		marginTop: 56,
 	},
 	separator: {
 		height: 2,

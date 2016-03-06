@@ -60,14 +60,12 @@ export default class Route extends Component {
 		if(route.className) {
 			return React.createElement(Page[route.className], {route, navigator, ddpClient, setNavBarVisibility: this._setNavBarVisibility.bind(this)})
 		} else {
-			route.title = 'Login'
-			return React.createElement(Page['EarnerProfile'], {route, navigator, ddpClient, setNavBarVisibility: this._setNavBarVisibility.bind(this)})
+			route.title = ''
+			return React.createElement(Page['Login'], {route, navigator, ddpClient, setNavBarVisibility: this._setNavBarVisibility.bind(this)})
 		}
 	}
 	_setNavBarVisibility(visible) {
-		InteractionManager.runAfterInteractions(()=> {
-			this.setState({hideNavBar: !visible})
-		})
+		this.setState({hideNavBar: !visible})
 	}
 	componentDidMount() {
 		// Override Android back button. Return false if you want to default back to original behaviour, which usually exits the app.
@@ -85,13 +83,23 @@ export default class Route extends Component {
 			}
 		})
 	}
+	_popToTop() {
+		this.setState({hideNavBar: true})
+		this.refs.navigator.popToTop()
+	}
+	_pop() {
+		if(this.refs.navigator.getCurrentRoutes().length === 2) {
+			this.setState({hideNavBar: true})
+		}
+		this.refs.navigator.pop()
+	}
 	_renderNavigationView() {
 		let _this = this // We need to hold onto reference to 'this' as "this" gets overwritten inside the method
 		const NavigationBarRouteMapper = {
 			LeftButton(route, navigator, index, navState) {
 				return (
 					<View style={styles.navLeftIconView}>
-						<TouchableOpacity style={styles.navButton}>
+						<TouchableOpacity onPress={_this._popToTop.bind(_this)} style={styles.navButton}>
 							<Image style={styles.navLeftIcon} source={require('./app/img/navigation/home_icon.png')} />
 						</TouchableOpacity>
           </View>
@@ -101,7 +109,9 @@ export default class Route extends Component {
 				// Button on the right side of navigationView
 				return (
 					<View style={styles.navRightIconView}>
-						<TouchableOpacity style={styles.navButton}>
+						<TouchableOpacity 
+							onPress={_this._pop.bind(_this)}
+							style={styles.navButton}>
 							<Image style={styles.navRightIcon} source={require('./app/img/navigation/close_white.png')} />
 						</TouchableOpacity>
           </View>

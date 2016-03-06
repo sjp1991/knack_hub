@@ -22,9 +22,6 @@ export default class Login extends Component {
 			dashboardY: new Animated.Value(-height / 2),
 		}
 	}
-	_popPage(){
-		this.props.navigator.pop()
-	}
 	_pushPage(className, title) {
 		this.props.navigator.push({className, title})
 	}
@@ -32,8 +29,6 @@ export default class Login extends Component {
 		const email = this.state.email
 		const password = this.state.password
 		_this = this
-		// alert(password)
-		console.log(this.props.ddpClient)
 		this.props.ddpClient.call('login', [
 		  { user : { email }, password }
 		], (err, result)=> {
@@ -98,19 +93,19 @@ export default class Login extends Component {
 				</View>
 				<Animated.View style={{position: 'absolute', bottom: this.state.dashboardY, width, height: height / 2, backgroundColor: '#373536', borderTopWidth: 16, borderColor: '#41645c', justifyContent: 'center', alignItems: 'center'}}>
 					<TouchableOpacity style={[styles.loginInputContainer, {backgroundColor: '#41645c'}]}
-						onPress={this._login.bind(this)}>
+						onPress={()=>this.props.navigator.push({className: 'EarnerProfile', title: 'Profile'})}>
 						<View style={styles.loginButtonInnerView}>
 							<Text style={styles.loginButtonText}>Profile</Text>
 						</View>
 					</TouchableOpacity>
 					<TouchableOpacity style={[styles.loginInputContainer, {backgroundColor: '#41645c'}]}
-						onPress={this._login.bind(this)}>
+						onPress={()=>this.props.navigator.push({className: 'TaskList', title: 'Task Board'})}>
 						<View style={styles.loginButtonInnerView}>
 							<Text style={styles.loginButtonText}>Task Board</Text>
 						</View>
 					</TouchableOpacity>
 					<TouchableOpacity style={[styles.loginInputContainer, {backgroundColor: '#41645c'}]}
-						onPress={this._login.bind(this)}>
+						onPress={()=>this.props.navigator.push({className: 'ClassList', title: 'Find Classes'})}>
 						<View style={styles.loginButtonInnerView}>
 							<Text style={styles.loginButtonText}>Find Classes</Text>
 						</View>

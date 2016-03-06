@@ -16,7 +16,6 @@ export default class ClassList extends Component {
 		this.state = {
 			dataSource: ds.cloneWithRows(['Basic food service', 'Cooking Method', 'Dish-machine Operation', 'Knife skills', 'Personal Finance', 'Teamwork']),
 		}
-		this.props.setNavBarVisibility(true)
 	}
 	_renderRow(rowData, sectionID, rowID) {
 		return (
@@ -29,6 +28,9 @@ export default class ClassList extends Component {
 				</Image>
 			</TouchableOpacity>
 		)
+	}
+	componentDidMount() {
+		this.props.setNavBarVisibility(true)
 	}
 	render() {
 		return (
