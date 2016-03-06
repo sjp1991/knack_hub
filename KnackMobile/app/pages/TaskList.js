@@ -9,16 +9,36 @@ import React, {
 	Image
 } from 'react-native'
 
+let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
+
 export default class TaskList extends Component {
 	constructor(props) {
 		super(props)
-		let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
 		this.state = {
-			dataSource: ds.cloneWithRows(['Waiter', 'Driver', 'Chef', 'Dog-walker', 'Cahsier', 'Make-up', 'Task', 'Task', 'Task', 'Task', 'Task', 'Task', 'Task', 'Task']),
+			// dataSource: ds.cloneWithRows(['Waiter', 'Driver', 'Chef', 'Dog-walker', 'Cahsier', 'Make-up', 'Task', 'Task', 'Task', 'Task', 'Task', 'Task', 'Task', 'Task']),
+			tasks: ds.cloneWithRows([]),
 		}
 	}
 	componentDidMount(){
+		this.props.ddpClient.connect((err, wasReconnect) => {
+      if (err) {
+      } else {
+        this.observeTasks.bind(this)()
+      }
+    })
 		this.props.setNavBarVisibility(true)
+	}
+	observeTasks(){
+		let observer = this.props.ddpClient.observe("tasks");
+    observer.added = (id) => {
+      this.setState({tasks: ds.cloneWithRows(Object.values(this.props.ddpClient.collections.tasks))})
+    }
+    observer.changed = (id, oldFields, clearedFields, newFields) => {
+      this.setState({tasks: ds.cloneWithRows(Object.values(this.props.ddpClient.collections.tasks))})
+    }
+    observer.removed = (id, oldValue) => {
+      this.setState({tasks: ds.cloneWithRows(Object.values(this.props.ddpClient.collections.tasks))})
+    }
 	}
 	_onTaskRowPress(rowData, rowID) {
 		this.props.navigator.push({className: 'TaskDetail', title: ''})
@@ -30,15 +50,15 @@ export default class TaskList extends Component {
 					<Text style={styles.filterText}>filter options</Text>
 				</TouchableOpacity>
 				<ListView 
-					dataSource={this.state.dataSource}
+					dataSource={this.state.tasks}
 					renderSeparator={(sectionID, rowID)=><View key={rowID} style={styles.separator}></View>}
 					renderRow={(rowData, sectionID, rowID) =>
 						<TouchableOpacity onPress={this._onTaskRowPress.bind(this)}>
 							<Image style={styles.rowImage} source={require('./../img/class/class1.jpg')}>
 								<View style={styles.rowView}>
-									<Text style={[styles.renderText, {width: 90}]}>{rowData}</Text>
-									<Text style={styles.renderText}>Noodle House</Text>
-									<Text style={styles.renderText}>500m</Text>
+									<Text style={[styles.renderText, {width: 90}]}>{rowData.title}</Text>
+									<Text style={styles.renderText}>{rowData.location}</Text>
+									<Text style={styles.renderText}>{(8 + (parseInt(rowID)*3)) + '00m'}</Text>
 								</View>
 							</Image>
 						</TouchableOpacity>

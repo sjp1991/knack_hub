@@ -190,18 +190,12 @@ export default class EarnerProfile extends Component {
 				</Image>
 				<View>
 					<View style={{height: 20, backgroundColor: 'transparent'}}></View>
-					<View style={styles.badgecontainer1}>
-						<Image style={{width: 100, height: 120, resizeMode: 'cover', margin: 5,}} source={require('./../img/badges/kitchen_math.png')}/>
-						<Image style={{width: 100, height: 120, resizeMode: 'cover', margin: 5,}} source={require('./../img/badges/professionalism.png')}/>
-						<Image style={{width: 100, height: 120, resizeMode: 'cover', margin: 5,}} source={require('./../img/badges/knife_skills.png')}/>
-					</View>
-					<View style={{height: 20, backgroundColor: 'transparent'}}></View>
-					<View style={styles.badgecontainer2}>
-						{this.renderBadge()}
-						<TouchableOpacity onPress={this._onPressAddNewBadge.bind(this)}>
-							<Image style={{width: 100, height: 120, resizeMode: 'cover', margin: 5,}} source={require('./../img/badges/add_new_badge.png')}/>
-						</TouchableOpacity>
-					</View>
+						<View style={styles.badgecontainer2}>
+							{this.renderBadge()}
+							<TouchableOpacity onPress={this._onPressAddNewBadge.bind(this)}>
+								<Image style={{width: 100, height: 120, resizeMode: 'cover', margin: 5,}} source={require('./../img/badges/add_new_badge.png')}/>
+							</TouchableOpacity>
+						</View>
 			    </View>
 
 
@@ -278,7 +272,7 @@ export default class EarnerProfile extends Component {
 		if(this.state.badges) {
 			return this.state.badges.map((badge)=>{
 				return (
-					<Image key={badge._id} style={{width: 100, height: 120, resizeMode: 'cover', margin: 5,}} source={{uri: badge.pic}}/>
+					<Image key={badge._id} style={{width: 90, height: 120, resizeMode: 'cover', margin: 5,}} source={{uri: badge.pic}}/>
 				)
 			})
 		}
@@ -379,8 +373,8 @@ var styles = StyleSheet.create({
   },
 
   badgecontainer2: {
-  	height: 170,
   	flexDirection: 'row',
+    flexWrap: 'wrap',
   	alignItems: 'flex-start',
   	width: width * 0.9
   },
