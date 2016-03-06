@@ -87,18 +87,18 @@ export default class EarnerProfile extends Component {
 		}
 	}
 	componentDidMount() {
-		_this = this
 		this.props.ddpClient.connect((err, wasReconnect) => {
       let connected = true;
       if (err) {
         connected = false
       } else {
-        this.observeBadges.bind(_this)()
-        this.observeEarners.bind(_this)()
-        this.observeUser.bind(_this)()
+        this.observeBadges.bind(this)()
+        this.observeEarners.bind(this)()
+        this.observeUser.bind(this)()
       }
       this.setState({ connected: connected })
     })
+    this.props.setNavBarVisibility(true)
 	}
 	observeBadges() {
     let observer = this.props.ddpClient.observe("badges");
@@ -220,7 +220,7 @@ export default class EarnerProfile extends Component {
 		        	<View style={styles.buttonContainer}>
 			        	<TouchableOpacity onPress={this.showTasks.bind(this)}>
 		    	    		<Text style={styles.heading}>
-		        				Jobs Applied
+		        				Tasks Applied
 		        			</Text>
 		        		</TouchableOpacity>
 		        		<View style={styles.lengthcontainer}>
