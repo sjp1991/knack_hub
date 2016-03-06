@@ -209,47 +209,7 @@ export default class Route extends Component {
 		)
 	}
 	render() {
-		if(Platform.OS === 'ios') {
-			return (
-				// Having black backgroundColor to match Android when opening drawerLayout
-				<View style={{flex: 1}}>
-					<Drawer
-						type='overlay' // overlay or static. Make sure to change tweenHandler too.
-						ref='drawer'
-						content={this.renderMenuItems.bind(this)()}
-						tapToClose={true} // Allow user to close drawer by tapping on the right side.
-						captureGestures={true} // Disable taps on the buttons when drawer is open.
-						openDrawerOffset={0.16} // 16% gap on the right side of drawer
-						panOpenMask={-3} // Disable user from opening drawer layout by swiping. This is because of bug that when used with captureGesture={true}, navigation buttons also gets disabled.
-						closedDrawerOffset={-3} // Putting -3 to hide the shadow on the left side of the window when drawer is closed.
-						styles={{
-							drawer: {shadowColor: '#000000', shadowOpacity: 0.8, shadowRadius: 3},
-							main: {paddingLeft: 0}
-						}}
-						/*tweenHandler={Drawer.tweenPresets.parallax}*/
-						tweenHandler={(ratio) => ({
-							main: { opacity:(2-ratio)/2 }
-						})}
-						onOpen={()=>this.setState({isDrawerOpen: true})}
-						onClose={()=>this.setState({isDrawerOpen: false})} >
-						{this._renderNavigationView()}
-					</Drawer>
-				</View>
-			)
-		}	else {
-			return (
-				// Drawer component is really bad in Android (third party), so we are using DrawerLayoutAndroid which is much better
-				<DrawerLayoutAndroid
-					ref='drawer'
-					drawerWidth={300}
-					drawerPosition={DrawerLayoutAndroid.positions.Left}
-					renderNavigationView={this.renderMenuItems.bind(this)}
-					onDrawerOpen={()=>this.setState({isDrawerOpen: true})}
-					onDrawerClose={()=>this.setState({isDrawerOpen: false})} >
-					{this._renderNavigationView()}
-				</DrawerLayoutAndroid>
-			)
-		}
+		return this._renderNavigationView()
 	}
 }
 
