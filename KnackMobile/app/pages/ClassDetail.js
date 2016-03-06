@@ -13,6 +13,9 @@ let {height, width} = Dimensions.get('window')
 export default class ClassDetail extends Component {
 	constructor(props) {
 		super(props)
+		this.state = {
+			isEnrolled: false,
+		}
 	}
 	componentDidMount(){
 		this.props.setNavBarVisibility(false)
@@ -32,7 +35,7 @@ export default class ClassDetail extends Component {
 				</View>
 				<ScrollView contentContainerStyle={{height: height-170, backgroundColor: 'black', alignItems: 'center'}}>
 					<View style={{width: width * 0.9, }}>
-						<Text style={styles.h1}>Basic Food Service</Text>
+						<Text style={styles.h1}>{this.props.route.rowData.name}</Text>
 					</View>
 					<View style={styles.separator} />
 					<View style={{marginTop:12, marginBottom: 12, width: width * 0.85, flexDirection: 'row', height: 130, justifyContent:'space-around', alignItems: 'center',}}>
@@ -40,13 +43,13 @@ export default class ClassDetail extends Component {
 						<Text style={{width: 140, color: 'white', fontSize: 15}}>Badge granted upon completion</Text>
 					</View>
 					<View style={styles.separator} />
-					<Text style={{ marginTop: 24, width: width * 0.75, color: 'white', fontSize: 12, lineHeight: 20}}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</Text>
-					<View style={{marginTop: 8, flexDirection: 'row', width: width * 0.75,}}><Text style={{color: 'white', fontSize: 12, width: 55, textAlign: 'right'}}>Location: </Text><Text style={{color: 'white', fontSize: 12}}>1234 East Hasting. Vancouver</Text></View>
-					<View style={{marginTop: 8, flexDirection: 'row', width: width * 0.75,}}><Text style={{color: 'white', fontSize: 12, width: 55, textAlign: 'right'}}>Time: </Text><Text style={{color: 'white', fontSize: 12}}>6:00 p.m. - 9:00 p.m. Wednesdays</Text></View>
+					<Text style={{ marginTop: 24, width: width * 0.75, color: 'white', fontSize: 12, lineHeight: 20}}>{this.props.route.rowData.description}</Text>
+					<View style={{marginTop: 8, flexDirection: 'row', width: width * 0.75,}}><Text style={{color: 'white', fontSize: 12, width: 55, textAlign: 'right'}}>Location: </Text><Text style={{color: 'white', fontSize: 12}}>{this.props.route.rowData.location}</Text></View>
+					<View style={{marginTop: 8, flexDirection: 'row', width: width * 0.75,}}><Text style={{color: 'white', fontSize: 12, width: 55, textAlign: 'right'}}>Time: </Text><Text style={{color: 'white', fontSize: 12}}>{this.props.route.rowData.when}</Text></View>
 					<View style={{marginTop: 8, flexDirection: 'row', width: width * 0.75,}}><Text style={{color: 'white', fontSize: 12, width: 55}}></Text><Text style={{color: 'white', fontSize: 12}}>2016/2/4 - 2016/3/5</Text></View>
 				</ScrollView>
-				<TouchableOpacity style={{height: 60, backgroundColor: '#41645c', justifyContent: 'center', alignItems: 'center',}}>
-					<Text style={{fontSize: 26, color: 'white', textAlign: 'center'}}>Enroll Class</Text>
+				<TouchableOpacity onPress={()=>this.setState({isEnrolled: true})} style={{height: 60, backgroundColor: '#41645c', justifyContent: 'center', alignItems: 'center',}}>
+					<Text style={{fontSize: 26, color: 'white', textAlign: 'center'}}>{this.state.isEnrolled? 'Enrolled!' : 'Enroll Class'}</Text>
 				</TouchableOpacity>
 				{/*<Text style={{fontSize: 30, alignSelf: 'center'}}>Class Title</Text>
 								<Text style={styles.h3}>Badges to be granted upon completion</Text>

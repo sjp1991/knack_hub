@@ -41,7 +41,7 @@ export default class TaskList extends Component {
     }
 	}
 	_onTaskRowPress(rowData, rowID) {
-		this.props.navigator.push({className: 'TaskDetail', title: ''})
+		this.props.navigator.push({className: 'TaskDetail', title: '', rowData})
 	}
 	render() {
 		return (
@@ -53,7 +53,7 @@ export default class TaskList extends Component {
 					dataSource={this.state.tasks}
 					renderSeparator={(sectionID, rowID)=><View key={rowID} style={styles.separator}></View>}
 					renderRow={(rowData, sectionID, rowID) =>
-						<TouchableOpacity onPress={this._onTaskRowPress.bind(this)}>
+						<TouchableOpacity onPress={this._onTaskRowPress.bind(this, rowData)}>
 							<Image style={styles.rowImage} source={require('./../img/class/class1.jpg')}>
 								<View style={styles.rowView}>
 									<Text style={[styles.renderText, {width: 90}]}>{rowData.title}</Text>
