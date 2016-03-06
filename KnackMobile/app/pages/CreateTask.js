@@ -16,11 +16,12 @@ let {height, width} = Dimensions.get('window')
 export default class CreateTask extends Component {
 	constructor(props) {
 		super(props)
-		this.state={title:'IT Support', wage: '$10.25/hour', description: 'Answer calls and assist customers with internet connectivity issues', location:'HubHub Community Centre', requiredBadgeId:''}
+		this.state={title:'Software Developer', wage:'$20/hour', description:'be a code monkey', location:'Conquer Mobile',
+requiredBadgeId:'6RsXARwjn7sC34o3W', distance:'2000 m'}
 	}
 
 	_create() {
-		this.props.ddpClient.call('createTask', [{title:this.state.title, wage:this.state.name, description:this.state.description, location:this.state.location,
+		this.props.ddpClient.call('createTask', [{title:this.state.title, wage:this.state.wage, description:this.state.description, location:this.state.location,
 			requiredBadgeId: this.state.requiredBadgeId, distance:''}])
 	}
 	componentDidMount() {
