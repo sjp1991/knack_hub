@@ -16,14 +16,20 @@ export default class ClassList extends Component {
 			dataSource: ds.cloneWithRows(['Class', 'Class', 'Class', 'Class', 'Class', 'Class', 'Class', 'Class', 'Class', 'Class', 'Class', 'Class', 'Class', 'Class']),
 		}
 	}
-
+	_renderRow(rowData, sectionID, rowID) {
+		return (
+			<TouchableOpacity>
+				<Text style={styles.renderText}>{rowData + ' ' + rowID}</Text>
+			</TouchableOpacity>
+		)
+	}
 	render() {
 		return (
 			<ScrollView style={styles.container}>
 				<ListView 
 					dataSource={this.state.dataSource}
 					renderSeparator={(sectionID, rowID)=><View key={rowID} style={styles.separator}></View>}
-					renderRow={(rowData, sectionID, rowID) => <Text style={styles.renderText}>{rowData + ' ' + rowID}</Text>} />
+					renderRow={this._renderRow.bind(this)} />
 			</ScrollView>
 		)
 	}

@@ -24,7 +24,8 @@ import AddEarnerProfile from './app/pages/AddEarnerProfile'
 import Register from './app/pages/Register'
 import Dashboard from './app/pages/Dashboard'
 import ClassList from './app/pages/ClassList'
-const Page = {Login, PageTwo, PageThree, PageFour, AddEarnerProfile, Register, Dashboard, ClassList}
+import ClassDetail from './app/pages/ClassDetail'
+const Page = {Login, PageTwo, PageThree, PageFour, AddEarnerProfile, Register, Dashboard, ClassList, ClassDetail}
 
 const Drawer = require('react-native-drawer') // Third party drawer layout that works in iOS, very funky so use with care
 
