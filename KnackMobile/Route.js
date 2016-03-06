@@ -27,7 +27,7 @@ const Page = {Login, PageTwo, PageThree, PageFour, AddEarnerProfile, Register}
 const Drawer = require('react-native-drawer') // Third party drawer layout that works in iOS, very funky so use with care
 
 let ddpClient = new DDPClient({
-  host: '172.18.147.160',
+  host: '172.18.147.31',
   // host: '192.168.1.3', // If using android use your device IP address
   port: '3000',
   // url: <your websocket url>
@@ -39,6 +39,14 @@ export default class Route extends Component {
 		this.state = {
 			isDrawerOpen: false,
 		}
+		ddpClient.connect((err, wasReconnect) => {
+      let connected = true;
+      if (err) {
+      	console.log(err)
+        connected = false
+      }
+      this.setState({ connected: connected });
+    });
 	}
 	_openDrawer() {
 		if(Platform.OS === 'ios') {

@@ -38,6 +38,7 @@ export default class Login extends Component {
 			} else {
 				console.log(result)
 				_this.setState({user: _this.props.ddpClient.collections.users[result.id]})
+				_this.props.navigator.replace({className: 'AddEarnerProfile', title: 'AddEarnerProfile'})
 			}
 		})
 	}
