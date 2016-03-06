@@ -16,7 +16,7 @@ let {height, width} = Dimensions.get('window')
 export default class CreateBadge extends Component {
 	constructor(props) {
 		super(props)
-		this.state={title: '', description: '', category:'',}
+		this.state={title: '', description: '', category:'', pic:''}
 	}
 
 	_create() {

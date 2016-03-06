@@ -19,7 +19,6 @@ import DDPClient from 'ddp-client';
 import Login from './app/pages/Login'
 import PageTwo from './app/pages/PageTwo'
 import PageThree from './app/pages/PageThree'
-import PageFour from './app/pages/PageFour'
 import AddEarnerProfile from './app/pages/AddEarnerProfile'
 import EarnerProfile from './app/pages/EarnerProfile'
 import Register from './app/pages/Register'
@@ -32,7 +31,7 @@ import EarnMoreBadge from './app/pages/EarnMoreBadge'
 import CreateBadge from './app/pages/CreateBadge'
 import CreateClass from './app/pages/CreateClass'
 import CreateTask from './app/pages/CreateTask'
-const Page = {Login, PageTwo, PageThree, PageFour, AddEarnerProfile, EarnerProfile, Register, Dashboard, ClassList, ClassDetail, TaskList, TaskDetail, EarnMoreBadge, CreateBadge, CreateClass, CreateTask}
+const Page = {Login, PageTwo, PageThree, AddEarnerProfile, EarnerProfile, Register, Dashboard, ClassList, ClassDetail, TaskList, TaskDetail, EarnMoreBadge, CreateBadge, CreateClass, CreateTask}
 
 let ddpClient = new DDPClient({
   host: '172.18.147.31',

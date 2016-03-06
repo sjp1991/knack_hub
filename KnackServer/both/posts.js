@@ -43,6 +43,11 @@ Meteor.methods({
   	Earners.update({userId}, {$addToSet:{appliedClasses: classId}})
   },
 
+  taskApply(taskId){
+    let userId = Meteor.userId()
+    Earners.update({userId}, {$addToSet:{appliedTasks: taskId}})
+  },
+
   earnBadge(badgeId){
   	let userId = Meteor.userId()
   	Earners.update({userId},{$addToSet:{earnedBadges:badgeId}})
@@ -56,7 +61,7 @@ Meteor.methods({
 
   createTask(taskInfo){
   	let userId = Meteor.userId()
-  	let {title, wage, location, description, requiredBadgeId} = taskInfo
+  	let {title, wage, location, description, requiredBadgeId, distance} = taskInfo
   	Tasks.insert({title, wage, location, description, requiredBadgeId, userId})
 
   },
@@ -69,8 +74,8 @@ Meteor.methods({
 
   createClass(classInfo){
   	let userId = Meteor.userId()
-  	let {name, description, location, size, signedUpNum, badgeId, when} = classInfo
-  	Classes.insert({name, description, location, size, signedUpNum, badgeId, when, userId})
+  	let {name, description, location, size, signedUpNum, badgeId, when, bg} = classInfo
+  	Classes.insert({name, description, location, size, signedUpNum, badgeId, when, bg, userId})
   },
 
   createBadge(badgeInfo){
