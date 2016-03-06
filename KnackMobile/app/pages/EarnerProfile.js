@@ -5,6 +5,7 @@ import React, {
 	Dimensions,
 	StyleSheet,
 	Image,
+	ListView,
 	TouchableOpacity,
 } from 'react-native'
 
@@ -24,13 +25,27 @@ var earner = {
 	}],
 	appliedTasks: [{
 		taskId: "task1",
+		taskName: "Testing task 1",
 		appliedDate: "Jan. 1st 2016",
 		status: "completed",
+	},
+	{
+		taskId: "task2",
+		taskName: "Testing task 2",
+		appliedDate: "Mar. 1st 2016",
+		status: "Applied",
 	}],
 	appliedClasses: [{
 		classId: "class1",
+		className: "Mock Class 1",
 		appliedDate: "Jan. 1st 2016",
 		status: "not completed",
+	},
+	{
+		classId: "class2",
+		className: "Mock Class 2",
+		appliedDate: "Feb. 1st 2016",
+		status: "Enrolled",
 	}]
 }
 
@@ -38,7 +53,19 @@ var earner = {
 export default class EarnerProfile extends Component {
 	constructor(props) {
 		super(props)
+		var appliedTasks = new ListView.DataSource({
+      		rowHasChanged: (r1, r2) => r1 != r2
+    	})
+
+		var appliedClasses = new ListView.DataSource({
+      		rowHasChanged: (r1, r2) => r1 != r2
+    	})
+
 		this.state = {
+			appliedTasks: appliedTasks.cloneWithRows(earner.appliedTasks),
+			appliedClasses: appliedClasses.cloneWithRows(earner.appliedClasses),
+			showTasks: false,
+			showClasses: false,
 			userId: undefined,
 			earner: earner,
 		}
@@ -100,13 +127,19 @@ export default class EarnerProfile extends Component {
 	        		</View>
 	        	</View>
 
-	        	<TouchableOpacity>
+	        	<TouchableOpacity onPress={this.showTasks.bind(this)}>
 	        	 	<Text style={styles.attr}>
 	        			<Text style={styles.heading}>
 	        				Jobs Applied
 	        			</Text>
 	        		</Text>
 	        	</TouchableOpacity>
+
+	        	<ListView
+        			dataSource={this.state.appliedTasks}
+        			renderRow={this.renderTasks}
+        			style={styles.listView}
+      			/>
 
 	        	<TouchableOpacity>
 	        	 	<Text style={styles.attr}>
@@ -117,6 +150,20 @@ export default class EarnerProfile extends Component {
 	        	</TouchableOpacity>
 			</View>
 		)
+	}
+
+	showTasks() {
+		if(this.state.showTasks ===)
+	}
+
+	renderTasks(task) {
+	    return (
+	    	<View style={styles.container}>
+		    	<View style={styles.rightContainer}>
+		    		<Text style={styles.title}>{task.taskName}</Text>
+		    	</View>
+		    </View>
+		);
 	}
 }
 
@@ -147,6 +194,8 @@ var styles = StyleSheet.create({
 
   heading: {
   	fontSize: 20,
+    marginBottom: 8,
+    textAlign: 'center',
   	fontWeight: 'bold',
   },
 
@@ -159,6 +208,15 @@ var styles = StyleSheet.create({
   	padding: 1,
   	marginLeft: 4,
   	width: width * 0.8,
+  },
+
+  listView: {
+    paddingTop: 20,
+    backgroundColor: '#F5FCFF',
+  },
+
+  rightContainer: {
+    flex: 1,
   },
 });
 
