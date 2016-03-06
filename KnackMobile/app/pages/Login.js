@@ -4,7 +4,6 @@ import React, {
 	Text,
 	StyleSheet,
 	TextInput,
-	JSONObject,
 	TouchableOpacity,
 	Dimensions,
 } from 'react-native'
