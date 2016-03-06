@@ -16,12 +16,13 @@ let {height, width} = Dimensions.get('window')
 export default class CreateClass extends Component {
 	constructor(props) {
 		super(props)
-		this.state={name: 'Computer Literacy', description: 'Learn how to create PowerPoint presentatons', location:'Hootsuite', size:'25', signedUpNum:'0', badgeId:'82BLmkLEFwJiDYCob', when:'March 29, 9am to 5pm', bg:''}
+		this.state={name: 'PowerPoint', description: 'Learn how to create PowerPoint presentatons', location:'Hootsuite', 
+size:'25', signedUpNum:'0', badgeId:'6RsXARwjn7sC34o3W', when:'June 6, 9am to 5pm', bg:'http://s15.postimg.org/e147rvpkb/image.jpg'}
 	}
 
 	_create() {
 		this.props.ddpClient.call('createClass', [{name:this.state.name, description:this.state.description, location:this.state.location,
-			size:this.state.size, signedUpNum:this.state.signedUpNum, badgeId:this.state.badgeId, when:this.state.when}])
+			size:this.state.size, signedUpNum:this.state.signedUpNum, badgeId:this.state.badgeId, when:this.state.when, bg:this.state.bg}])
 	}
 	componentDidMount() {
 		this.props.setNavBarVisibility(true)
