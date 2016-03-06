@@ -46,6 +46,7 @@ export default class Route extends Component {
 		super(props)
 		this.state = {
 			isDrawerOpen: false,
+			hideNavBar: true,
 		}
 		ddpClient.connect((err, wasReconnect) => {
       let connected = true;
@@ -53,8 +54,8 @@ export default class Route extends Component {
       	console.log(err)
         connected = false
       }
-      this.setState({ connected: connected });
-    });
+      this.setState({ connected: connected })
+    })
 	}
 	_openDrawer() {
 		if(Platform.OS === 'ios') {
@@ -83,7 +84,7 @@ export default class Route extends Component {
 			return React.createElement(Page[route.className], {route, navigator, ddpClient})
 		} else {
 			route.title = ''
-			return React.createElement(Page['CreateClass'], {route, navigator, ddpClient})
+			return React.createElement(Page['TaskDetail'], {route, navigator, ddpClient})
 		}
 	}
 	drawerMenuItemPressed(alertPopupMessage) {
@@ -188,7 +189,7 @@ export default class Route extends Component {
 				renderScene={this.renderPage}
 				navigationBar={
 					<Navigator.NavigationBar
-						style={styles.navigationBar}
+						style={this.state.hideNavBar ? {height: 0} : styles.navigationBar}
 						routeMapper={NavigationBarRouteMapper} />
 				}
 			/>

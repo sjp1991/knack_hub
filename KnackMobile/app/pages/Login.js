@@ -6,6 +6,7 @@ import React, {
 	TextInput,
 	TouchableOpacity,
 	Dimensions,
+	Image,
 } from 'react-native'
 
 // export default allows class to be referenced using import <className> from '<path>'
@@ -43,37 +44,48 @@ export default class Login extends Component {
 	}
 	render() {
 		return(
-			<View style={styles.container}>
-				<View>
-					<TextInput style={styles.logininput} 
-						ref='email'
-						placeholder="Enter email"
-  					placeholderTextColor="gray"
-						onChangeText={(email) => this.setState({email})}
-    				value={this.state.email}/>
-    			</View>
-
-    			<View>
-					<TextInput secureTextEntry={true}
-						ref= "password"
-						placeholder="Enter password"
-  					placeholderTextColor="gray"
-						style={styles.logininput}
-						onChangeText={(password)=>this.setState({password})}
-						value={this.state.password}/>
+			<Image source={require('./../img/login/login-bg.jpg')} style={styles.backgroundImg}>
+				<View style={styles.logoContainer}>
+					<Image source={require('./../img/login/knack-logo-new.png')} style={styles.logo} />
 				</View>
+				<View style={styles.loginContainer}>
+					<View>
+						<View style={styles.loginInputContainer}>
+							<TextInput style={styles.loginInput} 
+								placeholder="Email"
+		  					placeholderTextColor="white"
+								onChangeText={(email) => this.setState({email})}
+		    				value={this.state.email}/>
+		    			</View>
+	    			</View>
 
-				<View style={styles.buttonContainer}>
-					<TouchableOpacity style={styles.button}
-						onPress={this._pushPage.bind(this, 'Register', 'Register Title')}>
-						<Text>Register</Text>
-					</TouchableOpacity>
-					<TouchableOpacity
-						onPress={this._login.bind(this)}>
-						<Text>Log In</Text>
-					</TouchableOpacity>
+	    			<View style={styles.loginInputContainer}>
+							<TextInput secureTextEntry={true}
+								placeholder="Password"
+		  					placeholderTextColor="white"
+								style={styles.loginInput}
+								onChangeText={(password)=>this.setState({password})}
+								value={this.state.password}/>
+						</View>
+						<TouchableOpacity style={[styles.loginInputContainer, {backgroundColor: '#41645c'}]}
+							onPress={this._login.bind(this)}>
+							<View style={styles.loginButtonInnerView}>
+								<Text style={styles.loginButtonText}>LogIn</Text>
+							</View>
+						</TouchableOpacity>
 				</View>
-			</View>
+				<View style={{width: width, height: 40, alignSelf: 'flex-end',}}>
+					<View style={styles.bottomButtonsRowContainer}>
+						<TouchableOpacity
+							onPress={this._pushPage.bind(this, 'Register', 'Register Title')}>
+							<Text style={styles.bottomText}>Register an account</Text>
+						</TouchableOpacity>
+						<TouchableOpacity>
+							<Text style={styles.bottomText}>Forgot password?</Text>
+						</TouchableOpacity>
+					</View>
+				</View>
+			</Image>
 		)
 	}
 }
@@ -81,29 +93,76 @@ export default class Login extends Component {
 var width = Dimensions.get('window').width; 
 
 var styles = StyleSheet.create({
-  container: {
+	backgroundImg: {
+    flex: 1,
+    // remove width and height to override fixed static size
+    width: null,
+    height: null,
+  },
+  loginContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'gray',
+    // backgroundColor: 'blue',
   },
-
-  logininput: {
-    fontSize: 14,
-    textAlign: 'center',
-    backgroundColor: 'white',
-    margin: 10,
+  logoContainer: {
+  	flex: 1,
+  	justifyContent: 'flex-end',
+    alignItems: 'center',
+    marginBottom: 36,
+    // backgroundColor: 'red',
+  },
+	logo: {
+		height: 130,
+		width: 130,
+		resizeMode: 'cover',
+		// backgroundColor: 'red',
+	},
+	loginInputContainer: {
+		backgroundColor: 'rgba(255,255,255,0.4)',
+    borderRadius: 20,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 16,
     width: width * 0.8,
-    height: 40
+	},
+  loginInput: {
+    fontSize: 20,
+    textAlign: 'center',
+    backgroundColor: 'rgba(0,0,0,0)',
+    // backgroundColor: 'red',
+    color: 'white',
+    margin: 10,
+    
+    height: 50,
   },
+  loginButtonInnerView: {
 
+  	height: 50,
+  	justifyContent: 'center',
+  },
+  loginButtonText: {
+  	fontSize: 20,
+    textAlign: 'center',
+    color: 'white',
+  },
   buttonContainer: {
   	flexDirection:'row'
   },
-  
-  button: {
-  	paddingRight: 40
-  }
+  bottomText: {
+  	color: 'rgba(255,255,255,0.8)',
+  	alignSelf: 'center',
+  	fontSize: 14,
+  	marginLeft: 12,
+  	marginRight: 12,
+  },
+  bottomButtonsRowContainer: {
+  	flex: 1,
+  	justifyContent: 'space-between',
+  	flexDirection: 'row',
+  	alignItems: 'center',
+  },
 });
 
 // This line allows class to be referenced using const <className> = require('<path>')
