@@ -14,9 +14,9 @@ export default class Register extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			email: "",
-			password: "",
-			passwordConfirm: "",
+			email: "eric@example.com",
+			password: "123",
+			passwordConfirm: "123",
 		}
 	}
 
@@ -26,6 +26,14 @@ export default class Register extends Component {
 	_pushPage(className, title) {
 		this.props.navigator.push({className, title})
 	}
+
+	_register() {
+		const email = this.state.email
+		const password = this.state.password
+    this.props.ddpClient.call('register', [email, password]);
+    this._popPage()
+	}
+
 	render() {
 		return(
 			<View style={styles.container}>
@@ -35,8 +43,8 @@ export default class Register extends Component {
 					ref= "email"
 					placeholder="Enter email"
   					placeholderTextColor="gray"
-					onChangeText={(username) => this.setState({username})}
-    				value={this.state.username}/>
+					onChangeText={(email) => this.setState({email})}
+    				value={this.state.email}/>
 
 				<TextInput secureTextEntry={true}
 					ref= "password"
@@ -56,11 +64,11 @@ export default class Register extends Component {
 
 				<View style={styles.buttonContainer}>
 					<TouchableOpacity style = {styles.button}
-						onPress={this._pushPage.bind(this, 'Login', 'Login')}>
+						onPress={this._popPage.bind(this)}>
 						<Text>Cancel</Text>
 					</TouchableOpacity>
 					
-					<TouchableOpacity onPress={this._pushPage.bind(this, 'PageFour', 'PageFour Title')}>
+					<TouchableOpacity onPress={this._register.bind(this)}>
 						<Text>Continue</Text>
 					</TouchableOpacity>
 				</View>

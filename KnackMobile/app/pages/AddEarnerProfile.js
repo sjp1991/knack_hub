@@ -14,12 +14,12 @@ export default class AddEarnerProfile extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			firstName: undefined,
-			lastName: undefined,
-			description: undefined,
-			email: undefined,
-			cell: undefined,
-			address: undefined,
+			firstName: 'Lisa',
+			lastName: 'Wong',
+			description: 'Software Developer',
+			email: 'lisa@example.com',
+			cell: '7789173232',
+			address: '123 Bear Street',
 		}
 	}
 	_popPage(){
