@@ -19,7 +19,9 @@ export default class PageTwo extends Component {
 		super(props)
 		this.state = {
       connected: false,
-      posts: {}
+      posts: {},
+      users: {},
+      userId: undefined,
     }
 		ddpClient.connect((err, wasReconnect) => {
       let connected = true;
@@ -41,11 +43,17 @@ export default class PageTwo extends Component {
 		this.props.navigator.push({className, title})
 	}
 	_login(email, password) {
+		_this = this
 		ddpClient.call("login", [
 		  { user : { email }, password }
-		], function (err, result) {
-			console.log(err)
-			console.log(result)
+		], (err, result)=> {
+			if(err) {
+				console.log(err)
+			} else {
+				console.log(result)
+				_this.setState({user: ddpClient.collections.users[result.id]})
+				// _this.setState({userId: result.id})
+			}
 		});
 	}
 	_register(email, password) {
@@ -53,6 +61,8 @@ export default class PageTwo extends Component {
 	}
 	_handleIncrement() {
     ddpClient.call('addPost');
+    console.log(this.state.user)
+    // console.log(this.state.users[this.state.userId].emails[0].address)
   }
 	makeSubscription() {
     ddpClient.subscribe("posts", [], () => {
@@ -71,14 +81,15 @@ export default class PageTwo extends Component {
       this.setState({posts: ddpClient.collections.posts})
     }
   }
-  // _observeUser() {
-  // 	let observer = 
-  // }
 	render() {
 		return(
 			<View style={{flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'grey',}}>
 				<Text>
-					PageTwo
+					{this.state.user ? 
+						this.state.user.emails[0].address
+						:
+						null
+					}
 				</Text>
 				<TouchableOpacity onPress={this._handleIncrement.bind(this)}><Text>Increment Posts</Text></TouchableOpacity>
 
