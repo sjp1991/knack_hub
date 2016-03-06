@@ -27,7 +27,7 @@ Meteor.methods({
   		email,
   		password,
   	})
-  }
+  },
 
   createEarner(earnerInfo){
   	let userId = Meteor.userId()

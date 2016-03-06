@@ -17,12 +17,19 @@ import React, {
 import DDPClient from 'ddp-client';
 
 import Login from './app/pages/Login'
+import PageTwo from './app/pages/PageTwo'
 import PageThree from './app/pages/PageThree'
 import PageFour from './app/pages/PageFour'
 import AddEarnerProfile from './app/pages/AddEarnerProfile'
-const Page = {Login, PageThree, PageFour, AddEarnerProfile}
+const Page = {Login, PageTwo, PageThree, PageFour, AddEarnerProfile}
 
 const Drawer = require('react-native-drawer') // Third party drawer layout that works in iOS, very funky so use with care
+
+let ddpClient = new DDPClient({
+  // host: '192.168.1.3', // If using android use your device IP address
+  port: '3000',
+  // url: <your websocket url>
+})
 
 export default class Route extends Component {
 	constructor(props) {
@@ -30,12 +37,6 @@ export default class Route extends Component {
 		this.state = {
 			isDrawerOpen: false,
 		}
-		this.ddpClient = new DDPClient({
-		  host: '172.18.147.31',
-		  // host: '192.168.1.3', // If using android use your device IP address
-		  port: '3000',
-		  // url: <your websocket url>
-		});
 	}
 	_openDrawer() {
 		if(Platform.OS === 'ios') {
@@ -61,10 +62,10 @@ export default class Route extends Component {
 	// This gets called when you add new page into navigator stack (ie. navigator.push or navigator.replace)
 	renderPage(route, navigator) {
 		if(route.className) {
-			return React.createElement(Page[route.className], {route, navigator})
+			return React.createElement(Page[route.className], {route, navigator, ddpClient})
 		} else {
 			route.title = ''
-			return React.createElement(Page['Login'], {route, navigator})
+			return React.createElement(Page['PageTwo'], {route, navigator, ddpClient})
 		}
 	}
 	drawerMenuItemPressed(alertPopupMessage) {
