@@ -88,7 +88,7 @@ var styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop:60,
-    backgroundColor:'black'
+    backgroundColor:'#373536'
   },
   classinput: {
     fontSize: 20,
