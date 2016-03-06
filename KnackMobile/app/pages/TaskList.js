@@ -6,6 +6,7 @@ import React, {
 	TouchableOpacity,
 	ScrollView,
 	ListView,
+	Image
 } from 'react-native'
 
 export default class TaskList extends Component {
@@ -13,19 +14,29 @@ export default class TaskList extends Component {
 		super(props)
 		let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
 		this.state = {
-			dataSource: ds.cloneWithRows(['Task', 'Task', 'Task', 'Task', 'Task', 'Task', 'Task', 'Task', 'Task', 'Task', 'Task', 'Task', 'Task', 'Task']),
+			dataSource: ds.cloneWithRows(['Waiter', 'Driver', 'Chef', 'Dog-walker', 'Cahsier', 'Make-up', 'Task', 'Task', 'Task', 'Task', 'Task', 'Task', 'Task', 'Task']),
 		}
+		this.props.setNavBarVisibility(true)
 	}
 
 	render() {
 		return (
 			<ScrollView style={styles.container}>
+				<TouchableOpacity style={styles.filter}>
+					<Text style={styles.filterText}>filter options</Text>
+				</TouchableOpacity>
 				<ListView 
 					dataSource={this.state.dataSource}
 					renderSeparator={(sectionID, rowID)=><View key={rowID} style={styles.separator}></View>}
 					renderRow={(rowData, sectionID, rowID) =>
 						<TouchableOpacity>
-							<Text style={styles.renderText}>{rowData + ' ' + rowID + ' - Company ' + rowID}</Text>
+						<Image style={styles.rowImage} source={require('./../img/class/class1.jpg')}>
+						<View style={styles.rowView}>
+							<Text style={styles.renderText}>{rowData}</Text>
+							<Text style={styles.renderText}>Noodle House</Text>
+							<Text style={styles.renderText}>500m</Text>
+						</View>
+						</Image>
 						</TouchableOpacity>
 					} />
 			</ScrollView>
@@ -43,8 +54,35 @@ const styles = StyleSheet.create({
 		backgroundColor: 'black'
 	},
 	renderText: {
-		fontSize: 30,
+		fontSize: 20,
 		marginLeft: 8,
+		color:'white'
+	},
+	rowImage: {
+		flex:1,
+		width: null,
+		height: null,
+	},
+	rowView:{
+		height:85,
+		flexDirection: 'row',
+		justifyContent:'space-between',
+		alignItems:'center',
+		paddingLeft:10,
+		paddingRight:10,
+		backgroundColor: 'rgba(0,0,0,0.7)',
+	},
+	filter:{
+		height:60,
+		backgroundColor:'#41645c', 
+		justifyContent:'center',
+		paddingLeft:10
+	},
+
+	filterText:{
+		fontSize: 20,
+		marginLeft: 10,
+		color:'white'
 	}
 })
 
