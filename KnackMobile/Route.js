@@ -24,6 +24,7 @@ import AddEarnerProfile from './app/pages/AddEarnerProfile'
 import Register from './app/pages/Register'
 import Dashboard from './app/pages/Dashboard'
 import ClassList from './app/pages/ClassList'
+import ClassDetail from './app/pages/ClassDetail'
 import TaskList from './app/pages/TaskList'
 import EarnMoreBadge from './app/pages/EarnMoreBadge'
 const Page = {Login, PageTwo, PageThree, PageFour, AddEarnerProfile, Register, Dashboard, ClassList, ClassDetail, TaskList, EarnMoreBadge}
