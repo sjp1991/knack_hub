@@ -16,8 +16,8 @@ var earner = {
 	lastName: "Park",
 	email: "jasonpark@example.com",
 	pic: "",
-	description: "I make everyone amateurs. So pro, Very skills, Much wow",
-	phone: "604-555-555",
+	description: "I have an iOS app I am making with react-native. The Game class contains a ListView component. I set the state in the constructor and include a dataSource. I have a hardcoded array of data for right now that I store in a different state property (this.state.ds). Then in the componentDidMount I use the cloneWithRows method to clone my this.state.ds as my dataSource for the view. That is pretty standard as far as ListViews go and is working well.",
+	phone: "604-555-5555",
 	earnedBadges: [{
 		badgeId: "badge1",
 		badgeName: "Basic Food Service",
@@ -132,10 +132,16 @@ export default class EarnerProfile extends Component {
 						<Text style={styles.name}>
 							{this.state.earner.firstName} {this.state.earner.lastName}
 						</Text>
+						<Text style={styles.contact}> {this.state.earner.phone} </Text>
+						<Text style={styles.contact}> {this.state.earner.email} </Text>
 					</View>
 				</View>
 				<View style={styles.badgecontainer}>
 					{this.renderBadge(this.state.earner.earnedBadges)}
+					<Image
+	        			style={styles.moreBadge}
+	        			source={{uri: 'http://facebook.github.io/react/img/logo_og.png'}}
+	        		/>
 				</View>
 
         		<View style={styles.attr}>
@@ -225,9 +231,9 @@ export default class EarnerProfile extends Component {
 		if(!badges) {
 			return
 		}
+
 		return badges.map((badge)=>{
 			return (
-				<View style={styles.badgeAlign}>
 				<Image
 	       			style={styles.logo}
 	        		source={{uri: 'http://facebook.github.io/react/img/logo_og.png'}}
@@ -236,8 +242,8 @@ export default class EarnerProfile extends Component {
 						<Text style={styles.badgename}>{badge.badgeName}</Text>
 						<Text style={styles.badgecompany}>{badge.badgeCompany}</Text>
 					</View>
+				
 				</Image>
-				</View>
 			)
 		})
 	}
@@ -306,6 +312,8 @@ var styles = StyleSheet.create({
 
   badgecontainer: {
   	height: 200,
+  	flexDirection: 'row',
+  	alignItems: 'center',
   },
 
   badgeinfo: {
@@ -317,15 +325,12 @@ var styles = StyleSheet.create({
   	fontSize: 16,
   	color: 'white',
   	fontWeight: 'bold',
+  	justifyContent: 'flex-start',
   },
 
   badgecompany: {
   	fontSize: 14,
   	color: 'white',
-  },
-
-  badgeAlign: {
- 	flexDirection:'row'
   },
 
   scrollcontainer: {
@@ -357,12 +362,25 @@ var styles = StyleSheet.create({
   	color: 'white',
   },
 
+  contact: {
+  	fontSize: 16,
+  	color: 'white',
+  },
+
   logo: {
-    height: 110,
-    borderRadius: 50,
-    width: 110,
+    height: 150,
+    borderRadius: 100,
+    width: 150,
     borderWidth: 5,
     borderColor: '#373536',
+  },
+
+  moreBadge: {
+    height: 20,
+    borderRadius: 50,
+    width: 20,
+    borderWidth: 70,
+    borderColor: '#668f7f',
   },
 
   attr: {
@@ -383,7 +401,7 @@ var styles = StyleSheet.create({
   },
 
   descriptionslot: {
-  	height: 80,
+  	height: 160,
   	justifyContent: 'center',
   },
 
@@ -400,7 +418,7 @@ var styles = StyleSheet.create({
   	alignItems: 'center',
   	justifyContent: 'space-between',
   	width: width * 0.8,
-  	height: 80,
+  	height: 60,
   },
 
   length: {
