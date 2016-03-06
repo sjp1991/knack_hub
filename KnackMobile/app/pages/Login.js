@@ -14,8 +14,8 @@ export default class Login extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			email: "",
-			password: "abcd",
+			email: 'eric@example.com',
+			password: '123'
 		}
 	}
 	_popPage(){
@@ -24,23 +24,40 @@ export default class Login extends Component {
 	_pushPage(className, title) {
 		this.props.navigator.push({className, title})
 	}
+	_login() {
+		const email = this.state.email
+		const password = this.state.password
+		_this = this
+		// alert(password)
+		console.log(this.props.ddpClient)
+		this.props.ddpClient.call('login', [
+		  { user : { email }, password }
+		], (err, result)=> {
+			if(err) {
+				console.log(err)
+			} else {
+				console.log(result)
+				_this.setState({user: _this.props.ddpClient.collections.users[result.id]})
+			}
+		})
+	}
 	render() {
 		return(
 			<View style={styles.container}>
 				<View>
 					<TextInput style={styles.logininput} 
-						ref= "email"
+						ref='email'
 						placeholder="Enter email"
-	  					placeholderTextColor="gray"
+  					placeholderTextColor="gray"
 						onChangeText={(email) => this.setState({email})}
-	    				value={this.state.email}/>
+    				value={this.state.email}/>
     			</View>
 
     			<View>
 					<TextInput secureTextEntry={true}
 						ref= "password"
 						placeholder="Enter password"
-	  					placeholderTextColor="gray"
+  					placeholderTextColor="gray"
 						style={styles.logininput}
 						onChangeText={(password)=>this.setState({password})}
 						value={this.state.password}/>
@@ -51,8 +68,8 @@ export default class Login extends Component {
 						onPress={this._pushPage.bind(this, 'PageFour', 'PageFour Title')}>
 						<Text>Register</Text>
 					</TouchableOpacity>
-					<TouchableOpacity 
-						onPress={this._pushPage.bind(this, 'PageFour', 'PageFour Title')}>
+					<TouchableOpacity
+						onPress={this._login.bind(this)}>
 						<Text>Log In</Text>
 					</TouchableOpacity>
 				</View>
