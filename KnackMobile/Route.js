@@ -26,13 +26,14 @@ import Dashboard from './app/pages/Dashboard'
 import ClassList from './app/pages/ClassList'
 import ClassDetail from './app/pages/ClassDetail'
 import TaskList from './app/pages/TaskList'
+import TaskDetail from './app/pages/TaskDetail'
 import EarnMoreBadge from './app/pages/EarnMoreBadge'
-const Page = {Login, PageTwo, PageThree, PageFour, AddEarnerProfile, Register, Dashboard, ClassList, ClassDetail, TaskList, EarnMoreBadge}
+const Page = {Login, PageTwo, PageThree, PageFour, AddEarnerProfile, Register, Dashboard, ClassList, ClassDetail, TaskList, TaskDetail, EarnMoreBadge}
 
 const Drawer = require('react-native-drawer') // Third party drawer layout that works in iOS, very funky so use with care
 
 let ddpClient = new DDPClient({
-  host: '172.18.147.31',
+  host: '172.18.146.36',
   // host: '192.168.1.3', // If using android use your device IP address
   port: '3000',
   // url: <your websocket url>
@@ -80,7 +81,7 @@ export default class Route extends Component {
 			return React.createElement(Page[route.className], {route, navigator, ddpClient})
 		} else {
 			route.title = ''
-			return React.createElement(Page['Dashboard'], {route, navigator, ddpClient})
+			return React.createElement(Page['TaskDetail'], {route, navigator, ddpClient})
 		}
 	}
 	drawerMenuItemPressed(alertPopupMessage) {
