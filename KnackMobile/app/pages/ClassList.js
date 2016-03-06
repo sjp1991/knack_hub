@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
 	container: {
 		backgroundColor:'#41645c',
 		flex: 1,
-		marginTop: 60,
+		marginTop: 56,
 	},
 	separator: {
 		height: 2,
