@@ -77,7 +77,7 @@ export default class Login extends Component {
 				<View style={{width: width, height: 40, alignSelf: 'flex-end',}}>
 					<View style={styles.bottomButtonsRowContainer}>
 						<TouchableOpacity
-							onPress={this._pushPage.bind(this, 'Register', 'Register Title')}>
+							onPress={this._pushPage.bind(this, 'Register', 'Register')}>
 							<Text style={styles.bottomText}>Register an account</Text>
 						</TouchableOpacity>
 						<TouchableOpacity>
