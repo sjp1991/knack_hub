@@ -60,6 +60,10 @@ var earner = {
 	}]
 }
 
+let ds = new ListView.DataSource({
+	rowHasChanged: (r1, r2) => r1 != r2
+})
+
 // export default allows class to be referenced using import <className> from '<path>'
 export default class EarnerProfile extends Component {
 	constructor(props) {
@@ -111,13 +115,28 @@ export default class EarnerProfile extends Component {
 	observeEarners() {
 		let observer = this.props.ddpClient.observe("earners");
 		observer.added = (id) => {
-			this.setState({earners: Object.values(this.props.ddpClient.collections.earners)})
+			let earnersArr = Object.values(this.props.ddpClient.collections.earners)
+			this.setState({
+				earners: earnersArr,
+				appliedTasks: ds.cloneWithRows(earnersArr[0].appliedTasks),
+				appliedClasses: ds.cloneWithRows(earnersArr[0].appliedClasses),
+			})
 		}
 		observer.changed = (id, oldFields, clearedFields, newFields) => {
-			this.setState({earners: Object.values(this.props.ddpClient.collections.earners)})
+			let earnersArr = Object.values(this.props.ddpClient.collections.earners)
+			this.setState({
+				earners: earnersArr,
+				appliedTasks: ds.cloneWithRows(earnersArr[0].appliedTasks),
+				appliedClasses: ds.cloneWithRows(earnersArr[0].appliedClasses),
+			})
 		}
 		observer.removed = (id, oldValue) => {
-			this.setState({earners: Object.values(this.props.ddpClient.collections.earners)})
+			let earnersArr = Object.values(this.props.ddpClient.collections.earners)
+			this.setState({
+				earners: earnersArr,
+				appliedTasks: ds.cloneWithRows(earnersArr[0].appliedTasks),
+				appliedClasses: ds.cloneWithRows(earnersArr[0].appliedClasses),
+			})
 		}
 	}
 	observeUser() {
@@ -160,7 +179,7 @@ export default class EarnerProfile extends Component {
 					</View>
 					<View>
 						<View style={styles.contactcontainer}>
-							<Text style={styles.contact}> {this.state.earner.phone} </Text>
+							<Text style={styles.contact}> {this.state.earners ? this.state.earners[0].phone : null} </Text>
 							<Text style={styles.contact}> 1234 56th St. Van </Text>
 						</View>
 						<View style={styles.contactcontainer}>
@@ -190,7 +209,8 @@ export default class EarnerProfile extends Component {
         			<View style={styles.descriptionslot}>
 		        		<View style={styles.descriptioncontainer}>
 			        		<Text style={styles.description}>
-			        			{this.state.earner.description}
+			        			{this.state.earners ? this.state.earners[0].desc : null}
+			        			{/*this.state.earner.description*/}
 			        		</Text>
 		        		</View>
 	        		</View>
@@ -205,7 +225,7 @@ export default class EarnerProfile extends Component {
 		        		</TouchableOpacity>
 		        		<View style={styles.lengthcontainer}>
 			        		<Text style = {styles.length}>
-			        			{earner.appliedTasks.length}
+			        			{this.state.earners ? this.state.earners[0].appliedTasks.length : 0}
 			        		</Text>
 		        		</View>
 		        	</View>
@@ -213,44 +233,40 @@ export default class EarnerProfile extends Component {
 	        	
 				{
 					this.state.showTasks ?
-					<View style={{height:200}}>
 					<ScrollView style={styles.scrollcontainer}>
 						<ListView 
 							dataSource={this.state.appliedTasks}
 							renderRow={this.renderTasks}
 							style={styles.listview} />
 					</ScrollView>
-					</View>
 					:
 					null
 				}
 
-				<View style={styles.attr}>
-					<View style={styles.buttonContainer}>
-		        		<TouchableOpacity onPress={this.showClasses.bind(this)}>
-		        			<Text style={styles.heading}>
-		        					Course Registered
-		        			</Text>
-		        		</TouchableOpacity>
-		        		<View style={styles.lengthcontainer}>
-			        		<Text style = {styles.length}>
-			        			{earner.appliedClasses.length}
-			        		</Text>
-		        		</View>
-		        	</View>
-	        	</View>
+					<View style={styles.attr}>
+						<View style={styles.buttonContainer}>
+							<TouchableOpacity onPress={this.showClasses.bind(this)}>
+								<Text style={styles.heading}>
+									Course Registered
+								</Text>
+							</TouchableOpacity>
+							<View style={styles.lengthcontainer}>
+								<Text style = {styles.length}>
+									{this.state.earners ? this.state.earners[0].appliedClasses.length : 0}
+								</Text>
+							</View>
+						</View>
+					</View>
 
 	        	{
 					this.state.showClasses ?
 					
-					<View style={{height:250}}>
 						<ScrollView style={styles.scrollcontainer}>
 							<ListView 
 								dataSource={this.state.appliedClasses}
 								renderRow={this.renderClasses}
 								style={styles.listview} />
 					</ScrollView>
-					</View>
 					:
 					null
 				}
@@ -387,7 +403,7 @@ var styles = StyleSheet.create({
   },
 
   scrollcontainer: {
-  	height: 100,
+  	// height: 100,
   },
 
   separator: {
