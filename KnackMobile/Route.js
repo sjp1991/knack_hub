@@ -60,7 +60,7 @@ export default class Route extends Component {
 		if(route.className) {
 			return React.createElement(Page[route.className], {route, navigator, ddpClient, setNavBarVisibility: this._setNavBarVisibility.bind(this)})
 		} else {
-			route.title = 'Login'
+			route.title = 'Profile'
 			return React.createElement(Page['EarnerProfile'], {route, navigator, ddpClient, setNavBarVisibility: this._setNavBarVisibility.bind(this)})
 		}
 	}

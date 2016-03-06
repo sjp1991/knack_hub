@@ -122,12 +122,12 @@ export default class EarnerProfile extends Component {
 	}
 	render() {
 		return(
+			<ScrollView>
 			<View style={styles.container}>
 				<View style={styles.piccontainer}>
 					<Image
 	        			style={styles.logo}
-	        			source={{uri: 'http://facebook.github.io/react/img/logo_og.png'}}
-	        		/>
+	        			source={{uri: 'http://facebook.github.io/react/img/logo_og.png'}}/>
 	        		<View style={styles.rightcontainer}>
 						<Text style={styles.name}>
 							{this.state.earner.firstName} {this.state.earner.lastName}
@@ -140,15 +140,11 @@ export default class EarnerProfile extends Component {
 					{this.renderBadge(this.state.earner.earnedBadges)}
 					<Image
 	        			style={styles.moreBadge}
-	        			source={{uri: 'http://facebook.github.io/react/img/logo_og.png'}}
-	        		/>
+	        			source={{uri: 'http://facebook.github.io/react/img/logo_og.png'}}/>
 				</View>
 
         		<View style={styles.attr}>
         			<View style={styles.descriptionslot}>
-		        		<Text style={styles.heading}>
-		        			Description
-		        		</Text>
 		        		<View style={styles.descriptioncontainer}>
 			        		<Text style={styles.description}>
 			        			{this.state.earner.description}
@@ -224,6 +220,7 @@ export default class EarnerProfile extends Component {
 					null
 				}
 			</View>
+			</ScrollView>
 		)
 	}
 
@@ -234,16 +231,17 @@ export default class EarnerProfile extends Component {
 
 		return badges.map((badge)=>{
 			return (
-				<Image
-	       			style={styles.logo}
-	        		source={{uri: 'http://facebook.github.io/react/img/logo_og.png'}}
-	        	>
-					<View key={badge.badgeId} style={styles.badgeinfo}>
-						<Text style={styles.badgename}>{badge.badgeName}</Text>
-						<Text style={styles.badgecompany}>{badge.badgeCompany}</Text>
-					</View>
+				<Image style={{width: 100, height: 120, resizeMode: 'cover', margin: 5,}} source={require('./../img/badges/badic_food_service.png')}/>
+				// <Image
+	   //     			style={styles.logo}
+	   //      		source={{uri: 'http://facebook.github.io/react/img/logo_og.png'}}
+	   //      	>
+				// 	<View key={badge.badgeId} style={styles.badgeinfo}>
+				// 		<Text style={styles.badgename}>{badge.badgeName}</Text>
+				// 		<Text style={styles.badgecompany}>{badge.badgeCompany}</Text>
+				// 	</View>
 				
-				</Image>
+				// </Image>
 			)
 		})
 	}
@@ -311,9 +309,11 @@ var styles = StyleSheet.create({
   },
 
   badgecontainer: {
-  	height: 200,
+  	height: 150,
   	flexDirection: 'row',
   	alignItems: 'center',
+  	borderTopWidth: 2,
+  	borderColor: 'gray',
   },
 
   badgeinfo: {
@@ -368,18 +368,18 @@ var styles = StyleSheet.create({
   },
 
   logo: {
-    height: 150,
+    height: 120,
     borderRadius: 100,
-    width: 150,
+    width: 120,
     borderWidth: 5,
     borderColor: '#373536',
   },
 
   moreBadge: {
     height: 20,
-    borderRadius: 50,
+    borderRadius: 40,
     width: 20,
-    borderWidth: 70,
+    borderWidth: 40,
     borderColor: '#668f7f',
   },
 
@@ -401,7 +401,7 @@ var styles = StyleSheet.create({
   },
 
   descriptionslot: {
-  	height: 160,
+  	height: 300,
   	justifyContent: 'center',
   },
 
@@ -422,7 +422,7 @@ var styles = StyleSheet.create({
   },
 
   length: {
-  	fontSize: 28,
+  	fontSize: 18,
   	fontWeight: 'bold',
   	textAlign: 'center',
   	color: 'white',
@@ -430,10 +430,9 @@ var styles = StyleSheet.create({
 
   lengthcontainer: {
   	backgroundColor: '#668f7f',
-  	margin: 5,
   	borderRadius: 50,
-  	height: 40,
-  	width: 40,
+  	height: 30,
+  	width: 30,
   	alignItems: 'center',
   },
 
