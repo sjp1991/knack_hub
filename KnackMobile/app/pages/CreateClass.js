@@ -16,7 +16,7 @@ let {height, width} = Dimensions.get('window')
 export default class CreateClass extends Component {
 	constructor(props) {
 		super(props)
-		this.state={name: 'Computer Literacy', description: 'Learn how to create PowerPoint presentatons', location:'Hootsuite', size:'25', signedUpNum:'0', badgeId:'82BLmkLEFwJiDYCob', when:'March 29, 9am to 5pm'}
+		this.state={name: 'Computer Literacy', description: 'Learn how to create PowerPoint presentatons', location:'Hootsuite', size:'25', signedUpNum:'0', badgeId:'82BLmkLEFwJiDYCob', when:'March 29, 9am to 5pm', bg:''}
 	}
 
 	_create() {
