@@ -22,12 +22,13 @@ import PageThree from './app/pages/PageThree'
 import PageFour from './app/pages/PageFour'
 import AddEarnerProfile from './app/pages/AddEarnerProfile'
 import Register from './app/pages/Register'
-const Page = {Login, PageTwo, PageThree, PageFour, AddEarnerProfile, Register}
+import EarnerProfile from './app/pages/EarnerProfile'
+const Page = {Login, PageTwo, PageThree, PageFour, AddEarnerProfile, Register, EarnerProfile}
 
 const Drawer = require('react-native-drawer') // Third party drawer layout that works in iOS, very funky so use with care
 
 let ddpClient = new DDPClient({
-  host: '172.18.147.160',
+  host: '172.18.147.31',
   // host: '192.168.1.3', // If using android use your device IP address
   port: '3000',
   // url: <your websocket url>
@@ -67,7 +68,7 @@ export default class Route extends Component {
 			return React.createElement(Page[route.className], {route, navigator, ddpClient})
 		} else {
 			route.title = ''
-			return React.createElement(Page['Login'], {route, navigator, ddpClient})
+			return React.createElement(Page['EarnerProfile'], {route, navigator, ddpClient})
 		}
 	}
 	drawerMenuItemPressed(alertPopupMessage) {
