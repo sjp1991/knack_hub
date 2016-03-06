@@ -30,31 +30,31 @@ var earner = {
 	}],
 	appliedTasks: [{
 		taskId: "task1",
-		taskName: "Testing task 1",
+		taskName: "Catering at Foodbank",
 		appliedDate: "Jan. 1st 2016",
 		status: "completed",
 	},
 	{
 		taskId: "task2",
-		taskName: "Testing task 2",
+		taskName: "Serving at Restaurant",
 		appliedDate: "Mar. 1st 2016",
 		status: "Applied",
 	},
 	{
 		taskId: "task3",
-		taskName: "Testing task 3",
+		taskName: "Cashier at SaveOnFood",
 		appliedDate: "Feb. 1st 2016",
 		status: "Applied",
 	}],
 	appliedClasses: [{
 		classId: "class1",
-		className: "Mock Class 1",
+		className: "Serving 101",
 		appliedDate: "Jan. 1st 2016",
 		status: "not completed",
 	},
 	{
 		classId: "class2",
-		className: "Mock Class 2",
+		className: "Leadership 110",
 		appliedDate: "Feb. 1st 2016",
 		status: "Enrolled",
 	}]
@@ -124,24 +124,49 @@ export default class EarnerProfile extends Component {
 		return(
 			<ScrollView>
 			<View style={styles.container}>
-				<View style={styles.piccontainer}>
-					<Image
-	        			style={styles.logo}
-	        			source={{uri: 'http://facebook.github.io/react/img/logo_og.png'}}/>
-	        		<View style={styles.rightcontainer}>
-						<Text style={styles.name}>
-							{this.state.earner.firstName} {this.state.earner.lastName}
-						</Text>
-						<Text style={styles.contact}> {this.state.earner.phone} </Text>
-						<Text style={styles.contact}> {this.state.earner.email} </Text>
+				<Image source={require('./../img/badges/earner_background.png')} style={styles.backgroundImg}>
+					<View style={{height: 50, backgroundColor: 'transparent'}}></View>
+					<View style={styles.piccontainer}>
+						<Image
+		        			style={styles.logo}
+		        			source={{uri: 'http://facebook.github.io/react/img/logo_og.png'}}/>
+
+		        		<View style={styles.rightcontainer}>
+		        			<Image style={{width: 25, height: 25, marginLeft: 180}} source={require('./../img/navigation/edit.png')}/>
+							<Text style={styles.name}>
+								{this.state.earner.firstName} {this.state.earner.lastName}						
+							</Text>
+							<View style={styles.levelcontainer}>
+								<Text style={styles.level}> Lv 7 </Text>
+								<Image style={{width: 160, height: 20,}} source={require('./../img/badges/experience_bar.png')}/>
+							</View>
+						</View>
 					</View>
-				</View>
-				<View style={styles.badgecontainer}>
-					{this.renderBadge(this.state.earner.earnedBadges)}
-					<Image
-	        			style={styles.moreBadge}
-	        			source={{uri: 'http://facebook.github.io/react/img/logo_og.png'}}/>
-				</View>
+					<View>
+						<View style={styles.contactcontainer}>
+							<Text style={styles.contact}> {this.state.earner.phone} </Text>
+							<Text style={styles.contact}> 1234 56th St. Van </Text>
+						</View>
+						<View style={styles.contactcontainer}>
+							<Text style={styles.contact}> {this.state.earner.email} </Text>
+							<Text style={styles.contact}>                </Text>
+						</View>
+					</View>
+				</Image>
+				<View>
+					<View style={{height: 20, backgroundColor: 'transparent'}}></View>
+					<View style={styles.badgecontainer1}>
+						<Image style={{width: 100, height: 120, resizeMode: 'cover', margin: 5,}} source={require('./../img/badges/kitchen_math.png')}/>
+						<Image style={{width: 100, height: 120, resizeMode: 'cover', margin: 5,}} source={require('./../img/badges/professionalism.png')}/>
+						<Image style={{width: 100, height: 120, resizeMode: 'cover', margin: 5,}} source={require('./../img/badges/knife_skills.png')}/>
+					</View>
+					<View style={{height: 20, backgroundColor: 'transparent'}}></View>
+					<View style={styles.badgecontainer2}>
+						{this.renderBadge(this.state.earner.earnedBadges)}
+						<Image style={{width: 100, height: 120, resizeMode: 'cover', margin: 5,}} source={require('./../img/badges/add_new_badge.png')}/>
+					</View>
+			    </View>
+
 
         		<View style={styles.attr}>
         			<View style={styles.descriptionslot}>
@@ -156,10 +181,8 @@ export default class EarnerProfile extends Component {
 	        	<View style={styles.attr}>
 		        	<View style={styles.buttonContainer}>
 			        	<TouchableOpacity onPress={this.showTasks.bind(this)}>
-			        	 	<Text style={styles.attr}>
-		    	    			<Text style={styles.heading}>
-		        					Jobs Applied
-		        				</Text>
+		    	    		<Text style={styles.heading}>
+		        				Jobs Applied
 		        			</Text>
 		        		</TouchableOpacity>
 		        		<View style={styles.lengthcontainer}>
@@ -172,7 +195,7 @@ export default class EarnerProfile extends Component {
 	        	
 				{
 					this.state.showTasks ?
-					<View style={{height:250}}>
+					<View style={{height:200}}>
 					<ScrollView style={styles.scrollcontainer}>
 						<ListView 
 							dataSource={this.state.appliedTasks}
@@ -295,25 +318,57 @@ var styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: '#373536',
-    paddingTop: 100,
+  },
+
+  backgroundImg: {
+    width: width, 
+    resizeMode: 'cover',
+    height: null,
   },
 
   piccontainer: {
+  	marginLeft: 35,
     flexDirection: 'row',
     alignItems: 'center',
   },
 
   rightcontainer: {
   	flex: 1,
-  	marginLeft: 20,
+  	backgroundColor: 'transparent',
+  	justifyContent: 'center',
   },
 
-  badgecontainer: {
-  	height: 150,
+  level: {
+  	fontSize: 16,
+  	color: 'white',
+  	marginRight: 10,
+  },
+
+  levelcontainer: {
   	flexDirection: 'row',
-  	alignItems: 'center',
+  	justifyContent: 'space-around',
+  	marginRight: 30,
+  },
+
+  contactcontainer: {
+  	flexDirection: 'row',
+  	justifyContent: 'space-around',
+  },
+
+  badgecontainer1: {
+  	height: 170,
+  	flexDirection: 'row',
+  	alignItems: 'flex-end',
+  	borderColor: '#6b6e6d',
   	borderTopWidth: 2,
-  	borderColor: 'gray',
+  	width: width * 0.9
+  },
+
+  badgecontainer2: {
+  	height: 170,
+  	flexDirection: 'row',
+  	alignItems: 'flex-start',
+  	width: width * 0.9
   },
 
   badgeinfo: {
@@ -357,8 +412,9 @@ var styles = StyleSheet.create({
   },
 
   name: {
-  	fontSize: 30,
-  	paddingBottom: 20,
+  	marginLeft: 35,
+  	fontSize: 26,
+  	paddingBottom: 10,
   	color: 'white',
   },
 
@@ -385,7 +441,8 @@ var styles = StyleSheet.create({
 
   attr: {
   	borderTopWidth: 2,
-  	borderColor: 'gray',
+  	borderColor: '#6b6e6d',
+  	width: width * 0.9,
   },
 
   heading: {
@@ -426,6 +483,7 @@ var styles = StyleSheet.create({
   	fontWeight: 'bold',
   	textAlign: 'center',
   	color: 'white',
+  	marginTop: 3,
   },
 
   lengthcontainer: {
