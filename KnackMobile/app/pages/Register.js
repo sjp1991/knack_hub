@@ -28,8 +28,16 @@ export default class Register extends Component {
 		const email = this.state.email
 		const password = this.state.password
 		_this = this
-    	this.props.ddpClient.call('register', [email, password]);
-    	this._popPage()
+		_this.props.navigator.replace({className: 'AddEarnerProfile', title: 'AddEarnerProfile'})
+    	this.props.ddpClient.call('register', [
+		  	{ user : { email }, password }
+		], (err, result)=> {
+			if(err) {
+				console.log(err)
+			} else {
+				console.log(result)
+			}
+		})
 	}
 	render() {
 		return(

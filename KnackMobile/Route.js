@@ -21,6 +21,7 @@ import PageTwo from './app/pages/PageTwo'
 import PageThree from './app/pages/PageThree'
 import PageFour from './app/pages/PageFour'
 import AddEarnerProfile from './app/pages/AddEarnerProfile'
+import EarnerProfile from './app/pages/EarnerProfile'
 import Register from './app/pages/Register'
 import Dashboard from './app/pages/Dashboard'
 import ClassList from './app/pages/ClassList'
@@ -30,7 +31,7 @@ import TaskDetail from './app/pages/TaskDetail'
 import EarnMoreBadge from './app/pages/EarnMoreBadge'
 import CreateBadge from './app/pages/CreateBadge'
 import CreateClass from './app/pages/CreateClass'
-const Page = {Login, PageTwo, PageThree, PageFour, AddEarnerProfile, Register, Dashboard, ClassList, ClassDetail, TaskList, TaskDetail, EarnMoreBadge, CreateBadge, CreateClass}
+const Page = {Login, PageTwo, PageThree, PageFour, AddEarnerProfile, EarnerProfile, Register, Dashboard, ClassList, ClassDetail, TaskList, TaskDetail, EarnMoreBadge, CreateBadge, CreateClass}
 
 let ddpClient = new DDPClient({
   host: '172.18.146.36',
@@ -59,8 +60,8 @@ export default class Route extends Component {
 		if(route.className) {
 			return React.createElement(Page[route.className], {route, navigator, ddpClient, setNavBarVisibility: this._setNavBarVisibility.bind(this)})
 		} else {
-			route.title = 'Register'
-			return React.createElement(Page['Register'], {route, navigator, ddpClient, setNavBarVisibility: this._setNavBarVisibility.bind(this)})
+			route.title = 'Login'
+			return React.createElement(Page['EarnerProfile'], {route, navigator, ddpClient, setNavBarVisibility: this._setNavBarVisibility.bind(this)})
 		}
 	}
 	_setNavBarVisibility(visible) {
