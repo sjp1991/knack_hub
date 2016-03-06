@@ -15,6 +15,7 @@ export default class ClassList extends Component {
 		this.state = {
 			dataSource: ds.cloneWithRows(['Class', 'Class', 'Class', 'Class', 'Class', 'Class', 'Class', 'Class', 'Class', 'Class', 'Class', 'Class', 'Class', 'Class']),
 		}
+		this.props.setNavBarVisibility(true)
 	}
 	_renderRow(rowData, sectionID, rowID) {
 		return (

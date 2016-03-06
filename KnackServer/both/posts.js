@@ -69,8 +69,8 @@ Meteor.methods({
 
   createClass(classInfo){
   	let userId = Meteor.userId()
-  	let {name, description, location, size, signedUpNum, badgeId, startDate, endDate} = classInfo
-  	Classes.insert({name, description, location, size, signedUpNum, badgeId, startDate, endDate, userId})
+  	let {name, description, location, size, signedUpNum, badgeId, when} = classInfo
+  	Classes.insert({name, description, location, size, signedUpNum, badgeId, when, userId})
   },
 
   createBadge(badgeInfo){

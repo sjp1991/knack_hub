@@ -45,7 +45,7 @@ export default class CreateBadge extends Component {
 				<TextInput style={styles.badgeinput} 
 					ref= "category"
 					placeholder="Enter category"
-  					placeholderTextColor="eg. hard skill or soft skill"
+  					placeholderTextColor="gray"
 					onChangeText={(category) => this.setState({category})}
     				value={this.state.category}/>   		
 
