@@ -19,7 +19,8 @@ import DDPClient from 'ddp-client';
 import Login from './app/pages/Login'
 import PageThree from './app/pages/PageThree'
 import PageFour from './app/pages/PageFour'
-const Page = {Login, PageThree, PageFour}
+import AddEarnerProfile from './app/pages/AddEarnerProfile'
+const Page = {Login, PageThree, PageFour, AddEarnerProfile}
 
 const Drawer = require('react-native-drawer') // Third party drawer layout that works in iOS, very funky so use with care
 
@@ -62,7 +63,7 @@ export default class Route extends Component {
 		if(route.className) {
 			return React.createElement(Page[route.className], {route, navigator})
 		} else {
-			route.title = 'Login'
+			route.title = ''
 			return React.createElement(Page['Login'], {route, navigator})
 		}
 	}
@@ -92,6 +93,13 @@ export default class Route extends Component {
 					<View style={styles.drawerMenuItemView}>
 						<Image style={styles.drawerMenuItemImage} source={require('./app/img/navigation/nav_icon_menu.png')} />
 						<Text style={styles.drawerMenuItemText}>Do Something3!</Text>
+					</View>
+				</TouchableOpacity>
+				<View style={styles.drawerMenuItemSeparator}/>
+				<TouchableOpacity onPress={()=>this.refs.navigator.push({className: 'AddEarnerProfile', title: 'AddEarnerProfile'})}>
+					<View style={styles.drawerMenuItemView}>
+						<Image style={styles.drawerMenuItemImage} source={require('./app/img/navigation/nav_icon_menu.png')} />
+						<Text style={styles.drawerMenuItemText}>Add Earner Page</Text>
 					</View>
 				</TouchableOpacity>
 				<View style={styles.drawerMenuItemSeparator}/>
