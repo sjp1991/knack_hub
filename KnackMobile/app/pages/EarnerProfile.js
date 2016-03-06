@@ -134,12 +134,12 @@ export default class EarnerProfile extends Component {
 	        			</Text>
 	        		</Text>
 	        	</TouchableOpacity>
-
-	        	<ListView
-        			dataSource={this.state.appliedTasks}
-        			renderRow={this.renderTasks}
-        			style={styles.listView}
-      			/>
+	        	
+	        	<ScrollView style={styles.container}>
+					<ListView 
+						dataSource={this.state.dataSource}
+						renderRow={this._renderRow.bind(this)} />
+				</ScrollView>
 
 	        	<TouchableOpacity>
 	        	 	<Text style={styles.attr}>
@@ -152,8 +152,20 @@ export default class EarnerProfile extends Component {
 		)
 	}
 
-	showTasks() {
-		if(this.state.showTasks ===)
+	_onRowPress(rowID) {
+		let data = tempData
+		// console.log(data)
+		data[rowID].isSelected = !data[rowID].isSelected
+		this.setState({dataSource: ds.cloneWithRows(data)})
+	}
+	_renderRow(rowData, sectionID, rowID) {
+		const rowStyle = rowData.isSelected ? styles.selectedRow : styles.unselectedRow
+		// console.log(this.state.selectedRowID)
+		return (
+			<TouchableOpacity onPress={this._onRowPress.bind(this, rowID)} style={rowStyle}>
+				<Text style={styles.renderText}>{rowData.text + ' ' + rowID}</Text>
+			</TouchableOpacity>
+		)
 	}
 
 	renderTasks(task) {
