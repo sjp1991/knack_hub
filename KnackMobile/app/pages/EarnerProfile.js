@@ -6,6 +6,7 @@ import React, {
 	StyleSheet,
 	Image,
 	ListView,
+	ScrollView,
 	TouchableOpacity,
 } from 'react-native'
 
@@ -15,7 +16,7 @@ var earner = {
 	lastName: "Park",
 	email: "jasonpark@example.com",
 	pic: "",
-	description: "I am noob",
+	description: "I make everyone amateurs. So pro, Very skills, Much wow",
 	phone: "604-555-555",
 	earnedBadges: [{
 		badgeId: "badge1",
@@ -109,13 +110,17 @@ export default class EarnerProfile extends Component {
 	render() {
 		return(
 			<View style={styles.container}>
-				<Text style={styles.name}>
-					{this.state.earner.firstName} {this.state.earner.lastName}
-				</Text>
-				<Image
-        			style={styles.logo}
-        			source={{uri: 'http://facebook.github.io/react/img/logo_og.png'}}
-        		/>
+				<View style={styles.piccontainer}>
+					<Image
+	        			style={styles.logo}
+	        			source={{uri: 'http://facebook.github.io/react/img/logo_og.png'}}
+	        		/>
+	        		<View style={styles.rightcontainer}>
+						<Text style={styles.name}>
+							{this.state.earner.firstName} {this.state.earner.lastName}
+						</Text>
+					</View>
+				</View>
         		<View style={styles.attr}>
 	        		<Text style={styles.heading}>
 	        			Description
@@ -127,54 +132,90 @@ export default class EarnerProfile extends Component {
 	        		</View>
 	        	</View>
 
-	        	<TouchableOpacity onPress={this.showTasks.bind(this)}>
-	        	 	<Text style={styles.attr}>
-	        			<Text style={styles.heading}>
-	        				Jobs Applied
-	        			</Text>
-	        		</Text>
-	        	</TouchableOpacity>
+	        	<View style={styles.attr}>
+		        	<View style={styles.buttonContainer}>
+			        	<TouchableOpacity onPress={this.showTasks.bind(this)}>
+			        	 	<Text style={styles.attr}>
+		    	    			<Text style={styles.heading}>
+		        					Jobs Applied
+		        				</Text>
+		        			</Text>
+		        		</TouchableOpacity>
+		        		<Text style = {styles.lengthContainer}>
+		        			({earner.appliedTasks.length})
+		        		</Text>
+		        	</View>
+	        	</View>
 	        	
-	        	<ScrollView style={styles.container}>
-					<ListView 
-						dataSource={this.state.dataSource}
-						renderRow={this._renderRow.bind(this)} />
-				</ScrollView>
+				{
+					this.state.showTasks ?
+					<View style={{height:100}}>
+					<ScrollView style={styles.scrollcontainer}>
+						<ListView 
+							dataSource={this.state.appliedTasks}
+							renderRow={this.renderTasks}
+							style={styles.listview} />
+					</ScrollView>
+					</View>
+					:
+					null
+				}
 
-	        	<TouchableOpacity>
-	        	 	<Text style={styles.attr}>
-	        			<Text style={styles.heading}>
-	        				Course Registered
-	        			</Text>
-	        		</Text>
-	        	</TouchableOpacity>
+				<View style={styles.attr}>
+					<View style={styles.buttonContainer}>
+		        		<TouchableOpacity onPress={this.showClasses.bind(this)}>
+		        			<Text style={styles.heading}>
+		        					Course Registered
+		        			</Text>
+		        		</TouchableOpacity>
+		        		<Text style = {styles.lengthContainer}>
+		        			({earner.appliedClasses.length})
+		        		</Text>
+		        	</View>
+	        	</View>
+
+	        	{
+					this.state.showClasses ?
+					<View style={{height:100}}>
+					<ScrollView style={styles.scrollcontainer}>
+						<ListView 
+							dataSource={this.state.appliedClasses}
+							renderRow={this.renderClasses}
+							style={styles.listview} />
+					</ScrollView>
+					</View>
+					:
+					null
+				}
 			</View>
 		)
 	}
 
-	_onRowPress(rowID) {
-		let data = tempData
-		// console.log(data)
-		data[rowID].isSelected = !data[rowID].isSelected
-		this.setState({dataSource: ds.cloneWithRows(data)})
+	showTasks() {
+		this.setState({
+			showTasks: !this.state.showTasks
+		})
 	}
-	_renderRow(rowData, sectionID, rowID) {
-		const rowStyle = rowData.isSelected ? styles.selectedRow : styles.unselectedRow
-		// console.log(this.state.selectedRowID)
-		return (
-			<TouchableOpacity onPress={this._onRowPress.bind(this, rowID)} style={rowStyle}>
-				<Text style={styles.renderText}>{rowData.text + ' ' + rowID}</Text>
-			</TouchableOpacity>
-		)
+
+	showClasses() {
+		this.setState({
+			showClasses: !this.state.showClasses
+		})
 	}
 
 	renderTasks(task) {
 	    return (
-	    	<View style={styles.container}>
-		    	<View style={styles.rightContainer}>
-		    		<Text style={styles.title}>{task.taskName}</Text>
-		    	</View>
-		    </View>
+	    	<View style={styles.row}>
+	    		<Text>{task.taskName}</Text>
+	    	</View>
+		);
+	}
+
+	renderClasses(cl) {
+	    return (
+	    	<View style={styles.row}>
+	    		<Text>{cl.className}</Text>
+	    	</View>
 		);
 	}
 }
@@ -184,9 +225,33 @@ var width = Dimensions.get('window').width;
 var styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: 'gray',
+    paddingTop: 100,
+  },
+
+  piccontainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+
+  rightcontainer: {
+  	flex: 1,
+  	marginLeft: 20,
+  },
+
+  scrollcontainer: {
+  	height: 100,
+  },
+
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    padding: 10,
+    backgroundColor: 'white',
+    borderColor: 'black',
+    borderWidth: 1,
   },
 
   name: {
@@ -201,7 +266,8 @@ var styles = StyleSheet.create({
   },
 
   attr: {
-  	paddingBottom: 20,
+  	borderTopWidth: 1,
+  	marginTop: 10,
   },
 
   heading: {
@@ -222,14 +288,19 @@ var styles = StyleSheet.create({
   	width: width * 0.8,
   },
 
-  listView: {
-    paddingTop: 20,
-    backgroundColor: '#F5FCFF',
+  buttonContainer: {
+  	flexDirection:'row',
+  	alignItems: 'center',
+  	justifyContent: 'space-between',
+  	width: width * 0.8,
   },
 
-  rightContainer: {
-    flex: 1,
-  },
+  lengthContainer: {
+  	marginLeft: 5,
+  	fontSize: 18,
+  	fontWeight: 'bold',
+  	textAlign: 'center',
+  }
 });
 
 // This line allows class to be referenced using const <className> = require('<path>')
