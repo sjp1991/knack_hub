@@ -14,11 +14,11 @@ import React, {
 export default class CreateBadge extends Component {
 	constructor(props) {
 		super(props)
-		this.state={title: '', description: '', category:'',}
+		this.state={title: 'Computer Literacy', description: 'Learn how to use Office', category:'Hard Skill', pic:'http://s17.postimg.org/p6kqnxvpb/computer_literacy.png'}
 	}
 
 	_create() {
-		this.props.ddpClient.call('createBadge', [{title:this.state.title, pic:'https://lh3.googleusercontent.com/TJXbuHM8KFn6JuG43LOc38gU0oJdlRoO1I64ncbUPj-y987ebZG89uFhB5Jf8R_tAbcp=w300',
+		this.props.ddpClient.call('createBadge', [{title:this.state.title, pic:this.state.pic,
 		description:this.state.description, category:this.state.category}])
 	}
 
@@ -27,7 +27,12 @@ export default class CreateBadge extends Component {
 			<View style={styles.container}>
 
 			<Image style={{width: 200, height: 200}} source={{uri: 'https://lh3.googleusercontent.com/TJXbuHM8KFn6JuG43LOc38gU0oJdlRoO1I64ncbUPj-y987ebZG89uFhB5Jf8R_tAbcp=w300'}} />
-
+			<TextInput style={styles.badgeinput} 
+				placeholder= "Add pic url"
+				placeholderTextColor="gray"
+				onChangeText={(pic) => this.setState({pic})}
+    		value={this.state.pic}>
+			</TextInput>
 				<TextInput style={styles.badgeinput} 
 					ref= "title"
 					placeholder="Enter Badge Title"
@@ -48,18 +53,11 @@ export default class CreateBadge extends Component {
   					placeholderTextColor="gray"
 					onChangeText={(category) => this.setState({category})}
     				value={this.state.category}/>   		
-
-
-				<View style={styles.buttonContainer}>
-					<TouchableOpacity style = {styles.button}>
-						<Text>Cancel</Text>
-					</TouchableOpacity>
 					
 					<TouchableOpacity onPress={this._create.bind(this)}>
 						<Text>Create Badge</Text>
 					</TouchableOpacity>
 				</View>
-			</View>
 		)
 	}
 }

@@ -20,6 +20,7 @@ export default class AddEarnerProfile extends Component {
 			email: 'lisa@example.com',
 			cell: '7789173232',
 			address: '123 Bear Street',
+			pic:''
 		}
 	}
 	_popPage(){
@@ -30,7 +31,7 @@ export default class AddEarnerProfile extends Component {
 	}
 
 	createUser(){
-		this.props.ddpClient.call('createEarner', [{firstName: this.state.firstName, lastName: this.state.lastName, pic: '', desc: this.state.description, phone: this.state.cell}])
+		this.props.ddpClient.call('createEarner', [{firstName: this.state.firstName, lastName: this.state.lastName, pic: this.state.pic, desc: this.state.description, phone: this.state.cell}])
 	}
 
 	render() {

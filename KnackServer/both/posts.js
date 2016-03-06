@@ -31,8 +31,8 @@ Meteor.methods({
 
   createEarner(earnerInfo){
   	let userId = Meteor.userId()
-  	let {firstName, lastName, pic, desc, phone} = earnerInfo
-  	Earners.insert({firstName, lastName, pic, desc, phone, earnedBadges: [], appliedTasks: [], appliedClasses: [], userId})
+  	let {firstName, lastName, pic, desc, phone, address} = earnerInfo
+  	Earners.insert({firstName, lastName, pic, desc, phone, address, earnedBadges: [], appliedTasks: [], appliedClasses: [], userId})
   },
 
   registerClass(classId){
@@ -54,10 +54,10 @@ Meteor.methods({
   	Employers.insert({firstName, lastName, cName, address, industry, phone, description, postedTasks:[], userId})
   },
 
-  postTask(taskInfo){
+  createTask(taskInfo){
   	let userId = Meteor.userId()
-  	let {wage, location, description, requiredBadgeId} = taskInfo
-  	Tasks.insert({wage, location, description, requiredBadgeId, userId})
+  	let {title, wage, location, description, requiredBadgeId} = taskInfo
+  	Tasks.insert({title, wage, location, description, requiredBadgeId, userId})
 
   },
 
