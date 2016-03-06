@@ -152,32 +152,39 @@ export default class Route extends Component {
 		let _this = this // We need to hold onto reference to 'this' as "this" gets overwritten inside the method
 		const NavigationBarRouteMapper = {
 			LeftButton(route, navigator, index, navState) {
-        if(Platform.OS === 'ios' &&  index > 0) {
-          return (
-            <View style={{flexDirection:"row"}}>
-              <View style={styles.navLeftIconView}>
-                <TouchableOpacity onPress={navigator.pop} style={styles.navButton}>
-                  <Image style={styles.navLeftIcon} source={require('./app/img/navigation/back_bar_icon.png')} />
-                </TouchableOpacity>
-              </View>
-    					<View style={styles.navLeftIconView}>
-    						<TouchableOpacity onPress={_this.toggleDrawerLayout.bind(_this)} style={styles.navButton}>
-    							<Image style={styles.navLeftIcon} source={require('./app/img/navigation/nav_icon_menu.png')} />
-    						</TouchableOpacity>
-    					</View>
-            </View>
-          )
-        }
+        // if(Platform.OS === 'ios' &&  index > 0) {
+        //   return (
+        //     <View style={{flexDirection:"row"}}>
+        //       <View style={styles.navLeftIconView}>
+        //         <TouchableOpacity onPress={navigator.pop} style={styles.navButton}>
+        //           <Image style={styles.navLeftIcon} source={require('./app/img/navigation/back_bar_icon.png')} />
+        //         </TouchableOpacity>
+        //       </View>
+    				// 	<View style={styles.navLeftIconView}>
+    				// 		<TouchableOpacity onPress={_this.toggleDrawerLayout.bind(_this)} style={styles.navButton}>
+    				// 			<Image style={styles.navLeftIcon} source={require('./app/img/navigation/nav_icon_menu.png')} />
+    				// 		</TouchableOpacity>
+    				// 	</View>
+        //     </View>
+        //   )
+        // }
 				return (
 					<View style={styles.navLeftIconView}>
 						<TouchableOpacity onPress={_this.toggleDrawerLayout.bind(_this)} style={styles.navButton}>
-							<Image style={styles.navLeftIcon} source={require('./app/img/navigation/nav_icon_menu.png')} />
+							<Image style={styles.navLeftIcon} source={require('./app/img/navigation/home_icon.png')} />
 						</TouchableOpacity>
           </View>
 				)
 			},
 			RightButton(route, navigator, index, navState) {
 				// Button on the right side of navigationView
+				return (
+					<View style={styles.navRightIconView}>
+						<TouchableOpacity onPress={_this.toggleDrawerLayout.bind(_this)} style={styles.navButton}>
+							<Image style={styles.navRightIcon} source={require('./app/img/navigation/close_white.png')} />
+						</TouchableOpacity>
+          </View>
+				)
 			},
 			Title(route, navigator, index, navState) {
 				return (
@@ -254,14 +261,26 @@ let styles = StyleSheet.create({
 		flex:1,
 		justifyContent: 'center',
 	},
+	navRightIconView: {
+		flex:1,
+		justifyContent: 'center',
+	},
 	navButton: {
-		height: 44,
-		width: 44,
+		height: 60,
+		width: 60,
 		alignItems: 'center',
 		justifyContent: 'center',
 	},
 	navLeftIcon: {
-		// marginLeft: 10,
+		width: 30,
+		height: 30,
+		resizeMode: 'contain',
+	},
+	navRightIcon: {
+		width: 24,
+		height: 24,
+		marginTop: 4,
+		resizeMode: 'contain',
 	},
 	navigationTitleView: {
 		flex:1,
