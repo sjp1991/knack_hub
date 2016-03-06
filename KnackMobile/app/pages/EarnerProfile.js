@@ -84,6 +84,7 @@ export default class EarnerProfile extends Component {
 			earner: earner,
 			badges: [],
 			users: undefined,
+			tasks: undefined,
 		}
 	}
 	componentDidMount() {
@@ -95,6 +96,8 @@ export default class EarnerProfile extends Component {
         this.observeBadges.bind(this)()
         this.observeEarners.bind(this)()
         this.observeUser.bind(this)()
+        this.observeCollection.bind(this)("tasks")
+        this.observeCollection.bind(this)("classes")
       }
       this.setState({ connected: connected })
     })
@@ -110,6 +113,24 @@ export default class EarnerProfile extends Component {
     }
     observer.removed = (id, oldValue) => {
       this.setState({badges: Object.values(this.props.ddpClient.collections.badges)})
+    }
+  }
+  observeCollection(collectionName) {
+    let observer = this.props.ddpClient.observe(collectionName);
+    observer.added = (id) => {
+    	stateToSet = {}
+    	stateToSet[collectionName] = this.props.ddpClient.collections[collectionName]
+      this.setState(stateToSet)
+    }
+    observer.changed = (id, oldFields, clearedFields, newFields) => {
+      stateToSet = {}
+    	stateToSet[collectionName] = this.props.ddpClient.collections[collectionName]
+      this.setState(stateToSet)
+    }
+    observer.removed = (id, oldValue) => {
+      stateToSet = {}
+    	stateToSet[collectionName] = this.props.ddpClient.collections[collectionName]
+      this.setState(stateToSet)
     }
   }
 	observeEarners() {
@@ -184,7 +205,6 @@ export default class EarnerProfile extends Component {
 						</View>
 						<View style={styles.contactcontainer}>
 							<Text style={styles.contact}> {this.state.users ? this.state.users[0].emails[0].address : null} </Text>
-							<Text style={styles.contact}>                </Text>
 						</View>
 					</View>
 				</Image>
@@ -230,7 +250,7 @@ export default class EarnerProfile extends Component {
 					<ScrollView style={styles.scrollcontainer}>
 						<ListView 
 							dataSource={this.state.appliedTasks}
-							renderRow={this.renderTasks}
+							renderRow={this.renderTasks.bind(this)}
 							style={styles.listview} />
 					</ScrollView>
 					:
@@ -241,7 +261,7 @@ export default class EarnerProfile extends Component {
 						<View style={styles.buttonContainer}>
 							<TouchableOpacity onPress={this.showClasses.bind(this)}>
 								<Text style={styles.heading}>
-									Course Registered
+									Classes Registered
 								</Text>
 							</TouchableOpacity>
 							<View style={styles.lengthcontainer}>
@@ -258,7 +278,7 @@ export default class EarnerProfile extends Component {
 						<ScrollView style={styles.scrollcontainer}>
 							<ListView 
 								dataSource={this.state.appliedClasses}
-								renderRow={this.renderClasses}
+								renderRow={this.renderClasses.bind(this)}
 								style={styles.listview} />
 					</ScrollView>
 					:
@@ -290,13 +310,13 @@ export default class EarnerProfile extends Component {
 		})
 	}
 
-	renderTasks(task) {
+	renderTasks(taskId) {
 	    return (
 	    	<View style={styles.popUpAttr}>
 		    	<View style={styles.row}>
 		    		<View style={styles.rowEntry}>
 		    			<Text style={styles.popUpContainers}>
-		    				{task.taskName}
+		    				{this.state.tasks? this.state.tasks[taskId].title : null}
 		    			</Text>
 		    		</View>
 		    	</View>
@@ -310,7 +330,7 @@ export default class EarnerProfile extends Component {
 		    	<View style={styles.row}>
 		    		<View style={styles.rowEntry}>
 		    			<Text style={styles.popUpContainers}>
-	    					{cl.className}
+	    					{this.state.classes?this.state.classes[cl].name : null}
 	    				</Text>
 	    			</View>
 	    		</View>
@@ -361,7 +381,9 @@ var styles = StyleSheet.create({
 
   contactcontainer: {
   	flexDirection: 'row',
-  	justifyContent: 'space-around',
+  	justifyContent: 'space-between',
+  	marginLeft: 30,
+  	marginRight: 30,
   },
 
   badgecontainer1: {
@@ -374,10 +396,14 @@ var styles = StyleSheet.create({
   },
 
   badgecontainer2: {
+  	borderColor: '#6b6e6d',
+  	borderTopWidth: 2,
   	flexDirection: 'row',
     flexWrap: 'wrap',
   	alignItems: 'flex-start',
-  	width: width * 0.9
+  	width: width * 0.9,
+  	marginBottom: 16,
+  	paddingTop: 16,
   },
 
   badgeinfo: {
@@ -467,12 +493,14 @@ var styles = StyleSheet.create({
   },
 
   descriptionslot: {
-  	height: 300,
   	justifyContent: 'center',
+  	marginTop: 24,
+  	marginBottom: 24,
   },
 
   description: {
-  	fontSize: 16,
+  	fontSize: 14,
+  	lineHeight:20,
   	padding: 1,
   	marginLeft: 4,
   	width: width * 0.8,

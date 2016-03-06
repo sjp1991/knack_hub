@@ -49,7 +49,7 @@ export default class TaskList extends Component {
 				<TouchableOpacity style={styles.filter}>
 					<Text style={styles.filterText}>filter options</Text>
 				</TouchableOpacity>
-				<ListView 
+				<ListView style={{backgroundColor:'#41645c'}}
 					dataSource={this.state.tasks}
 					renderSeparator={(sectionID, rowID)=><View key={rowID} style={styles.separator}></View>}
 					renderRow={(rowData, sectionID, rowID) =>
@@ -71,11 +71,11 @@ export default class TaskList extends Component {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor:'#41645c',
+		backgroundColor: '#373535',
 		marginTop: 56,
 	},
 	separator: {
-		height: 2,
+		height: 0,
 		backgroundColor: 'black'
 	},
 	renderText: {

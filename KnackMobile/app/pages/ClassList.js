@@ -60,7 +60,7 @@ export default class ClassList extends Component {
 				<TouchableOpacity style={styles.filter}>
 					<Text style={styles.filterText}>filter options</Text>
 				</TouchableOpacity>
-				<ListView 
+				<ListView style={{backgroundColor: '#41645c'}}
 					dataSource={this.state.classes}
 					renderSeparator={(sectionID, rowID)=><View key={rowID} style={styles.separator}></View>}
 					renderRow={this._renderRow.bind(this)} />
@@ -71,12 +71,12 @@ export default class ClassList extends Component {
 
 const styles = StyleSheet.create({
 	container: {
-		backgroundColor:'#41645c',
+		backgroundColor:'#373535',
 		flex: 1,
 		marginTop: 56,
 	},
 	separator: {
-		height: 2,
+		height: 0,
 		backgroundColor: 'black'
 	},
 	renderText: {

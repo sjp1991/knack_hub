@@ -24,6 +24,11 @@ export default class TaskDetail extends Component {
 		this.props.setNavBarVisibility(true)
 		this.props.navigator.pop()
 	}
+	_taskApply(){
+		this.setState({isApplied: true})
+		alert(this.props.route.rowData._id)
+		this.props.ddpClient.call('taskApply', [this.props.route.rowData._id])
+	}
 	render() {
 		return (
 			<View style={styles.container}>
@@ -51,7 +56,7 @@ export default class TaskDetail extends Component {
 						<View style={{marginTop: 8, flexDirection: 'row', width: width * 0.75,}}><Text style={{color: 'white', fontSize: 12, width: 55}}></Text><Text style={{color: 'white', fontSize: 12}}>2016/2/4 - 2016/3/5</Text></View>
 					</ScrollView>
 
-				<TouchableOpacity onPress={()=>this.setState({isApplied: true})}
+				<TouchableOpacity onPress={this._taskApply.bind(this)}
 					style={{height: 60, backgroundColor: '#41645c', justifyContent: 'center', alignItems: 'center',}}>
 					<Text style={{fontSize: 26, color: 'white', textAlign: 'center'}}>{this.state.isApplied ? 'Applied!' : 'Apply Task'}</Text>
 				</TouchableOpacity>
