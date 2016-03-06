@@ -8,7 +8,9 @@ import React, {
 	TouchableOpacity,
 	PickerIOS,
 	Image,
+	ScrollView,
 } from 'react-native'
+let {height, width} = Dimensions.get('window')
 
 // export default allows class to be referenced using import <className> from '<path>'
 export default class CreateBadge extends Component {
@@ -25,61 +27,58 @@ export default class CreateBadge extends Component {
 	render() {
 		return(
 			<View style={styles.container}>
-
-			<Image style={{width: 200, height: 200}} source={{uri: 'https://lh3.googleusercontent.com/TJXbuHM8KFn6JuG43LOc38gU0oJdlRoO1I64ncbUPj-y987ebZG89uFhB5Jf8R_tAbcp=w300'}} />
-
-				<TextInput style={styles.badgeinput} 
-					ref= "title"
-					placeholder="Enter Badge Title"
-  					placeholderTextColor="gray"
-					onChangeText={(title) => this.setState({title})}
-    				value={this.state.title}/>
-
-				<TextInput style={styles.badgeinput} 
-					ref= "description"
-					placeholder="Enter Badge Description"
-  					placeholderTextColor="gray"
-					onChangeText={(description) => this.setState({description})}
-    				value={this.state.description}/>
-
-				<TextInput style={styles.badgeinput} 
-					ref= "category"
-					placeholder="Enter category"
-  					placeholderTextColor="gray"
-					onChangeText={(category) => this.setState({category})}
-    				value={this.state.category}/>   		
-
-
-				<View style={styles.buttonContainer}>
-					<TouchableOpacity style = {styles.button}>
-						<Text>Cancel</Text>
-					</TouchableOpacity>
-					
-					<TouchableOpacity onPress={this._create.bind(this)}>
-						<Text>Create Badge</Text>
-					</TouchableOpacity>
+				<View style={{height: 30, backgroundColor: 'transparent'}}></View>
+				<View style={styles.imageContainer}>
+					<View style={{height: 23, backgroundColor: 'transparent'}}></View>
+					<Text style={styles.uploadText}>Tap to upload</Text>
+					<Text style={styles.uploadText}>Badge image</Text>
 				</View>
+				<ScrollView style={styles.scroll}>
+					<View>
+						<View style={{height:64, width:width*.7, borderWidth:2, borderColor:'gray', marginTop:30, alignSelf:'center'}}>
+							<Text style={{color:'gray', marginTop:-8, width:100, alignSelf:'center', textAlign:'center'}}>Badge Name</Text>
+							<TextInput style={styles.classinput}
+								onChangeText={(name) => this.setState({name})}
+		    				value={this.state.name}>
+							</TextInput>
+						</View>
+						<View style={{height:140, width:width*.7, borderWidth:2, borderColor:'gray', marginTop:30, alignSelf:'center'}}>
+							<Text style={{color:'gray', marginTop:-8, width:130, alignSelf:'center', textAlign:'center'}}>Badge Description</Text>
+							<TextInput style={[styles.classinput, {height: 125}]}
+								onChangeText={(description) => this.setState({description})}
+								multiline={true}
+		    				value={this.state.description}>
+							</TextInput>
+						</View>
+					</View>
+				</ScrollView>
+				<View style={{width: width*width, backgroundColor:'#41645c',}}>
+					<View style={{marginTop:30, justifyContent:'center', alignItems:'center', height:30}}>
+						<TouchableOpacity onPress={this._create.bind(this)}>
+							<Text style={{color:'white', fontSize: 25,}}>Create Badge</Text>
+							<View style={{height: 25, backgroundColor: 'transparent'}}></View>
+						</TouchableOpacity>
+					</View>
+				</View>
+				<View style={{height: 20, backgroundColor: 'transparent'}}></View>
 			</View>
 		)
 	}
 }
 
-var width = Dimensions.get('window').width;
-
 var styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    marginTop:60,
+    backgroundColor:'#373536',
     alignItems: 'center',
-    backgroundColor: 'gray',
   },
-  badgeinput: {
+  classinput: {
     fontSize: 20,
     textAlign: 'center',
-    backgroundColor: 'white',
-    margin: 10,
-    width: width * 0.8,
-    height: 40
+    width: width * 0.7,
+    height: 50,
+    color:'white'
   },
 
   buttonContainer: {
@@ -88,6 +87,33 @@ var styles = StyleSheet.create({
 
   button: {
   	paddingRight: 40
+  },
+
+  uploadText:{
+  	fontSize:15,
+  	textAlign:'center',
+  	color: '#333',
+  	justifyContent: 'center',
+  	backgroundColor: 'transparent',
+  },
+
+  imageContainer:{
+  	height: 110,
+  	width: 110,
+  	backgroundColor:'white',
+  	justifyContent:'center',
+  	borderBottomWidth: 24,
+  	borderRadius: 100,
+  	borderColor:'#41645c'
+  },
+
+  scroll:{
+  	height:height-225,
+  },
+
+  name:{
+  	color:'gray',
+  	fontSize:20,
   }
 });
 
