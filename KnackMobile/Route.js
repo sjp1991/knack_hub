@@ -34,7 +34,7 @@ import CreateClass from './app/pages/CreateClass'
 const Page = {Login, PageTwo, PageThree, PageFour, AddEarnerProfile, EarnerProfile, Register, Dashboard, ClassList, ClassDetail, TaskList, TaskDetail, EarnMoreBadge, CreateBadge, CreateClass}
 
 let ddpClient = new DDPClient({
-  host: '172.18.146.36',
+  host: '172.18.147.31',
   // host: '192.168.1.3', // If using android use your device IP address
   port: '3000',
   // url: <your websocket url>

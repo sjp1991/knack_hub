@@ -13,14 +13,20 @@ let {height, width} = Dimensions.get('window')
 export default class ClassDetail extends Component {
 	constructor(props) {
 		super(props)
+	}
+	componentDidMount(){
 		this.props.setNavBarVisibility(false)
+	}
+	_onPressClose(){
+		this.props.setNavBarVisibility(true)
+		this.props.navigator.pop()
 	}
 	render() {
 		return (
 			<View style={styles.container}>
 				<View style={{height: 170, width: width, backgroundColor: '#41645c'}}>
 					<Image style={{height: 160, width: width, resizeMode: 'cover'}} source={require('./../img/class/class1.jpg')} />
-					<TouchableOpacity style={{position: 'absolute', top: 26, right: 20}}>
+					<TouchableOpacity onPress={this._onPressClose.bind(this)} style={{position: 'absolute', top: 26, right: 20}}>
 						<Image style={{width: 44, height: 44}} source={require('./../img/navigation/close_black.png')}/>
 					</TouchableOpacity>
 				</View>

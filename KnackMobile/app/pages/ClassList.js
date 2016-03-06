@@ -17,9 +17,12 @@ export default class ClassList extends Component {
 			dataSource: ds.cloneWithRows(['Basic food service', 'Cooking Method', 'Dish-machine Operation', 'Knife skills', 'Personal Finance', 'Teamwork']),
 		}
 	}
+	_onClassRowPress(rowData, rowID) {
+		this.props.navigator.push({className: 'ClassDetail', title: ''})
+	}
 	_renderRow(rowData, sectionID, rowID) {
 		return (
-			<TouchableOpacity>
+			<TouchableOpacity onPress={this._onClassRowPress.bind(this, rowData, rowID)}>
 				<Image style={styles.rowImage} source={require('./../img/class/class1.jpg')}>
 					<View style={styles.rowView}>
 						<Text style={styles.renderText}>{rowData}</Text>
@@ -35,9 +38,9 @@ export default class ClassList extends Component {
 	render() {
 		return (
 			<ScrollView style={styles.container}>
-			<TouchableOpacity style={styles.filter}>
-				<Text style={styles.filterText}>filter options</Text>
-			</TouchableOpacity>
+				<TouchableOpacity style={styles.filter}>
+					<Text style={styles.filterText}>filter options</Text>
+				</TouchableOpacity>
 				<ListView 
 					dataSource={this.state.dataSource}
 					renderSeparator={(sectionID, rowID)=><View key={rowID} style={styles.separator}></View>}
