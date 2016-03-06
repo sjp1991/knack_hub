@@ -16,11 +16,11 @@ let {height, width} = Dimensions.get('window')
 export default class CreateBadge extends Component {
 	constructor(props) {
 		super(props)
-		this.state={title: '', description: '', category:'', pic:''}
-	}
-
+		this.state={title:'Time Management', pic:'http://s17.postimg.org/i1yc15z27/time_management.png',
+description:'Learn how to manage your time and stop procrastinating', category:'Soft Skill'}
+}
 	_create() {
-		this.props.ddpClient.call('createBadge', [{title:this.state.title, pic:'https://lh3.googleusercontent.com/TJXbuHM8KFn6JuG43LOc38gU0oJdlRoO1I64ncbUPj-y987ebZG89uFhB5Jf8R_tAbcp=w300',
+		this.props.ddpClient.call('createBadge', [{title:this.state.title, pic:this.state.pic,
 		description:this.state.description, category:this.state.category}])
 	}
 
