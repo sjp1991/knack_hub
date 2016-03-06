@@ -23,7 +23,7 @@ export default class EarnMoreBadge extends Component {
 			dataSource: ds.cloneWithRows(tempData),
 			classDataSource: ds.cloneWithRows(tempClassData),
 		}
-		this.props.setNavBarVisibility(true)
+		
 	}
 	_onRowPress(rowID) {
 		let data = tempData
@@ -65,6 +65,9 @@ export default class EarnMoreBadge extends Component {
 				</View>
 			)
 		}
+	}
+	componentDidMount(){
+		this.props.setNavBarVisibility(true)
 	}
 	render() {
 		return (

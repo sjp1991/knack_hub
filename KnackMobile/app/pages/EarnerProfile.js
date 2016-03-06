@@ -71,7 +71,6 @@ export default class EarnerProfile extends Component {
 		var appliedClasses = new ListView.DataSource({
       		rowHasChanged: (r1, r2) => r1 != r2
     	})
-
 		this.state = {
 			appliedTasks: appliedTasks.cloneWithRows(earner.appliedTasks),
 			appliedClasses: appliedClasses.cloneWithRows(earner.appliedClasses),
@@ -79,46 +78,63 @@ export default class EarnerProfile extends Component {
 			showClasses: false,
 			userId: undefined,
 			earner: earner,
+			badges: [],
+			users: undefined,
 		}
+	}
+	componentDidMount() {
+		_this = this
 		this.props.ddpClient.connect((err, wasReconnect) => {
-			let connected = true;
-			if (err) {
-				console.log(err)
-				connected = false
-			} else {
-				//this.makeSubscription();
-				//this.observePosts();
-				this.state.earner = earner;
-				console.log(this.state.earner);
-			}
-    		this.setState({ connected: connected });
-    	});
+      let connected = true;
+      if (err) {
+        connected = false
+      } else {
+        this.observeBadges.bind(_this)()
+        this.observeEarners.bind(_this)()
+        this.observeUser.bind(_this)()
+      }
+      this.setState({ connected: connected })
+    })
 	}
-	_popPage(){
-		this.props.navigator.pop()
-	}
-	_pushPage(className, title) {
-		this.props.navigator.push({className, title})
-	}
-	makeSubscription() {
-		this.props.ddpClient.subscribe("earners", [], () => {
-			this.setState({earner: this.props.ddpClient.collections.earners});
-		});
-	}
-	observeEarner() {
+	observeBadges() {
+    let observer = this.props.ddpClient.observe("badges");
+    observer.added = (id) => {
+      this.setState({badges: Object.values(this.props.ddpClient.collections.badges)})
+    }
+    observer.changed = (id, oldFields, clearedFields, newFields) => {
+      this.setState({badges: Object.values(this.props.ddpClient.collections.badges)})
+    }
+    observer.removed = (id, oldValue) => {
+      this.setState({badges: Object.values(this.props.ddpClient.collections.badges)})
+    }
+  }
+	observeEarners() {
 		let observer = this.props.ddpClient.observe("earners");
 		observer.added = (id) => {
-			this.setState({earner: this.props.ddpClient.collections.earners})
+			this.setState({earners: Object.values(this.props.ddpClient.collections.earners)})
 		}
 		observer.changed = (id, oldFields, clearedFields, newFields) => {
-			this.setState({earner: this.props.ddpClient.collections.earners})
+			this.setState({earners: Object.values(this.props.ddpClient.collections.earners)})
 		}
 		observer.removed = (id, oldValue) => {
-			this.setState({earner: this.props.ddpClient.collections.earners})
+			this.setState({earners: Object.values(this.props.ddpClient.collections.earners)})
 		}
 	}
-	_renderSeparatorView(rowData, sectionid, rowId) {
-		return (sectionId,rowId)=><View key={rowId} style={styles.separator}></View>
+	observeUser() {
+		let observer = this.props.ddpClient.observe("users");
+		observer.added = (id) => {
+			this.setState({users: Object.values(this.props.ddpClient.collections.users)})
+		}
+		observer.changed = (id, oldFields, clearedFields, newFields) => {
+			this.setState({users: Object.values(this.props.ddpClient.collections.users)})
+		}
+		observer.removed = (id, oldValue) => {
+			this.setState({users: Object.values(this.props.ddpClient.collections.users)})
+		}
+	}
+	_onPressAddNewBadge() {
+		console.log(this.state.users)
+		// this.props.navigator.push({className: 'EarnMoreBadge', 'title': 'Earn a Badge'})
 	}
 	render() {
 		return(
@@ -134,7 +150,7 @@ export default class EarnerProfile extends Component {
 		        		<View style={styles.rightcontainer}>
 		        			<Image style={{width: 25, height: 25, marginLeft: 180}} source={require('./../img/navigation/edit.png')}/>
 							<Text style={styles.name}>
-								{this.state.earner.firstName} {this.state.earner.lastName}						
+								{this.state.earners ? this.state.earners[0].firstName : null} {this.state.earners ? this.state.earners[0].lastName : null}						
 							</Text>
 							<View style={styles.levelcontainer}>
 								<Text style={styles.level}> Lv 7 </Text>
@@ -148,7 +164,7 @@ export default class EarnerProfile extends Component {
 							<Text style={styles.contact}> 1234 56th St. Van </Text>
 						</View>
 						<View style={styles.contactcontainer}>
-							<Text style={styles.contact}> {this.state.earner.email} </Text>
+							<Text style={styles.contact}> {this.state.users ? this.state.users[0].emails[0].address : null} </Text>
 							<Text style={styles.contact}>                </Text>
 						</View>
 					</View>
@@ -162,8 +178,10 @@ export default class EarnerProfile extends Component {
 					</View>
 					<View style={{height: 20, backgroundColor: 'transparent'}}></View>
 					<View style={styles.badgecontainer2}>
-						{this.renderBadge(this.state.earner.earnedBadges)}
-						<Image style={{width: 100, height: 120, resizeMode: 'cover', margin: 5,}} source={require('./../img/badges/add_new_badge.png')}/>
+						{this.renderBadge()}
+						<TouchableOpacity onPress={this._onPressAddNewBadge.bind(this)}>
+							<Image style={{width: 100, height: 120, resizeMode: 'cover', margin: 5,}} source={require('./../img/badges/add_new_badge.png')}/>
+						</TouchableOpacity>
 					</View>
 			    </View>
 
@@ -229,12 +247,6 @@ export default class EarnerProfile extends Component {
 						<ScrollView style={styles.scrollcontainer}>
 							<ListView 
 								dataSource={this.state.appliedClasses}
-								renderSeparator={
-									(this.rowId < earner.appliedClasses.length - 1) ? 
-										this._renderSeparatorView()
-									:
-									null
-								}
 								renderRow={this.renderClasses}
 								style={styles.listview} />
 					</ScrollView>
@@ -246,27 +258,14 @@ export default class EarnerProfile extends Component {
 			</ScrollView>
 		)
 	}
-
-	renderBadge(badges) {
-		if(!badges) {
-			return
+	renderBadge() {
+		if(this.state.badges) {
+			return this.state.badges.map((badge)=>{
+				return (
+					<Image key={badge._id} style={{width: 100, height: 120, resizeMode: 'cover', margin: 5,}} source={{uri: badge.pic}}/>
+				)
+			})
 		}
-
-		return badges.map((badge)=>{
-			return (
-				<Image style={{width: 100, height: 120, resizeMode: 'cover', margin: 5,}} source={require('./../img/badges/badic_food_service.png')}/>
-				// <Image
-	   //     			style={styles.logo}
-	   //      		source={{uri: 'http://facebook.github.io/react/img/logo_og.png'}}
-	   //      	>
-				// 	<View key={badge.badgeId} style={styles.badgeinfo}>
-				// 		<Text style={styles.badgename}>{badge.badgeName}</Text>
-				// 		<Text style={styles.badgecompany}>{badge.badgeCompany}</Text>
-				// 	</View>
-				
-				// </Image>
-			)
-		})
 	}
 
 	showTasks() {
@@ -322,7 +321,6 @@ var styles = StyleSheet.create({
 
   backgroundImg: {
     width: width, 
-    resizeMode: 'cover',
     height: null,
   },
 
