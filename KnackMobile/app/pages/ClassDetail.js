@@ -24,6 +24,11 @@ export default class ClassDetail extends Component {
 		this.props.setNavBarVisibility(true)
 		this.props.navigator.pop()
 	}
+	_registerClass(){
+		this.setState({isEnrolled: true})
+		alert(this.props.route.rowData._id)
+		this.props.ddpClient.call('registerClass', [this.props.route.rowData._id])
+	}
 	render() {
 		return (
 			<View style={styles.container}>
@@ -48,15 +53,9 @@ export default class ClassDetail extends Component {
 					<View style={{marginTop: 8, flexDirection: 'row', width: width * 0.75,}}><Text style={{color: 'white', fontSize: 12, width: 55, textAlign: 'right'}}>Time: </Text><Text style={{color: 'white', fontSize: 12}}>{this.props.route.rowData.when}</Text></View>
 					<View style={{marginTop: 8, flexDirection: 'row', width: width * 0.75,}}><Text style={{color: 'white', fontSize: 12, width: 55}}></Text><Text style={{color: 'white', fontSize: 12}}>2016/2/4 - 2016/3/5</Text></View>
 				</ScrollView>
-				<TouchableOpacity onPress={()=>this.setState({isEnrolled: true})} style={{height: 60, backgroundColor: '#41645c', justifyContent: 'center', alignItems: 'center',}}>
+				<TouchableOpacity onPress={this._registerClass.bind(this)} style={{height: 60, backgroundColor: '#41645c', justifyContent: 'center', alignItems: 'center',}}>
 					<Text style={{fontSize: 26, color: 'white', textAlign: 'center'}}>{this.state.isEnrolled? 'Enrolled!' : 'Enroll Class'}</Text>
 				</TouchableOpacity>
-				{/*<Text style={{fontSize: 30, alignSelf: 'center'}}>Class Title</Text>
-								<Text style={styles.h3}>Badges to be granted upon completion</Text>
-								<Text style={styles.h3}>Class Details</Text>
-								<Text style={styles.h3}>Location</Text>
-								<Text style={styles.h3}>When</Text>
-								<TouchableOpacity style={styles.button}><Text style={styles.buttonText}>Enroll Class</Text></TouchableOpacity>*/}
 			</View>
 		)
 	}

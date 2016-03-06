@@ -6,6 +6,8 @@ Agencies = new Mongo.Collection('agencies')
 Classes = new Mongo.Collection('classes')
 Badges = new Mongo.Collection('badges')
 
+let userId = '9D3MN58QwCftKqeKY'
+
 Meteor.methods({
   'addPost': function() {
     console.log('addPost')
@@ -30,56 +32,47 @@ Meteor.methods({
   },
 
   createEarner(earnerInfo){
-  	let userId = Meteor.userId()
   	let {firstName, lastName, pic, desc, phone, address} = earnerInfo
   	Earners.insert({firstName, lastName, pic, desc, phone, address, earnedBadges: [], appliedTasks: [], appliedClasses: [], userId})
   },
 
   registerClass(classId){
-  	let userId = Meteor.userId()
   	// increase the signedUpNum
-  	Classes.update(classId, {$inc: {signedUpNum: 1}})
+  	// Classes.update(classId, {$inc: {signedUpNum: 1}})
   	// add class to earner 
   	Earners.update({userId}, {$addToSet:{appliedClasses: classId}})
   },
 
   taskApply(taskId){
-    let userId = Meteor.userId()
     Earners.update({userId}, {$addToSet:{appliedTasks: taskId}})
   },
 
   earnBadge(badgeId){
-  	let userId = Meteor.userId()
   	Earners.update({userId},{$addToSet:{earnedBadges:badgeId}})
   },
 
   createEmployer(employerInfo){
-  	let userId = Meteor.userId()
   	let {firstName, lastName, cName, address, industry, phone, description} = employerInfo
   	Employers.insert({firstName, lastName, cName, address, industry, phone, description, postedTasks:[], userId})
   },
 
   createTask(taskInfo){
-  	let userId = Meteor.userId()
   	let {title, wage, location, description, requiredBadgeId, distance} = taskInfo
   	Tasks.insert({title, wage, location, description, requiredBadgeId, userId})
 
   },
 
   createAgency(agencyInfo){
-  	let userId = Meteor.userId()
   	let {name, address, phone, description} = agencyInfo
   	Agencies.insert({name, address, phone, description, userId})
   },
 
   createClass(classInfo){
-  	let userId = Meteor.userId()
   	let {name, description, location, size, signedUpNum, badgeId, when, bg} = classInfo
   	Classes.insert({name, description, location, size, signedUpNum, badgeId, when, bg, userId})
   },
 
   createBadge(badgeInfo){
-  	let userId = Meteor.userId()
   	let {title, pic, description, category} = badgeInfo
   	Badges.insert({title, pic, description, category, userId})
   },
