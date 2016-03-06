@@ -13,6 +13,9 @@ let {height, width} = Dimensions.get('window')
 export default class TaskDetail extends Component {
 	constructor(props) {
 		super(props)
+		this.state = {
+			isApplied: false
+		}
 	}
 	componentDidMount(){
 		this.props.setNavBarVisibility(false)
@@ -30,31 +33,29 @@ export default class TaskDetail extends Component {
 						<Image style={{width: 44, height: 44}} source={require('./../img/navigation/close_black.png')}/>
 					</TouchableOpacity>
 				</View>
-				<ScrollView contentContainerStyle={{flex:1, backgroundColor: 'black', alignItems: 'center'}}>
-					<View style={{width: width * 0.9, }}>
-						<Text style={styles.h1}>Part-time waiter</Text>
-					</View>
-					<View style={styles.separator} />
-					<View style={{marginTop:12, marginBottom: 12, width: width * 0.85, flexDirection: 'row', height: 130, justifyContent:'space-around', alignItems: 'center',}}>
-						<Image style={{width: 100, height: 120, resizeMode: 'cover',}} source={require('./../img/badges/badic_food_service.png')}/>
-						<Text style={{width: 140, color: 'white', fontSize: 15}}>Badge granted upon completion</Text>
-					</View>
-					<View style={styles.separator} />
-					<Text style={{ marginTop: 16, width: width * 0.75, color: 'white', fontSize: 12, lineHeight: 12}}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.</Text>
-					<Text style={{ marginTop: 4, width: width * 0.75, color: 'white', fontSize: 12}}>Rate: $ 12 / h</Text>
-					<Text style={{ marginTop: 4, width: width * 0.75, color: 'white', fontSize: 12}}>Location: 1234 East Hasting. Vancouver</Text>
-					<Text style={{ marginTop: 4, width: width * 0.75, color: 'white', fontSize: 12}}>Time: 6:00 p.m. - 9:00 p.m. Wednesdays</Text>
-					<Text style={{ marginTop: 4, width: width * 0.75, color: 'white', fontSize: 12}}>2016/2/4 - 2016/3/5</Text>
-				</ScrollView>
-				<TouchableOpacity style={{height: 60, backgroundColor: '#41645c', justifyContent: 'center', alignItems: 'center',}}>
-					<Text style={{fontSize: 26, color: 'white', textAlign: 'center'}}>Apply Task</Text>
+
+					<ScrollView contentContainerStyle={{height: height-170, backgroundColor: 'black', alignItems: 'center'}}>
+						<View style={{width: width * 0.9, }}>
+							<Text style={styles.h1}>Part-time waiter</Text>
+						</View>
+						<View style={styles.separator} />
+						<View style={{marginTop:12, marginBottom: 12, width: width * 0.85, flexDirection: 'row', height: 130, justifyContent:'space-around', alignItems: 'center',}}>
+							<Image style={{width: 100, height: 120, resizeMode: 'cover',}} source={require('./../img/badges/badic_food_service.png')}/>
+							<Text style={{width: 140, color: 'white', fontSize: 15}}>Required badges to apply to this task</Text>
+						</View>
+						<View style={styles.separator} />
+						<Text style={{ marginTop: 24, width: width * 0.75, color: 'white', fontSize: 12, lineHeight: 20}}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.</Text>
+						<View style={{marginTop: 8, flexDirection: 'row', width: width * 0.75,}}><Text style={{color: 'white', fontSize: 12, width: 55, textAlign: 'right'}}>Rate: </Text><Text style={{color: 'white', fontSize: 12}}>$ 12 / h</Text></View>
+						<View style={{marginTop: 8, flexDirection: 'row', width: width * 0.75,}}><Text style={{color: 'white', fontSize: 12, width: 55, textAlign: 'right'}}>Location: </Text><Text style={{color: 'white', fontSize: 12}}>1234 East Hasting. Vancouver</Text></View>
+						<View style={{marginTop: 8, flexDirection: 'row', width: width * 0.75,}}><Text style={{color: 'white', fontSize: 12, width: 55, textAlign: 'right'}}>Time: </Text><Text style={{color: 'white', fontSize: 12}}>6:00 p.m. - 9:00 p.m. Wednesdays</Text></View>
+						<View style={{marginTop: 8, flexDirection: 'row', width: width * 0.75,}}><Text style={{color: 'white', fontSize: 12, width: 55}}></Text><Text style={{color: 'white', fontSize: 12}}>2016/2/4 - 2016/3/5</Text></View>
+					</ScrollView>
+
+				<TouchableOpacity onPress={()=>this.setState({isApplied: true})}
+					style={{height: 60, backgroundColor: '#41645c', justifyContent: 'center', alignItems: 'center',}}>
+					<Text style={{fontSize: 26, color: 'white', textAlign: 'center'}}>{this.state.isApplied ? 'Applied!' : 'Apply Task'}</Text>
 				</TouchableOpacity>
-				{/*<Text style={{fontSize: 30, alignSelf: 'center'}}>Class Title</Text>
-								<Text style={styles.h3}>Badges to be granted upon completion</Text>
-								<Text style={styles.h3}>Class Details</Text>
-								<Text style={styles.h3}>Location</Text>
-								<Text style={styles.h3}>When</Text>
-								<TouchableOpacity style={styles.button}><Text style={styles.buttonText}>Enroll Class</Text></TouchableOpacity>*/}
+				
 			</View>
 		)
 	}
@@ -63,8 +64,7 @@ export default class TaskDetail extends Component {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		// marginBottom: 30,
-		// flexDirection: 'column',
+		backgroundColor:'#41645c',
 	},
 	separator: {
 		height: 2,

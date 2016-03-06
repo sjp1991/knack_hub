@@ -36,7 +36,7 @@ export default class TaskList extends Component {
 						<TouchableOpacity onPress={this._onTaskRowPress.bind(this)}>
 							<Image style={styles.rowImage} source={require('./../img/class/class1.jpg')}>
 								<View style={styles.rowView}>
-									<Text style={styles.renderText}>{rowData}</Text>
+									<Text style={[styles.renderText, {width: 90}]}>{rowData}</Text>
 									<Text style={styles.renderText}>Noodle House</Text>
 									<Text style={styles.renderText}>500m</Text>
 								</View>

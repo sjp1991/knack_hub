@@ -30,7 +30,7 @@ export default class ClassDetail extends Component {
 						<Image style={{width: 44, height: 44}} source={require('./../img/navigation/close_black.png')}/>
 					</TouchableOpacity>
 				</View>
-				<ScrollView contentContainerStyle={{flex:1, backgroundColor: 'black', alignItems: 'center'}}>
+				<ScrollView contentContainerStyle={{height: height-170, backgroundColor: 'black', alignItems: 'center'}}>
 					<View style={{width: width * 0.9, }}>
 						<Text style={styles.h1}>Basic Food Service</Text>
 					</View>
@@ -40,10 +40,10 @@ export default class ClassDetail extends Component {
 						<Text style={{width: 140, color: 'white', fontSize: 15}}>Badge granted upon completion</Text>
 					</View>
 					<View style={styles.separator} />
-					<Text style={{ marginTop: 16, width: width * 0.75, color: 'white', fontSize: 12, lineHeight: 12}}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</Text>
-					<Text style={{ marginTop: 16, width: width * 0.75, color: 'white', fontSize: 12}}>Location: 1234 East Hasting. Vancouver</Text>
-					<Text style={{ marginTop: 4, width: width * 0.75, color: 'white', fontSize: 12}}>Time: 6:00 p.m. - 9:00 p.m. Wednesdays</Text>
-					<Text style={{ marginTop: 4, width: width * 0.75, color: 'white', fontSize: 12}}>2016/2/4 - 2016/3/5</Text>
+					<Text style={{ marginTop: 24, width: width * 0.75, color: 'white', fontSize: 12, lineHeight: 20}}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</Text>
+					<View style={{marginTop: 8, flexDirection: 'row', width: width * 0.75,}}><Text style={{color: 'white', fontSize: 12, width: 55, textAlign: 'right'}}>Location: </Text><Text style={{color: 'white', fontSize: 12}}>1234 East Hasting. Vancouver</Text></View>
+					<View style={{marginTop: 8, flexDirection: 'row', width: width * 0.75,}}><Text style={{color: 'white', fontSize: 12, width: 55, textAlign: 'right'}}>Time: </Text><Text style={{color: 'white', fontSize: 12}}>6:00 p.m. - 9:00 p.m. Wednesdays</Text></View>
+					<View style={{marginTop: 8, flexDirection: 'row', width: width * 0.75,}}><Text style={{color: 'white', fontSize: 12, width: 55}}></Text><Text style={{color: 'white', fontSize: 12}}>2016/2/4 - 2016/3/5</Text></View>
 				</ScrollView>
 				<TouchableOpacity style={{height: 60, backgroundColor: '#41645c', justifyContent: 'center', alignItems: 'center',}}>
 					<Text style={{fontSize: 26, color: 'white', textAlign: 'center'}}>Enroll Class</Text>
@@ -62,8 +62,7 @@ export default class ClassDetail extends Component {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		// marginBottom: 30,
-		// flexDirection: 'column',
+		backgroundColor:'#41645c',
 	},
 	separator: {
 		height: 2,
