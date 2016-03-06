@@ -19,7 +19,7 @@ export default class ClassList extends Component {
 		}
 	}
 	_onClassRowPress(rowData, rowID) {
-		this.props.navigator.push({className: 'ClassDetail', title: ''})
+		this.props.navigator.push({className: 'ClassDetail', title: '', rowData})
 	}
 	_renderRow(rowData, sectionID, rowID) {
 		return (

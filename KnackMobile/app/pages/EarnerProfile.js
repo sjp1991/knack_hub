@@ -327,6 +327,7 @@ var styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: '#373536',
+    marginTop: 56,
   },
 
   backgroundImg: {

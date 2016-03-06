@@ -36,7 +36,7 @@ export default class TaskDetail extends Component {
 
 					<ScrollView contentContainerStyle={{height: height-170, backgroundColor: 'black', alignItems: 'center'}}>
 						<View style={{width: width * 0.9, }}>
-							<Text style={styles.h1}>Part-time waiter</Text>
+							<Text style={styles.h1}>{this.props.route.rowData.title}</Text>
 						</View>
 						<View style={styles.separator} />
 						<View style={{marginTop:12, marginBottom: 12, width: width * 0.85, flexDirection: 'row', height: 130, justifyContent:'space-around', alignItems: 'center',}}>
@@ -44,7 +44,7 @@ export default class TaskDetail extends Component {
 							<Text style={{width: 140, color: 'white', fontSize: 15}}>Required badges to apply to this task</Text>
 						</View>
 						<View style={styles.separator} />
-						<Text style={{ marginTop: 24, width: width * 0.75, color: 'white', fontSize: 12, lineHeight: 20}}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.</Text>
+						<Text style={{ marginTop: 24, width: width * 0.75, color: 'white', fontSize: 12, lineHeight: 20}}>{this.props.route.rowData.description}</Text>
 						<View style={{marginTop: 8, flexDirection: 'row', width: width * 0.75,}}><Text style={{color: 'white', fontSize: 12, width: 55, textAlign: 'right'}}>Rate: </Text><Text style={{color: 'white', fontSize: 12}}>$ 12 / h</Text></View>
 						<View style={{marginTop: 8, flexDirection: 'row', width: width * 0.75,}}><Text style={{color: 'white', fontSize: 12, width: 55, textAlign: 'right'}}>Location: </Text><Text style={{color: 'white', fontSize: 12}}>1234 East Hasting. Vancouver</Text></View>
 						<View style={{marginTop: 8, flexDirection: 'row', width: width * 0.75,}}><Text style={{color: 'white', fontSize: 12, width: 55, textAlign: 'right'}}>Time: </Text><Text style={{color: 'white', fontSize: 12}}>6:00 p.m. - 9:00 p.m. Wednesdays</Text></View>
