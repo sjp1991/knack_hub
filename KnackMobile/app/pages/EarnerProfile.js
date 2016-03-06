@@ -20,9 +20,13 @@ var earner = {
 	phone: "604-555-555",
 	earnedBadges: [{
 		badgeId: "badge1",
+		badgeName: "Basic Food Service",
+		badgeCompany: "Potluck Cafe",
 	},
 	{
 		badgeId: "badge2",
+		badgeName: "Cooking Methods",
+		badgeCompany: "Potluck Cafe",
 	}],
 	appliedTasks: [{
 		taskId: "task1",
@@ -34,6 +38,12 @@ var earner = {
 		taskId: "task2",
 		taskName: "Testing task 2",
 		appliedDate: "Mar. 1st 2016",
+		status: "Applied",
+	},
+	{
+		taskId: "task3",
+		taskName: "Testing task 3",
+		appliedDate: "Feb. 1st 2016",
 		status: "Applied",
 	}],
 	appliedClasses: [{
@@ -107,6 +117,9 @@ export default class EarnerProfile extends Component {
 			this.setState({earner: this.props.ddpClient.collections.earners})
 		}
 	}
+	_renderSeparatorView(rowData, sectionid, rowId) {
+		return (sectionId,rowId)=><View key={rowId} style={styles.separator}></View>
+	}
 	render() {
 		return(
 			<View style={styles.container}>
@@ -121,14 +134,20 @@ export default class EarnerProfile extends Component {
 						</Text>
 					</View>
 				</View>
+				<View style={styles.badgecontainer}>
+					{this.renderBadge(this.state.earner.earnedBadges)}
+				</View>
+
         		<View style={styles.attr}>
-	        		<Text style={styles.heading}>
-	        			Description
-	        		</Text>
-	        		<View style={styles.descriptioncontainer}>
-		        		<Text style={styles.description}>
-		        			{this.state.earner.description}
+        			<View style={styles.descriptionslot}>
+		        		<Text style={styles.heading}>
+		        			Description
 		        		</Text>
+		        		<View style={styles.descriptioncontainer}>
+			        		<Text style={styles.description}>
+			        			{this.state.earner.description}
+			        		</Text>
+		        		</View>
 	        		</View>
 	        	</View>
 
@@ -141,15 +160,17 @@ export default class EarnerProfile extends Component {
 		        				</Text>
 		        			</Text>
 		        		</TouchableOpacity>
-		        		<Text style = {styles.lengthContainer}>
-		        			({earner.appliedTasks.length})
-		        		</Text>
+		        		<View style={styles.lengthcontainer}>
+			        		<Text style = {styles.length}>
+			        			{earner.appliedTasks.length}
+			        		</Text>
+		        		</View>
 		        	</View>
 	        	</View>
 	        	
 				{
 					this.state.showTasks ?
-					<View style={{height:100}}>
+					<View style={{height:250}}>
 					<ScrollView style={styles.scrollcontainer}>
 						<ListView 
 							dataSource={this.state.appliedTasks}
@@ -168,20 +189,29 @@ export default class EarnerProfile extends Component {
 		        					Course Registered
 		        			</Text>
 		        		</TouchableOpacity>
-		        		<Text style = {styles.lengthContainer}>
-		        			({earner.appliedClasses.length})
-		        		</Text>
+		        		<View style={styles.lengthcontainer}>
+			        		<Text style = {styles.length}>
+			        			{earner.appliedClasses.length}
+			        		</Text>
+		        		</View>
 		        	</View>
 	        	</View>
 
 	        	{
 					this.state.showClasses ?
-					<View style={{height:100}}>
-					<ScrollView style={styles.scrollcontainer}>
-						<ListView 
-							dataSource={this.state.appliedClasses}
-							renderRow={this.renderClasses}
-							style={styles.listview} />
+					
+					<View style={{height:250}}>
+						<ScrollView style={styles.scrollcontainer}>
+							<ListView 
+								dataSource={this.state.appliedClasses}
+								renderSeparator={
+									(this.rowId < earner.appliedClasses.length - 1) ? 
+										this._renderSeparatorView()
+									:
+									null
+								}
+								renderRow={this.renderClasses}
+								style={styles.listview} />
 					</ScrollView>
 					</View>
 					:
@@ -189,6 +219,27 @@ export default class EarnerProfile extends Component {
 				}
 			</View>
 		)
+	}
+
+	renderBadge(badges) {
+		if(!badges) {
+			return
+		}
+		return badges.map((badge)=>{
+			return (
+				<View style={styles.badgeAlign}>
+				<Image
+	       			style={styles.logo}
+	        		source={{uri: 'http://facebook.github.io/react/img/logo_og.png'}}
+	        	>
+					<View key={badge.badgeId} style={styles.badgeinfo}>
+						<Text style={styles.badgename}>{badge.badgeName}</Text>
+						<Text style={styles.badgecompany}>{badge.badgeCompany}</Text>
+					</View>
+				</Image>
+				</View>
+			)
+		})
 	}
 
 	showTasks() {
@@ -205,16 +256,28 @@ export default class EarnerProfile extends Component {
 
 	renderTasks(task) {
 	    return (
-	    	<View style={styles.row}>
-	    		<Text>{task.taskName}</Text>
+	    	<View style={styles.popUpAttr}>
+		    	<View style={styles.row}>
+		    		<View style={styles.rowEntry}>
+		    			<Text style={styles.popUpContainers}>
+		    				{task.taskName}
+		    			</Text>
+		    		</View>
+		    	</View>
 	    	</View>
 		);
 	}
 
 	renderClasses(cl) {
 	    return (
-	    	<View style={styles.row}>
-	    		<Text>{cl.className}</Text>
+	    	<View style={styles.popUpAttr}>
+		    	<View style={styles.row}>
+		    		<View style={styles.rowEntry}>
+		    			<Text style={styles.popUpContainers}>
+	    					{cl.className}
+	    				</Text>
+	    			</View>
+	    		</View>
 	    	</View>
 		);
 	}
@@ -227,7 +290,7 @@ var styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    backgroundColor: 'gray',
+    backgroundColor: '#373536',
     paddingTop: 100,
   },
 
@@ -241,33 +304,70 @@ var styles = StyleSheet.create({
   	marginLeft: 20,
   },
 
+  badgecontainer: {
+  	height: 200,
+  },
+
+  badgeinfo: {
+  	justifyContent: 'center',
+  	alignItems: 'center',
+  },
+
+  badgename: {
+  	fontSize: 16,
+  	color: 'white',
+  	fontWeight: 'bold',
+  },
+
+  badgecompany: {
+  	fontSize: 14,
+  	color: 'white',
+  },
+
+  badgeAlign: {
+ 	flexDirection:'row'
+  },
+
   scrollcontainer: {
   	height: 100,
   },
 
+  separator: {
+  	justifyContent: 'center',
+  	height: 2,
+  	backgroundColor: 'white',
+  	width: width * 0.8,
+  },
+
   row: {
-    flexDirection: 'row',
     justifyContent: 'center',
-    padding: 10,
-    backgroundColor: 'white',
-    borderColor: 'black',
-    borderWidth: 1,
+    height: 60,
+    backgroundColor: '#668f7f',
+    width: width,
+  },
+
+  rowEntry: {
+  	flexDirection: 'row',
+  	justifyContent: 'center',
   },
 
   name: {
   	fontSize: 30,
   	paddingBottom: 20,
+  	color: 'white',
   },
 
   logo: {
-    height: 100,
+    height: 110,
     borderRadius: 50,
-    width: 100
+    width: 110,
+    borderWidth: 5,
+    borderColor: '#373536',
   },
 
   attr: {
-  	borderTopWidth: 1,
-  	marginTop: 10,
+  	borderTopWidth: 2,
+  	borderColor: 'gray',
   },
 
   heading: {
@@ -275,10 +375,16 @@ var styles = StyleSheet.create({
     marginBottom: 8,
     textAlign: 'center',
   	fontWeight: 'bold',
+  	color: 'white',
   },
 
   descriptioncontainer: {
-  	backgroundColor: 'white',
+  	backgroundColor: '#373536',
+  },
+
+  descriptionslot: {
+  	height: 80,
+  	justifyContent: 'center',
   },
 
   description: {
@@ -286,6 +392,7 @@ var styles = StyleSheet.create({
   	padding: 1,
   	marginLeft: 4,
   	width: width * 0.8,
+  	color: 'white',
   },
 
   buttonContainer: {
@@ -293,13 +400,29 @@ var styles = StyleSheet.create({
   	alignItems: 'center',
   	justifyContent: 'space-between',
   	width: width * 0.8,
+  	height: 80,
   },
 
-  lengthContainer: {
-  	marginLeft: 5,
-  	fontSize: 18,
+  length: {
+  	fontSize: 28,
   	fontWeight: 'bold',
   	textAlign: 'center',
+  	color: 'white',
+  },
+
+  lengthcontainer: {
+  	backgroundColor: '#668f7f',
+  	margin: 5,
+  	borderRadius: 50,
+  	height: 40,
+  	width: 40,
+  	alignItems: 'center',
+  },
+
+  popUpContainers: {
+  	fontSize: 20,
+  	fontWeight: 'bold',
+  	color: 'white',
   }
 });
 
