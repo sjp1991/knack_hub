@@ -25,7 +25,8 @@ import Register from './app/pages/Register'
 import Dashboard from './app/pages/Dashboard'
 import ClassList from './app/pages/ClassList'
 import ClassDetail from './app/pages/ClassDetail'
-const Page = {Login, PageTwo, PageThree, PageFour, AddEarnerProfile, Register, Dashboard, ClassList, ClassDetail}
+import EarnMoreBadge from './app/pages/EarnMoreBadge'
+const Page = {Login, PageTwo, PageThree, PageFour, AddEarnerProfile, Register, Dashboard, ClassList, ClassDetail, EarnMoreBadge}
 
 const Drawer = require('react-native-drawer') // Third party drawer layout that works in iOS, very funky so use with care
 
@@ -78,7 +79,7 @@ export default class Route extends Component {
 			return React.createElement(Page[route.className], {route, navigator, ddpClient})
 		} else {
 			route.title = ''
-			return React.createElement(Page['Dashboard'], {route, navigator, ddpClient})
+			return React.createElement(Page['EarnMoreBadge'], {route, navigator, ddpClient})
 		}
 	}
 	drawerMenuItemPressed(alertPopupMessage) {
