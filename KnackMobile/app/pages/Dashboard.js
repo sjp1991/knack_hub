@@ -3,9 +3,7 @@ import React, {
 	View,
 	Text,
 	StyleSheet,
-	TextInput,
 	TouchableOpacity,
-	Dimensions,
 } from 'react-native'
 
 export default class Dashboard extends Component {
