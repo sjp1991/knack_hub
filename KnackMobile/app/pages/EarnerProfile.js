@@ -254,7 +254,7 @@ export default class EarnerProfile extends Component {
 
 		return badges.map((badge)=>{
 			return (
-				<Image style={{width: 100, height: 120, resizeMode: 'cover', margin: 5,}} source={require('./../img/badges/badic_food_service.png')}/>
+				<Image key={badge.badgeId} style={{width: 100, height: 120, resizeMode: 'cover', margin: 5,}} source={require('./../img/badges/badic_food_service.png')}/>
 				// <Image
 	   //     			style={styles.logo}
 	   //      		source={{uri: 'http://facebook.github.io/react/img/logo_og.png'}}
@@ -322,7 +322,7 @@ var styles = StyleSheet.create({
 
   backgroundImg: {
     width: width, 
-    resizeMode: 'cover',
+    // resizeMode: 'cover',
     height: null,
   },
 
