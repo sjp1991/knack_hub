@@ -20,14 +20,12 @@ export default class TaskDetail extends Component {
 			isApplied: false
 		}
 	}
-	componentDidMount(){
+	componentWillMount(){
 		this.props.setNavBarVisibility(false)
 	}
 	startMeteorSubscriptions(){
-
 	}
 	getMeteorData(){
-
 	}
 	_onPressClose(){
 		this.props.setNavBarVisibility(true)
@@ -35,7 +33,6 @@ export default class TaskDetail extends Component {
 	}
 	_taskApply(){
 		this.setState({isApplied: true})
-		alert(this.props.route.rowData._id)
 		Meteor.call('taskApply', this.props.route.rowData._id)
 	}
 	render() {
@@ -48,22 +45,22 @@ export default class TaskDetail extends Component {
 					</TouchableOpacity>
 				</View>
 
-					<ScrollView contentContainerStyle={{height: height-170, backgroundColor: 'black', alignItems: 'center'}}>
-						<View style={{width: width * 0.9, }}>
-							<Text style={styles.h1}>{this.props.route.rowData.title}</Text>
-						</View>
-						<View style={styles.separator} />
-						<View style={{marginTop:12, marginBottom: 12, width: width * 0.85, flexDirection: 'row', height: 130, justifyContent:'space-around', alignItems: 'center',}}>
-							<Image style={{width: 100, height: 120, resizeMode: 'cover',}} source={require('./../img/badges/badic_food_service.png')}/>
-							<Text style={{width: 140, color: 'white', fontSize: 15}}>Required badges to apply to this task</Text>
-						</View>
-						<View style={styles.separator} />
-						<Text style={{ marginTop: 24, width: width * 0.75, color: 'white', fontSize: 12, lineHeight: 20}}>{this.props.route.rowData.description}</Text>
-						<View style={{marginTop: 8, flexDirection: 'row', width: width * 0.75,}}><Text style={{color: 'white', fontSize: 12, width: 55, textAlign: 'right'}}>Rate: </Text><Text style={{color: 'white', fontSize: 12}}>$ 12 / h</Text></View>
-						<View style={{marginTop: 8, flexDirection: 'row', width: width * 0.75,}}><Text style={{color: 'white', fontSize: 12, width: 55, textAlign: 'right'}}>Location: </Text><Text style={{color: 'white', fontSize: 12}}>1234 East Hasting. Vancouver</Text></View>
-						<View style={{marginTop: 8, flexDirection: 'row', width: width * 0.75,}}><Text style={{color: 'white', fontSize: 12, width: 55, textAlign: 'right'}}>Time: </Text><Text style={{color: 'white', fontSize: 12}}>6:00 p.m. - 9:00 p.m. Wednesdays</Text></View>
-						<View style={{marginTop: 8, flexDirection: 'row', width: width * 0.75,}}><Text style={{color: 'white', fontSize: 12, width: 55}}></Text><Text style={{color: 'white', fontSize: 12}}>2016/2/4 - 2016/3/5</Text></View>
-					</ScrollView>
+				<ScrollView contentContainerStyle={{height: height-170, backgroundColor: 'black', alignItems: 'center'}}>
+					<View style={{width: width * 0.9, }}>
+						<Text style={styles.h1}>{this.props.route.rowData.title}</Text>
+					</View>
+					<View style={styles.separator} />
+					<View style={{marginTop:12, marginBottom: 12, width: width * 0.85, flexDirection: 'row', height: 130, justifyContent:'space-around', alignItems: 'center',}}>
+						<Image style={{width: 100, height: 120, resizeMode: 'cover',}} source={require('./../img/badges/badic_food_service.png')}/>
+						<Text style={{width: 140, color: 'white', fontSize: 15}}>Required badges to apply to this task</Text>
+					</View>
+					<View style={styles.separator} />
+					<Text style={{ marginTop: 24, width: width * 0.75, color: 'white', fontSize: 12, lineHeight: 20}}>{this.props.route.rowData.description}</Text>
+					<View style={{marginTop: 8, flexDirection: 'row', width: width * 0.75,}}><Text style={{color: 'white', fontSize: 12, width: 55, textAlign: 'right'}}>Rate: </Text><Text style={{color: 'white', fontSize: 12}}>$ 12 / h</Text></View>
+					<View style={{marginTop: 8, flexDirection: 'row', width: width * 0.75,}}><Text style={{color: 'white', fontSize: 12, width: 55, textAlign: 'right'}}>Location: </Text><Text style={{color: 'white', fontSize: 12}}>1234 East Hasting. Vancouver</Text></View>
+					<View style={{marginTop: 8, flexDirection: 'row', width: width * 0.75,}}><Text style={{color: 'white', fontSize: 12, width: 55, textAlign: 'right'}}>Time: </Text><Text style={{color: 'white', fontSize: 12}}>6:00 p.m. - 9:00 p.m. Wednesdays</Text></View>
+					<View style={{marginTop: 8, flexDirection: 'row', width: width * 0.75,}}><Text style={{color: 'white', fontSize: 12, width: 55}}></Text><Text style={{color: 'white', fontSize: 12}}>2016/2/4 - 2016/3/5</Text></View>
+				</ScrollView>
 
 				<TouchableOpacity onPress={this._taskApply.bind(this)}
 					style={{height: 60, backgroundColor: '#41645c', justifyContent: 'center', alignItems: 'center',}}>

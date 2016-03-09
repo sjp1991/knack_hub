@@ -75,7 +75,7 @@ export default class AddEarnerProfile extends Component {
   				value={this.state.address} />
 
   			<View style={{flex:1, flexDirection: 'row', 'justifyContent': 'space-between'}}>
-	  			<TouchableOpacity style={{width: 80}}>
+	  			<TouchableOpacity style={{width: 80}} onPress={()=>this.props.navigator.pop()}>
 						<Text>Cancel</Text>
 					</TouchableOpacity>
 					<TouchableOpacity onPress={this.createUser.bind(this)} style={{width: 80, alignItems: 'flex-end'}}>

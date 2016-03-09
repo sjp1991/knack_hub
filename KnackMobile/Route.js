@@ -48,9 +48,9 @@ export default class Route extends Component {
 			return React.createElement(Page['Login'], {route, navigator, setNavBarVisibility: this._setNavBarVisibility.bind(this)})
 		}
 	}
-	_setNavBarVisibility(visible) {
-		this.setState({hideNavBar: !visible})
-	}
+  _setNavBarVisibility(visible) {
+    this.setState({hideNavBar: !visible})
+  }
 	componentDidMount() {
 		// Override Android back button. Return false if you want to default back to original behaviour, which usually exits the app.
 		BackAndroid.addEventListener('hardwareBackPress', ()=>{
