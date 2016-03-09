@@ -6,11 +6,17 @@ import React, {
 	TouchableOpacity,
 } from 'react-native'
 
+import Meteor, {connectMeteor} from 'react-native-meteor'
+
+@connectMeteor
 export default class Dashboard extends Component {
 	constructor(props) {
 		super(props)
 	}
-
+	startMeteorSubscriptions(){
+	}
+	getMeteorData(){
+	}
 	render() {
 		return (
 			<View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
@@ -38,4 +44,4 @@ const styles = StyleSheet.create({
 	}
 })
 
-module.exports = Dashboard 
+module.exports = Dashboard

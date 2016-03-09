@@ -12,18 +12,21 @@ import React, {
 } from 'react-native'
 let {height, width} = Dimensions.get('window')
 
-// export default allows class to be referenced using import <className> from '<path>'
+import Meteor, {connectMeteor} from 'react-native-meteor'
+
+@connectMeteor
 export default class CreateBadge extends Component {
 	constructor(props) {
 		super(props)
-		this.state={title:'Time Management', pic:'http://s17.postimg.org/i1yc15z27/time_management.png',
-description:'Learn how to manage your time and stop procrastinating', category:'Soft Skill'}
-}
-	_create() {
-		this.props.ddpClient.call('createBadge', [{title:this.state.title, pic:this.state.pic,
-		description:this.state.description, category:this.state.category}])
+		this.state={title:'Time Management', pic:'http://s17.postimg.org/i1yc15z27/time_management.png', description:'Learn how to manage your time and stop procrastinating', category:'Soft Skill'}
 	}
-
+	startMeteorSubscriptions(){
+	}
+	getMeteorData(){
+	}
+	_create() {
+		Meteor.call('createBadge', {title:this.state.title, pic:this.state.pic, description:this.state.description, category:this.state.category})
+	}
 	render() {
 		return(
 			<View style={styles.container}>
@@ -70,7 +73,7 @@ description:'Learn how to manage your time and stop procrastinating', category:'
 	}
 }
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop:60,
@@ -84,15 +87,12 @@ var styles = StyleSheet.create({
     height: 50,
     color:'white'
   },
-
   buttonContainer: {
   	flexDirection: 'row'
   },
-
   button: {
   	paddingRight: 40
   },
-
   uploadText:{
   	fontSize:15,
   	textAlign:'center',
@@ -100,7 +100,6 @@ var styles = StyleSheet.create({
   	justifyContent: 'center',
   	backgroundColor: 'transparent',
   },
-
   imageContainer:{
   	height: 110,
   	width: 110,
@@ -110,16 +109,14 @@ var styles = StyleSheet.create({
   	borderRadius: 100,
   	borderColor:'#41645c'
   },
-
   scroll:{
   	height:height-225,
   },
-
   name:{
   	color:'gray',
   	fontSize:20,
   }
-});
+})
 
 // This line allows class to be referenced using const <className> = require('<path>')
 module.exports = CreateBadge

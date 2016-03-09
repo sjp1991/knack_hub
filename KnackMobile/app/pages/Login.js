@@ -11,8 +11,9 @@ import React, {
 } from 'react-native'
 
 let {height, width} = Dimensions.get('window')
+import Meteor, {connectMeteor, } from 'react-native-meteor'
 
-// export default allows class to be referenced using import <className> from '<path>'
+@connectMeteor
 export default class Login extends Component {
 	constructor(props) {
 		super(props)
@@ -28,21 +29,15 @@ export default class Login extends Component {
 	_login() {
 		const email = this.state.email
 		const password = this.state.password
-		_this = this
-		this.props.ddpClient.call('login', [
-		  { user : { email }, password }
-		], (err, result)=> {
+		Meteor.loginWithPassword(email, password, (err)=>{
 			if(err) {
-				console.log(err)
+				alert(err)
 			} else {
-				console.log(result)
-				_this.setState({user: _this.props.ddpClient.collections.users[result.id]})
-				// _this.props.navigator.replace({className: 'AddEarnerProfile', title: 'AddEarnerProfile'})
-				_this.openDashboard.bind(_this)()
+				this._openDashboard.bind(this)()
 			}
 		})
 	}
-	openDashboard() {
+	_openDashboard() {
 		Animated.timing(  // Uses easing functions
 			this.state.dashboardY,  // The value to drive
 			{toValue: 0},  // Configuration
@@ -57,7 +52,7 @@ export default class Login extends Component {
 				<View style={styles.loginContainer}>
 					<View>
 						<View style={styles.loginInputContainer}>
-							<TextInput style={styles.loginInput} 
+							<TextInput style={styles.loginInput}
 								placeholder="Email"
 		  					placeholderTextColor="white"
 								onChangeText={(email) => this.setState({email})}
@@ -105,7 +100,7 @@ export default class Login extends Component {
 						</View>
 					</TouchableOpacity>
 					<TouchableOpacity style={[styles.loginInputContainer, {backgroundColor: '#41645c'}]}
-						onPress={()=>this.props.navigator.push({className: 'ClassList', title: 'Find Classes'})}>
+						onPress={()=>this.props.navigator.push({className: 'CreateTask', title: 'Find Classes'})}>
 						<View style={styles.loginButtonInnerView}>
 							<Text style={styles.loginButtonText}>Find Classes</Text>
 						</View>
@@ -158,7 +153,7 @@ var styles = StyleSheet.create({
     // backgroundColor: 'red',
     color: 'white',
     margin: 10,
-    
+
     height: 50,
   },
   loginButtonInnerView: {
@@ -190,4 +185,4 @@ var styles = StyleSheet.create({
 });
 
 // This line allows class to be referenced using const <className> = require('<path>')
-module.exports = Login 
+module.exports = Login

@@ -9,13 +9,19 @@ import React, {
 	Image,
 } from 'react-native'
 let {height, width} = Dimensions.get('window')
+import Meteor, {connectMeteor} from 'react-native-meteor'
 
+@connectMeteor
 export default class ClassDetail extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
 			isEnrolled: false,
 		}
+	}
+	startMeteorSubscriptions(){
+	}
+	getMeteorData(){
 	}
 	componentDidMount(){
 		this.props.setNavBarVisibility(false)
@@ -27,7 +33,7 @@ export default class ClassDetail extends Component {
 	_registerClass(){
 		this.setState({isEnrolled: true})
 		alert(this.props.route.rowData._id)
-		this.props.ddpClient.call('registerClass', [this.props.route.rowData._id])
+		Meteor.call('registerClass', this.props.route.rowData._id)
 	}
 	render() {
 		return (
@@ -95,4 +101,4 @@ const styles = StyleSheet.create({
 	}
 })
 
-module.exports = ClassDetail 
+module.exports = ClassDetail

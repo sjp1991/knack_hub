@@ -10,6 +10,9 @@ import React, {
 } from 'react-native'
 let {height, width} = Dimensions.get('window')
 
+import Meteor, {connectMeteor} from 'react-native-meteor'
+
+@connectMeteor
 export default class TaskDetail extends Component {
 	constructor(props) {
 		super(props)
@@ -20,6 +23,12 @@ export default class TaskDetail extends Component {
 	componentDidMount(){
 		this.props.setNavBarVisibility(false)
 	}
+	startMeteorSubscriptions(){
+
+	}
+	getMeteorData(){
+
+	}
 	_onPressClose(){
 		this.props.setNavBarVisibility(true)
 		this.props.navigator.pop()
@@ -27,7 +36,7 @@ export default class TaskDetail extends Component {
 	_taskApply(){
 		this.setState({isApplied: true})
 		alert(this.props.route.rowData._id)
-		this.props.ddpClient.call('taskApply', [this.props.route.rowData._id])
+		Meteor.call('taskApply', this.props.route.rowData._id)
 	}
 	render() {
 		return (
@@ -60,7 +69,7 @@ export default class TaskDetail extends Component {
 					style={{height: 60, backgroundColor: '#41645c', justifyContent: 'center', alignItems: 'center',}}>
 					<Text style={{fontSize: 26, color: 'white', textAlign: 'center'}}>{this.state.isApplied ? 'Applied!' : 'Apply Task'}</Text>
 				</TouchableOpacity>
-				
+
 			</View>
 		)
 	}
@@ -100,4 +109,4 @@ const styles = StyleSheet.create({
 	}
 })
 
-module.exports = TaskDetail 
+module.exports = TaskDetail

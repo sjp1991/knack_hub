@@ -9,8 +9,11 @@ import React, {
 	Image
 } from 'react-native'
 
+import Meteor, {connectMeteor} from 'react-native-meteor'
+
 let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
 
+@connectMeteor
 export default class TaskList extends Component {
 	constructor(props) {
 		super(props)
@@ -19,26 +22,16 @@ export default class TaskList extends Component {
 			tasks: ds.cloneWithRows([]),
 		}
 	}
-	componentDidMount(){
-		this.props.ddpClient.connect((err, wasReconnect) => {
-      if (err) {
-      } else {
-        this.observeTasks.bind(this)()
-      }
-    })
-		this.props.setNavBarVisibility(true)
+	startMeteorSubscriptions(){
+		Meteor.subscribe('tasks')
 	}
-	observeTasks(){
-		let observer = this.props.ddpClient.observe("tasks");
-    observer.added = (id) => {
-      this.setState({tasks: ds.cloneWithRows(Object.values(this.props.ddpClient.collections.tasks))})
-    }
-    observer.changed = (id, oldFields, clearedFields, newFields) => {
-      this.setState({tasks: ds.cloneWithRows(Object.values(this.props.ddpClient.collections.tasks))})
-    }
-    observer.removed = (id, oldValue) => {
-      this.setState({tasks: ds.cloneWithRows(Object.values(this.props.ddpClient.collections.tasks))})
-    }
+	getMeteorData(){
+		return {
+			tasksDataSource: ds.cloneWithRows(Meteor.collection('tasks').find()),
+		}
+	}
+	componentDidMount(){
+		this.props.setNavBarVisibility(true)
 	}
 	_onTaskRowPress(rowData, rowID) {
 		this.props.navigator.push({className: 'TaskDetail', title: '', rowData})
@@ -50,7 +43,7 @@ export default class TaskList extends Component {
 					<Text style={styles.filterText}>filter options</Text>
 				</TouchableOpacity>
 				<ListView style={{backgroundColor:'#41645c'}}
-					dataSource={this.state.tasks}
+					dataSource={this.data.tasksDataSource}
 					renderSeparator={(sectionID, rowID)=><View key={rowID} style={styles.separator}></View>}
 					renderRow={(rowData, sectionID, rowID) =>
 						<TouchableOpacity onPress={this._onTaskRowPress.bind(this, rowData)}>
@@ -99,7 +92,7 @@ const styles = StyleSheet.create({
 	},
 	filter:{
 		height:60,
-		backgroundColor:'#41645c', 
+		backgroundColor:'#41645c',
 		justifyContent:'center',
 		paddingLeft:10
 	},
@@ -111,4 +104,4 @@ const styles = StyleSheet.create({
 	}
 })
 
-module.exports = TaskList 
+module.exports = TaskList

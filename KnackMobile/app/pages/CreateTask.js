@@ -12,22 +12,25 @@ import React, {
 } from 'react-native'
 let {height, width} = Dimensions.get('window')
 
-// export default allows class to be referenced using import <className> from '<path>'
+import Meteor, {connectMeteor} from 'react-native-meteor'
+
+@connectMeteor
 export default class CreateTask extends Component {
 	constructor(props) {
 		super(props)
-		this.state={title:'Software Developer', wage:'$20/hour', description:'be a code monkey', location:'Conquer Mobile',
-requiredBadgeId:'6RsXARwjn7sC34o3W', distance:'2000 m'}
+		this.state={title:'Software Developer', wage:'$20/hour', description:'be a code monkey', location:'Conquer Mobile', requiredBadgeId:'6RsXARwjn7sC34o3W', distance:'2000 m'}
 	}
-
+	startMeteorSubscriptions(){
+	}
+	getMeteorData(){
+	}
 	_create() {
-		this.props.ddpClient.call('createTask', [{title:this.state.title, wage:this.state.wage, description:this.state.description, location:this.state.location,
-			requiredBadgeId: this.state.requiredBadgeId, distance:''}])
+		Meteor.call('createTask', {title:this.state.title, wage:this.state.wage, description:this.state.description, location:this.state.location,
+			requiredBadgeId: this.state.requiredBadgeId, distance:''})
 	}
 	componentDidMount() {
 		this.props.setNavBarVisibility(true)
 	}
-
 	render() {
 		return(
 			<View style={styles.container}>
@@ -129,7 +132,7 @@ var styles = StyleSheet.create({
   	color:'gray',
   	fontSize:20,
   }
-});
+})
 
 // This line allows class to be referenced using const <className> = require('<path>')
 module.exports = CreateTask

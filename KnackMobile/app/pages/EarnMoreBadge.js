@@ -10,11 +10,14 @@ import React, {
 	Dimensions,
 } from 'react-native'
 
+import Meteor, {connectMeteor, } from 'react-native-meteor'
+
 let tempData = [{text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', isSelected: false}, {text: 'Lorem Ipsum is simply dummy text of the pri', isSelected: false}, {text: 'There are many variations of passages of Lorem Ipsum available,', isSelected: false}, {text: 'Class', isSelected: false}, {text: 'Class', isSelected: false}, {text: 'Class', isSelected: false}, {text: 'Class', isSelected: false}, {text: 'Class', isSelected: false}, {text: 'Class', isSelected: false}, {text: 'Class', isSelected: false}, {text: 'Class', isSelected: false}]
 let tempClassData = [{name: 'Class 1', description: 'Food Services class', location:'Shoppers'}, {name: 'Class 2', description: 'Food Services tutorial', location:'Health BC'}]
 let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
 let {height, width} = Dimensions.get('window')
 
+@connectMeteor
 export default class EarnMoreBadge extends Component {
 	constructor(props) {
 		super(props)
@@ -23,7 +26,12 @@ export default class EarnMoreBadge extends Component {
 			dataSource: ds.cloneWithRows(tempData),
 			classDataSource: ds.cloneWithRows(tempClassData),
 		}
-		
+	}
+	startMeteorSubscriptions(){
+
+	}
+	getMeteorData(){
+
 	}
 	_onRowPress(rowID) {
 		let data = tempData
@@ -75,7 +83,7 @@ export default class EarnMoreBadge extends Component {
 				<TouchableOpacity style={styles.filter}>
 					<Text style={styles.filterText}>Search:  __________________________</Text>
 				</TouchableOpacity>
-				<ListView 
+				<ListView
 					dataSource={this.state.dataSource}
 					renderSeparator={(sectionID, rowID)=><View key={rowID} style={styles.separator}></View>}
 					renderRow={this._renderRow.bind(this)} />
@@ -124,7 +132,7 @@ const styles = StyleSheet.create({
 	},
 	filter:{
 		height:60,
-		backgroundColor:'#41645c', 
+		backgroundColor:'#41645c',
 		justifyContent:'center',
 		paddingLeft:10
 	},
@@ -135,4 +143,4 @@ const styles = StyleSheet.create({
 	},
 })
 
-module.exports = EarnMoreBadge 
+module.exports = EarnMoreBadge

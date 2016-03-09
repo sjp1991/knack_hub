@@ -13,9 +13,7 @@ import React, {
   Image,
   InteractionManager,
 } from 'react-native'
-
-import DDPClient from 'ddp-client';
-
+import Meteor, {connectMeteor, } from 'react-native-meteor'
 import Login from './app/pages/Login'
 import PageTwo from './app/pages/PageTwo'
 import PageThree from './app/pages/PageThree'
@@ -33,35 +31,21 @@ import CreateClass from './app/pages/CreateClass'
 import CreateTask from './app/pages/CreateTask'
 const Page = {Login, PageTwo, PageThree, AddEarnerProfile, EarnerProfile, Register, Dashboard, ClassList, ClassDetail, TaskList, TaskDetail, EarnMoreBadge, CreateBadge, CreateClass, CreateTask}
 
-let ddpClient = new DDPClient({
-  host: '172.18.147.31',
-  // host: '192.168.1.3', // If using android use your device IP address
-  port: '3000',
-  // url: <your websocket url>
-})
-
+@connectMeteor
 export default class Route extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
 			hideNavBar: true,
 		}
-		ddpClient.connect((err, wasReconnect) => {
-      let connected = true;
-      if (err) {
-      	console.log(err)
-        connected = false
-      }
-      this.setState({ connected: connected })
-    })
 	}
 	// This gets called when you add new page into navigator stack (ie. navigator.push or navigator.replace)
 	renderPage(route, navigator) {
 		if(route.className) {
-			return React.createElement(Page[route.className], {route, navigator, ddpClient, setNavBarVisibility: this._setNavBarVisibility.bind(this)})
+			return React.createElement(Page[route.className], {route, navigator, setNavBarVisibility: this._setNavBarVisibility.bind(this)})
 		} else {
-			route.title = 'Profile'
-			return React.createElement(Page['CreateBadge'], {route, navigator, ddpClient, setNavBarVisibility: this._setNavBarVisibility.bind(this)})
+			route.title = 'Login'
+			return React.createElement(Page['Login'], {route, navigator, setNavBarVisibility: this._setNavBarVisibility.bind(this)})
 		}
 	}
 	_setNavBarVisibility(visible) {
@@ -82,7 +66,22 @@ export default class Route extends Component {
 				return false
 			}
 		})
+
+    const url = 'http://'+(this.props.serverUrl || '10.0.1.69')+':3003/websocket'
+    Meteor.connect(url)
+
+    Meteor.ddp.on('connected', function() {
+      console.log('CONNECTED to meteor server')
+    })
 	}
+  startMeteorSubscriptions() {
+    Meteor.subscribe('posts')
+  }
+  getMeteorData() {
+    return {
+      posts: Meteor.collection('posts').find()
+    }
+  }
 	_popToTop() {
 		this.setState({hideNavBar: true})
 		this.refs.navigator.popToTop()
@@ -109,7 +108,7 @@ export default class Route extends Component {
 				// Button on the right side of navigationView
 				return (
 					<View style={styles.navRightIconView}>
-						<TouchableOpacity 
+						<TouchableOpacity
 							onPress={_this._pop.bind(_this)}
 							style={styles.navButton}>
 							<Image style={styles.navRightIcon} source={require('./app/img/navigation/close_white.png')} />
@@ -181,7 +180,6 @@ let styles = StyleSheet.create({
 		color: 'white',
 		fontSize: 18,
 		fontWeight: '500',
-		// fontStyle: 'italic',
 		alignSelf: 'flex-end',
 	},
 })

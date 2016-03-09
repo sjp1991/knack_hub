@@ -9,14 +9,20 @@ import React, {
 	Image,
 } from 'react-native'
 
-// export default allows class to be referenced using import <className> from '<path>'
+import Meteor, {connectMeteor} from 'react-native-meteor'
+
+@connectMeteor
 export default class Register extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
 			email: 'eric@example.com',
-			password: '123'
+			password: '123',
 		}
+	}
+	startMeteorSubscriptions(){
+	}
+	getMeteorData(){
 	}
 	_popPage(){
 		this.props.navigator.pop()
@@ -27,15 +33,14 @@ export default class Register extends Component {
 	_register() {
 		const email = this.state.email
 		const password = this.state.password
-		_this = this
-		_this.props.navigator.replace({className: 'AddEarnerProfile', title: 'AddEarnerProfile'})
-    	this.props.ddpClient.call('register', [
-		  	{ user : { email }, password }
-		], (err, result)=> {
+		// _this.props.navigator.replace({className: 'AddEarnerProfile', title: 'AddEarnerProfile'})
+  	Meteor.call('register',
+		  	email, password
+		, (err)=> {
 			if(err) {
-				console.log(err)
+				alert(err ? err.message : 'Register Failed!')
 			} else {
-				console.log(result)
+				alert('Register Success!')
 			}
 		})
 	}
@@ -45,11 +50,11 @@ export default class Register extends Component {
 				<View style={styles.loginContainer}>
 					<View>
 						<View style={styles.loginInputContainer}>
-							<TextInput style={styles.loginInput} 
+							<TextInput style={styles.loginInput}
 								placeholder="eric@example.com"
-		  						placeholderTextColor="white"
+	  						placeholderTextColor="white"
 								onChangeText={(email) => this.setState({email})}
-		    					value={this.state.email}/>
+	    					value={this.state.email}/>
 		    			</View>
 	    			</View>
 	    			<View style={styles.loginInputContainer}>
@@ -73,7 +78,7 @@ export default class Register extends Component {
 							onPress={()=>this.props.navigator.pop()}>
 							<Text style={styles.bottomText}>Cancel</Text>
 						</TouchableOpacity>
-						<TouchableOpacity>
+						<TouchableOpacity onPress={this._register.bind(this)}>
 							<Text style={styles.bottomText}>Register</Text>
 						</TouchableOpacity>
 					</View>

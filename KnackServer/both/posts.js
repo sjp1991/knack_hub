@@ -6,7 +6,7 @@ Agencies = new Mongo.Collection('agencies')
 Classes = new Mongo.Collection('classes')
 Badges = new Mongo.Collection('badges')
 
-let userId = '9D3MN58QwCftKqeKY'
+// let userId = '9D3MN58QwCftKqeKY'
 
 Meteor.methods({
   'addPost': function() {
@@ -39,15 +39,18 @@ Meteor.methods({
   registerClass(classId){
   	// increase the signedUpNum
   	// Classes.update(classId, {$inc: {signedUpNum: 1}})
-  	// add class to earner 
+  	// add class to earner
+    let userId = Meteor.userId()
   	Earners.update({userId}, {$addToSet:{appliedClasses: classId}})
   },
 
   taskApply(taskId){
+    let userId = Meteor.userId()
     Earners.update({userId}, {$addToSet:{appliedTasks: taskId}})
   },
 
   earnBadge(badgeId){
+    let userId = Meteor.userId()
   	Earners.update({userId},{$addToSet:{earnedBadges:badgeId}})
   },
 
@@ -57,22 +60,26 @@ Meteor.methods({
   },
 
   createTask(taskInfo){
+    let userId = Meteor.userId()
   	let {title, wage, location, description, requiredBadgeId, distance} = taskInfo
   	Tasks.insert({title, wage, location, description, requiredBadgeId, userId})
 
   },
 
   createAgency(agencyInfo){
+    let userId = Meteor.userId()
   	let {name, address, phone, description} = agencyInfo
   	Agencies.insert({name, address, phone, description, userId})
   },
 
   createClass(classInfo){
+    let userId = Meteor.userId()
   	let {name, description, location, size, signedUpNum, badgeId, when, bg} = classInfo
   	Classes.insert({name, description, location, size, signedUpNum, badgeId, when, bg, userId})
   },
 
   createBadge(badgeInfo){
+    let userId = Meteor.userId()
   	let {title, pic, description, category} = badgeInfo
   	Badges.insert({title, pic, description, category, userId})
   },

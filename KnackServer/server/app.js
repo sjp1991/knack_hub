@@ -33,4 +33,3 @@ Meteor.publish('employers', function() {
 Meteor.publish('badges', function() {
   return Badges.find();
 });
-

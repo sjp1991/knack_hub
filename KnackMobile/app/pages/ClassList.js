@@ -9,13 +9,20 @@ import React, {
 	Image,
 } from 'react-native'
 
+import Meteor, {connectMeteor} from 'react-native-meteor'
 let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
 
+@connectMeteor
 export default class ClassList extends Component {
 	constructor(props) {
 		super(props)
-		this.state = {
-			classes: ds.cloneWithRows([]),
+	}
+	startMeteorSubscriptions(){
+		Meteor.subscribe('classes')
+	}
+	getMeteorData(){
+		return {
+			classesDataSource: ds.cloneWithRows(Meteor.collection('classes').find())
 		}
 	}
 	_onClassRowPress(rowData, rowID) {
@@ -34,25 +41,7 @@ export default class ClassList extends Component {
 		)
 	}
 	componentDidMount() {
-		this.props.ddpClient.connect((err, wasReconnect) => {
-      if (err) {
-      } else {
-        this.observeClasses.bind(this)()
-      }
-    })
     this.props.setNavBarVisibility(true)
-	}
-	observeClasses() {
-		let observer = this.props.ddpClient.observe("classes");
-    observer.added = (id) => {
-      this.setState({classes: ds.cloneWithRows(Object.values(this.props.ddpClient.collections.classes))})
-    }
-    observer.changed = (id, oldFields, clearedFields, newFields) => {
-      this.setState({classes: ds.cloneWithRows(Object.values(this.props.ddpClient.collections.classes))})
-    }
-    observer.removed = (id, oldValue) => {
-      this.setState({classes: ds.cloneWithRows(Object.values(this.props.ddpClient.collections.classes))})
-    }
 	}
 	render() {
 		return (
@@ -61,7 +50,7 @@ export default class ClassList extends Component {
 					<Text style={styles.filterText}>filter options</Text>
 				</TouchableOpacity>
 				<ListView style={{backgroundColor: '#41645c'}}
-					dataSource={this.state.classes}
+					dataSource={this.data.classesDataSource}
 					renderSeparator={(sectionID, rowID)=><View key={rowID} style={styles.separator}></View>}
 					renderRow={this._renderRow.bind(this)} />
 			</ScrollView>
@@ -105,7 +94,7 @@ const styles = StyleSheet.create({
 	},
 	filter:{
 		height:60,
-		backgroundColor:'#41645c', 
+		backgroundColor:'#41645c',
 		justifyContent:'center',
 		paddingLeft:10
 	},
@@ -117,4 +106,4 @@ const styles = StyleSheet.create({
 	}
 })
 
-module.exports = ClassList 
+module.exports = ClassList

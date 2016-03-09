@@ -12,22 +12,26 @@ import React, {
 } from 'react-native'
 let {height, width} = Dimensions.get('window')
 
-// export default allows class to be referenced using import <className> from '<path>'
+import Meteor, {connectMeteor} from 'react-native-meteor'
+
+@connectMeteor
 export default class CreateClass extends Component {
 	constructor(props) {
 		super(props)
-		this.state={name: 'PowerPoint', description: 'Learn how to create PowerPoint presentatons', location:'Hootsuite', 
+		this.state={name: 'PowerPoint', description: 'Learn how to create PowerPoint presentatons', location:'Hootsuite',
 size:'25', signedUpNum:'0', badgeId:'6RsXARwjn7sC34o3W', when:'June 6, 9am to 5pm', bg:'http://s15.postimg.org/e147rvpkb/image.jpg'}
 	}
-
+	startMeteorSubscriptions(){
+	}
+	getMeteorData(){
+	}
 	_create() {
-		this.props.ddpClient.call('createClass', [{name:this.state.name, description:this.state.description, location:this.state.location,
-			size:this.state.size, signedUpNum:this.state.signedUpNum, badgeId:this.state.badgeId, when:this.state.when, bg:this.state.bg}])
+		Meteor.call('createClass', {name:this.state.name, description:this.state.description, location:this.state.location,
+			size:this.state.size, signedUpNum:this.state.signedUpNum, badgeId:this.state.badgeId, when:this.state.when, bg:this.state.bg})
 	}
 	componentDidMount() {
 		this.props.setNavBarVisibility(true)
 	}
-
 	render() {
 		return(
 			<View style={styles.container}>
