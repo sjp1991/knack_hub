@@ -10,9 +10,9 @@ import React, {
 	Image,
 	ScrollView,
 } from 'react-native'
-let {height, width} = Dimensions.get('window')
-
 import Meteor, {connectMeteor} from 'react-native-meteor'
+
+let {height, width} = Dimensions.get('window')
 
 @connectMeteor
 export default class CreateTask extends Component {
@@ -28,7 +28,7 @@ export default class CreateTask extends Component {
 		Meteor.call('createTask', {title:this.state.title, wage:this.state.wage, description:this.state.description, location:this.state.location,
 			requiredBadgeId: this.state.requiredBadgeId, distance:''})
 	}
-	componentDidMount() {
+	componentWillMount() {
 		this.props.setNavBarVisibility(true)
 	}
 	render() {
@@ -88,7 +88,7 @@ export default class CreateTask extends Component {
 	}
 }
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop:60,
@@ -101,21 +101,17 @@ var styles = StyleSheet.create({
     height: 50,
     color:'white'
   },
-
   buttonContainer: {
   	flexDirection: 'row'
   },
-
   button: {
   	paddingRight: 40
   },
-
   uploadText:{
   	fontSize:16,
   	textAlign:'center',
   	color: '#333'
   },
-
   imageContainer:{
   	height:150,
   	backgroundColor:'white',
@@ -123,11 +119,9 @@ var styles = StyleSheet.create({
   	borderBottomWidth: 24,
   	borderColor:'#41645c'
   },
-
   scroll:{
   	height:height-225,
   },
-
   name:{
   	color:'gray',
   	fontSize:20,

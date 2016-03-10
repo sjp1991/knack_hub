@@ -104,7 +104,7 @@ export default class EarnerProfile extends Component {
 			users: Meteor.collection('users').find(),
 		}
 	}
-	componentDidMount() {
+	componentWillMount() {
     this.props.setNavBarVisibility(true)
 	}
 	_onPressAddNewBadge() {

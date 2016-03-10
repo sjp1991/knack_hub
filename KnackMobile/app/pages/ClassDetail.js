@@ -8,8 +8,9 @@ import React, {
 	Dimensions,
 	Image,
 } from 'react-native'
-let {height, width} = Dimensions.get('window')
 import Meteor, {connectMeteor} from 'react-native-meteor'
+
+let {height, width} = Dimensions.get('window')
 
 @connectMeteor
 export default class ClassDetail extends Component {
@@ -23,7 +24,7 @@ export default class ClassDetail extends Component {
 	}
 	getMeteorData(){
 	}
-	componentDidMount(){
+	componentWillMount(){
 		this.props.setNavBarVisibility(false)
 	}
 	_onPressClose(){

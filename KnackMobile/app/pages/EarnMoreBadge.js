@@ -74,7 +74,7 @@ export default class EarnMoreBadge extends Component {
 			)
 		}
 	}
-	componentDidMount(){
+	componentWillMount(){
 		this.props.setNavBarVisibility(true)
 	}
 	render() {

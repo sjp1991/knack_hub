@@ -10,9 +10,9 @@ import React, {
 	Image,
 	ScrollView,
 } from 'react-native'
-let {height, width} = Dimensions.get('window')
-
 import Meteor, {connectMeteor} from 'react-native-meteor'
+
+let {height, width} = Dimensions.get('window')
 
 @connectMeteor
 export default class CreateClass extends Component {
@@ -29,7 +29,7 @@ size:'25', signedUpNum:'0', badgeId:'6RsXARwjn7sC34o3W', when:'June 6, 9am to 5p
 		Meteor.call('createClass', {name:this.state.name, description:this.state.description, location:this.state.location,
 			size:this.state.size, signedUpNum:this.state.signedUpNum, badgeId:this.state.badgeId, when:this.state.when, bg:this.state.bg})
 	}
-	componentDidMount() {
+	componentWillMount() {
 		this.props.setNavBarVisibility(true)
 	}
 	render() {
@@ -89,7 +89,7 @@ size:'25', signedUpNum:'0', badgeId:'6RsXARwjn7sC34o3W', when:'June 6, 9am to 5p
 	}
 }
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop:60,
@@ -102,21 +102,17 @@ var styles = StyleSheet.create({
     height: 50,
     color:'white'
   },
-
   buttonContainer: {
   	flexDirection: 'row'
   },
-
   button: {
   	paddingRight: 40
   },
-
   uploadText:{
   	fontSize:16,
   	textAlign:'center',
   	color: '#333'
   },
-
   imageContainer:{
   	height:150,
   	backgroundColor:'white',
@@ -124,16 +120,14 @@ var styles = StyleSheet.create({
   	borderBottomWidth: 24,
   	borderColor:'#41645c'
   },
-
   scroll:{
   	height:height-225,
   },
-
   name:{
   	color:'gray',
   	fontSize:20,
   }
-});
+})
 
 // This line allows class to be referenced using const <className> = require('<path>')
 module.exports = CreateClass

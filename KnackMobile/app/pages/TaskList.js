@@ -18,7 +18,6 @@ export default class TaskList extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			// dataSource: ds.cloneWithRows(['Waiter', 'Driver', 'Chef', 'Dog-walker', 'Cahsier', 'Make-up', 'Task', 'Task', 'Task', 'Task', 'Task', 'Task', 'Task', 'Task']),
 			tasks: ds.cloneWithRows([]),
 		}
 	}
@@ -30,7 +29,7 @@ export default class TaskList extends Component {
 			tasksDataSource: ds.cloneWithRows(Meteor.collection('tasks').find()),
 		}
 	}
-	componentDidMount(){
+	componentWillMount(){
 		this.props.setNavBarVisibility(true)
 	}
 	_onTaskRowPress(rowData, rowID) {

@@ -18,7 +18,6 @@ export default class AddEarnerProfile extends Component {
 			firstName: 'Lisa',
 			lastName: 'Wong',
 			description: 'Software Developer',
-			email: 'lisa@example.com',
 			cell: '7789173232',
 			address: '123 Bear Street',
 			pic:'',
@@ -55,11 +54,6 @@ export default class AddEarnerProfile extends Component {
 					onChangeText={(description) => this.setState({description})}
   				value={this.state.description} />
 
-				<TextInput style={styles.logininput}
-					ref= 'email'
-  				placeholderTextColor='gray'
-  				editable={false}
-  				value={this.state.email} />
 				<TextInput style={styles.logininput}
 					ref= 'cell'
 					placeholder='Cell #'

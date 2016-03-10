@@ -5,7 +5,6 @@ import React, {
 	StyleSheet,
 	TouchableOpacity,
 } from 'react-native'
-
 import Meteor, {connectMeteor} from 'react-native-meteor'
 
 @connectMeteor

@@ -8,8 +8,9 @@ import React, {
 	Dimensions,
 	Image,
 } from 'react-native'
-
 import Meteor, {connectMeteor} from 'react-native-meteor'
+
+let {height, width} = Dimensions.get('window')
 
 @connectMeteor
 export default class Register extends Component {
@@ -88,9 +89,7 @@ export default class Register extends Component {
 	}
 }
 
-var width = Dimensions.get('window').width;
-
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
 	backgroundImg: {
 		flex: 1,
 	    width: null,
@@ -127,7 +126,7 @@ var styles = StyleSheet.create({
 		flexDirection: 'row',
 		alignItems: 'center',
 	},
-});
+})
 
 // This line allows class to be referenced using const <className> = require('<path>')
 module.exports = Register

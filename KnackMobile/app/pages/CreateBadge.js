@@ -10,9 +10,9 @@ import React, {
 	Image,
 	ScrollView,
 } from 'react-native'
-let {height, width} = Dimensions.get('window')
-
 import Meteor, {connectMeteor} from 'react-native-meteor'
+
+let {height, width} = Dimensions.get('window')
 
 @connectMeteor
 export default class CreateBadge extends Component {

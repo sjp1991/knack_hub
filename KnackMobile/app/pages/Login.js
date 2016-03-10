@@ -9,9 +9,9 @@ import React, {
 	Image,
 	Animated,
 } from 'react-native'
+import Meteor, {connectMeteor, } from 'react-native-meteor'
 
 let {height, width} = Dimensions.get('window')
-import Meteor, {connectMeteor, } from 'react-native-meteor'
 
 @connectMeteor
 export default class Login extends Component {
@@ -100,7 +100,7 @@ export default class Login extends Component {
 						</View>
 					</TouchableOpacity>
 					<TouchableOpacity style={[styles.loginInputContainer, {backgroundColor: '#41645c'}]}
-						onPress={()=>this.props.navigator.push({className: 'CreateTask', title: 'Find Classes'})}>
+						onPress={()=>this.props.navigator.push({className: 'AddEarnerProfile', title: 'Find Classes'})}>
 						<View style={styles.loginButtonInnerView}>
 							<Text style={styles.loginButtonText}>Find Classes</Text>
 						</View>
@@ -182,7 +182,7 @@ var styles = StyleSheet.create({
   	flexDirection: 'row',
   	alignItems: 'center',
   },
-});
+})
 
 // This line allows class to be referenced using const <className> = require('<path>')
 module.exports = Login

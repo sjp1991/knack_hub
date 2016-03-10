@@ -8,8 +8,8 @@ import React, {
 	ListView,
 	Image,
 } from 'react-native'
-
 import Meteor, {connectMeteor} from 'react-native-meteor'
+
 let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
 
 @connectMeteor
@@ -40,7 +40,7 @@ export default class ClassList extends Component {
 			</TouchableOpacity>
 		)
 	}
-	componentDidMount() {
+	componentWillMount() {
     this.props.setNavBarVisibility(true)
 	}
 	render() {
