@@ -93,30 +93,29 @@ export default class Route extends Component {
 		this.refs.navigator.pop()
 	}
 	_renderNavigationView() {
-		let _this = this // We need to hold onto reference to 'this' as "this" gets overwritten inside the method
 		const NavigationBarRouteMapper = {
-			LeftButton(route, navigator, index, navState) {
+			LeftButton: (route, navigator, index, navState) => {
 				return (
 					<View style={styles.navLeftIconView}>
-						<TouchableOpacity onPress={_this._popToTop.bind(_this)} style={styles.navButton}>
+						<TouchableOpacity onPress={this._popToTop.bind(this)} style={styles.navButton}>
 							<Image style={styles.navLeftIcon} source={require('./app/img/navigation/home_icon.png')} />
 						</TouchableOpacity>
           </View>
 				)
 			},
-			RightButton(route, navigator, index, navState) {
+			RightButton: (route, navigator, index, navState) => {
 				// Button on the right side of navigationView
 				return (
 					<View style={styles.navRightIconView}>
 						<TouchableOpacity
-							onPress={_this._pop.bind(_this)}
+							onPress={this._pop.bind(this)}
 							style={styles.navButton}>
 							<Image style={styles.navRightIcon} source={require('./app/img/navigation/close_white.png')} />
 						</TouchableOpacity>
           </View>
 				)
 			},
-			Title(route, navigator, index, navState) {
+			Title: (route, navigator, index, navState) => {
 				return (
 					<View style={styles.navigationTitleView}>
 						<Text style={styles.navigationTitleText}>
