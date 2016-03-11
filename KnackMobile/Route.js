@@ -130,7 +130,7 @@ export default class Route extends Component {
 				navigationBar={
 					<Navigator.NavigationBar
 						style={this.state.hideNavBar ? {height: 0} : styles.navigationBar}
-						routeMapper={NavigationBarRouteMapper} />
+						routeMapper={this.state.hideNavBar ? {LeftButton(){}, RightButton(){}, Title(){}} : NavigationBarRouteMapper} />
 				}
 			/>
 		)
