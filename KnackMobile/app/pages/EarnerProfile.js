@@ -98,14 +98,15 @@ export default class EarnerProfile extends Component {
 	getMeteorData() {
 		let data = {
 			earners: Meteor.collection('earners').find(),
+			earner: Meteor.collection('earners').findOne(),
 			badges: Meteor.collection('badges').find(),
 			tasks: Meteor.collection('tasks').find(),
 			classes: Meteor.collection('classes').find(),
 			users: Meteor.collection('users').find(),
 		}
-		if(data.earners && data.earners.length > 0) {
-			data.appliedTasks = ds.cloneWithRows(data.earners[0].appliedTasks)
-			data.appliedClasses = ds.cloneWithRows(data.earners[0].appliedClasses)
+		if(data.earner) {
+			data.appliedTasks = ds.cloneWithRows(data.earner.appliedTasks)
+			data.appliedClasses = ds.cloneWithRows(data.earner.appliedClasses)
 		}
 		return data
 	}
@@ -255,7 +256,7 @@ export default class EarnerProfile extends Component {
 	    	<View style={styles.row}>
 	    		<View style={styles.rowEntry}>
 	    			<Text style={styles.popUpContainers}>
-							{this.data.classes? this.data.classes.find((class)=>class._id === classId).name : null }
+							{this.data.classes? this.data.classes.find((cl)=>cl._id === classId).name : null }
     				</Text>
     			</View>
     		</View>
