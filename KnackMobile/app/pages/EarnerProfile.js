@@ -96,13 +96,18 @@ export default class EarnerProfile extends Component {
 		Meteor.subscribe('users')
 	}
 	getMeteorData() {
-		return {
+		let data = {
 			earners: Meteor.collection('earners').find(),
 			badges: Meteor.collection('badges').find(),
 			tasks: Meteor.collection('tasks').find(),
 			classes: Meteor.collection('classes').find(),
 			users: Meteor.collection('users').find(),
 		}
+		if(data.earners && data.earners.length > 0) {
+			data.appliedTasks = ds.cloneWithRows(data.earners[0].appliedTasks)
+			data.appliedClasses = ds.cloneWithRows(data.earners[0].appliedClasses)
+		}
+		return data
 	}
 	componentWillMount() {
     this.props.setNavBarVisibility(true)
@@ -173,7 +178,7 @@ export default class EarnerProfile extends Component {
 	        	</View>
 	      	</View>
 					{
-						this.data.showTasks ?
+						this.state.showTasks ?
 							<ScrollView style={styles.scrollcontainer}>
 								<ListView
 									dataSource={this.data.appliedTasks}
@@ -198,7 +203,7 @@ export default class EarnerProfile extends Component {
 						</View>
 					</View>
 	      	{
-						this.data.showClasses ?
+						this.state.showClasses ?
 							<ScrollView style={styles.scrollcontainer}>
 								<ListView
 									dataSource={this.data.appliedClasses}
@@ -223,12 +228,12 @@ export default class EarnerProfile extends Component {
 	}
 	showTasks() {
 		this.setState({
-			showTasks: !this.data.showTasks
+			showTasks: !this.state.showTasks
 		})
 	}
 	showClasses() {
 		this.setState({
-			showClasses: !this.data.showClasses
+			showClasses: !this.state.showClasses
 		})
 	}
 	renderTasks(taskId) {
@@ -237,20 +242,20 @@ export default class EarnerProfile extends Component {
 	    	<View style={styles.row}>
 	    		<View style={styles.rowEntry}>
 	    			<Text style={styles.popUpContainers}>
-	    				{this.data.tasks? this.data.tasks[taskId].title : null}
+							{this.data.tasks? this.data.tasks.find((task)=>task._id === taskId).title : null }
 	    			</Text>
 	    		</View>
 	    	</View>
     	</View>
 		)
 	}
-	renderClasses(cl) {
+	renderClasses(classId) {
     return (
     	<View style={styles.popUpAttr}>
 	    	<View style={styles.row}>
 	    		<View style={styles.rowEntry}>
 	    			<Text style={styles.popUpContainers}>
-    					{this.data.classes?this.data.classes[cl].name : null}
+							{this.data.classes? this.data.classes.find((class)=>class._id === classId).name : null }
     				</Text>
     			</View>
     		</View>
